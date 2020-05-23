@@ -45,5 +45,6 @@ a {
     --heading-color: #AED3F2;
 }
 
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~font-awesome/css/font-awesome.min.css';
+a {
+    color: #0000EE;
+}

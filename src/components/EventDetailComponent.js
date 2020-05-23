@@ -1,49 +1,93 @@
 import React from 'react'
 
-export default class EventDetailComponent
-    extends React.Component {
-    imageurl= "https://media.npr.org/assets/img/2016/07/11/jacob-collier2_wide-6e4700e64c8039b9148fa629b871d9afe1dd406f.jpg?s=1400"
+export default class EventDetailComponent extends React.Component {
+
+    venueInformation = () => {
+        if (this.props.event._embedded === undefined || this.props.event._embedded.venues === undefined) {
+            return "";
+        }
+
+        const venues = this.props.event._embedded.venues;
+        let venueInfo = [];
+        let venueLocation = "";
+        venues.map(venue => {
+            venueInfo.push(venue.name);
+            venueLocation = venue.city.name + ", " + (venue.state === undefined ? venue.country.countryCode : venue.state.stateCode);
+        });
+        return venueInfo.join(" & ") + " " + venueLocation;
+    };
+
+    renderDescription = () => {
+        return this.props.event.description === undefined ? "d-none" : "";
+    };
+
+    renderInformation = () => {
+        return this.props.event.info === undefined ? "d-none" : "";
+    };
+
+    renderAccessibility = () => {
+        return this.props.event.accessibility === undefined ? "d-none" : "";
+    };
+
+    renderTicketLimit = () => {
+        return this.props.event.ticketLimit === undefined ? "d-none" : "";
+    };
+
+    renderPleaseNote = () => {
+        return this.props.event.pleaseNote === undefined ? "d-none" : "";
+    };
+
+
     render() {
         return (
             <div>
-                <h1>Event name</h1>
+                <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
-                        <img src={this.imageurl} className="img-fluid "></img>
+                        <img src={this.props.event.images[0].url} className="img-fluid " alt=""/>
                         <p className="text-muted">This is a caption</p>
                     </div>
                     <div className="col-md-5 align-self-center">
                         <ul>
                             <li>
                                 <b>Location: </b>
-                                Madison Square Garden, New York City, NY
+                                {this.venueInformation()}
                             </li>
                             <li>
                                 <b>Date: </b>
-                                Thu May 22 2020
+                                {this.props.event.dates.start.localDate}
                             </li>
                             <li>
                                 <b>Doors open: </b>
-                                7:00 PM
+                                {this.props.event.dates.start.localTime}
                             </li>
                             <li>
                                 <b>Tickets: </b>
-                                <a>Link</a>
+                                <a href={this.props.event.url}>{this.props.event.url}</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <p>
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                    This is a long paragraph with the description of the event.
-                </p>
-
+                <div className={this.renderDescription()}>
+                    <h4>Description</h4>
+                    <p>{this.props.event.description === undefined ? "" : this.props.event.description}</p>
+                </div>
+                <div className={this.renderInformation()}>
+                    <h4>Information</h4>
+                    <p>{this.props.event.info === undefined ? "" : this.props.event.info}</p>
+                </div>
+                <div className={this.renderAccessibility()}>
+                    <h4>Accessibility</h4>
+                    <p>{this.props.event.accessibility === undefined ? "" : this.props.event.accessibility.info}</p>
+                </div>
+                <div className={this.renderTicketLimit()}>
+                    <h4>Ticket Limit</h4>
+                    <p>{this.props.event.ticketLimit === undefined ? "" : this.props.event.ticketLimit.info}</p>
+                </div>
+                <div className={this.renderPleaseNote()}>
+                    <h4>Please Note</h4>
+                    <p>{this.props.event.pleaseNote === undefined ? "" : this.props.event.pleaseNote}</p>
+                </div>
             </div>
         )
     }

@@ -1,34 +1,21 @@
 import React from "react";
-import EventSearchResultComponent from "./components/EventSearchResultComponent";
-import SearchComponent from "./components/SearchComponent";
-import './App.style.css'
+import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
+import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
-import LoginComponent from "./components/LoginComponent";
-import RegisterComponent from "./components/RegisterComponent";
-import EventDetailComponent from "./components/EventDetailComponent";
+import UserContainer from "./containers/UserContainer"
+import EventContainer from "./containers/EventContainer"
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            events: [],
-        };
-    }
-
-    componentDidMount() {
-        // TODO
-    }
 
     render() {
         return (
             <div className="AppContainer">
-                <MenuComponent/>
-                <br/>
-                <SearchComponent/>
-                <LoginComponent/>
-                <RegisterComponent/>
-                <EventSearchResultComponent/>
-                <EventDetailComponent/>
+                <BrowserRouter>
+                    <Redirect exact from="/" to='/event/search'/>
+                    <Route path='/' component={MenuComponent}/>
+                    <Route path='/user' component={UserContainer}/>
+                    <Route path='/event/search' component={EventContainer}/>
+                </BrowserRouter>
             </div>
         );
     }

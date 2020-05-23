@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchSuggestionComponent from "./SearchSuggestionComponent";
 
 export default class LoginComponent
     extends React.Component {

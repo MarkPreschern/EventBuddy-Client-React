@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchSuggestionComponent from "./SearchSuggestionComponent";
 
 export default class RegisterComponent
     extends React.Component {
