@@ -13,15 +13,17 @@ export default class SearchComponent extends React.Component {
     }
 
     searchClicked = () => {
+        console.log(this.state.date);
         const params = {};
         if (this.state.location !== "") {
             params.city = this.state.location;
         }
         if (this.state.date !== "") {
-            params.startDateTime = this.state.date
+            params.startDateTime = this.state.date + "T00:00:00Z";
+            params.endDateTime = this.state.date + "T23:59:59Z";
         }
         if (this.state.search !== "") {
-            params.keyword = this.state.search
+            params.keyword = this.state.search;
         }
         this.props.searchEventHandler.bind(this, params)();
     };
@@ -45,7 +47,7 @@ export default class SearchComponent extends React.Component {
                         />
                         <input className="form-control col-11 col-sm-5"
                                type="search"
-                               placeholder="Search for events"
+                               placeholder="Seciarch for events"
                                value={this.state.search}
                                onChange={(event) => this.setState({search: event.target.value})}
                         />

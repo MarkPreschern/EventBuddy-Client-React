@@ -21,10 +21,4 @@ export default {
         });
     },
 
-    getEventImages : (_id) => {
-        return fetch(url(`/events/${_id}/images`, {})).then(res => {
-            return res.json();
-        });
-    }
-
 }

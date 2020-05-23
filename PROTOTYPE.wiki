@@ -1,0 +1,31 @@
+EventBuddy Wiki
+By: Duy (Danny) Tran and Mark Preschern
+
+Deployed: ...TODO...
+
+Web API
+- In order to implement all of the components of our proposed web application, we will need data from the following public API.
+
+TicketMaster Web API
+- Documentation: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
+- To obtain a large set of event data, we are using the TicketMaster Web API. We will be making GET requests to “/discovery/v2/events” and filter our search by location, date, availability, and much more depending on user input.
+
+URL Web Service Endpoints
+- Get Events: Find events and filter your search by location, date, and keywords.
+  - Endpoint: https://app.ticketmaster.com/discovery/v2/events
+  - Search Criteria: location (optional), date (optional), keywords (optional)
+  - Summary Results: Event name, event date, and venue location(s), event image
+  - Details Results: Not Applicable
+  - Sample Queries:
+      - fetch(https://app.ticketmaster.com/discovery/v2/events.json?apikey=JXfugI8vtmG4dlSSSa1CUyzGeMa91d9V)
+      - fetch(https://app.ticketmaster.com/discovery/v2/events.json?keyword=golf&apikey=JXfugI8vtmG4dlSSSa1CUyzGeMa91d9V)
+      - fetch(https://app.ticketmaster.com/discovery/v2/events.json?city=Boston,+MA&apikey=JXfugI8vtmG4dlSSSa1CUyzGeMa91d9V)
+      - fetch(https://app.ticketmaster.com/discovery/v2/events.json?startDateTime=2020-08-01T14:00:00Z&apikey=JXfugI8vtmG4dlSSSa1CUyzGeMa91d9V)
+
+- Get Specific Event: Get details for a specific event using the unique identifier for the event. This includes the venue and location, the attraction(s), and the Ticketmaster Website URL for purchasing tickets for the event.
+  - Endpoint: https://app.ticketmaster.com//discovery/v2/events/{id}
+  - Search Criteria: event_id (required)
+  - Summary Results: Not applicable
+  - Details Results: Event name, event date, and venue location(s), event image(s), opening Time, link to buy tickets, description (optional), information (optional), accessibility (optional), ticket limit (optional), please note (optional)
+  - Sample Query:
+      - https://app.ticketmaster.com/discovery/v2/events/G5vVZ4zQwhNp7.json?apikey=JXfugI8vtmG4dlSSSa1CUyzGeMa91d9V

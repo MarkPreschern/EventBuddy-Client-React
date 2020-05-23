@@ -28,7 +28,6 @@ export default class EventContainer extends React.Component {
 
     selectEventHandler = async (event_id) => {
         const data = await TicketMasterService.getEvent(event_id);
-        console.log(data);
         this.setState({event: data});
     };
 
