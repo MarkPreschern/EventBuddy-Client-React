@@ -1,5 +1,11 @@
 import React from "react";
-import EventServices from "./services/event.service.client";
+import EventSearchResultComponent from "./components/EventSearchResultComponent";
+import SearchComponent from "./components/SearchComponent";
+import './App.style.css'
+import MenuComponent from "./components/MenuComponent";
+import LoginComponent from "./components/LoginComponent";
+import RegisterComponent from "./components/RegisterComponent";
+import EventDetailComponent from "./components/EventDetailComponent";
 
 class App extends React.Component {
     constructor(props) {
@@ -14,7 +20,17 @@ class App extends React.Component {
     }
 
     render() {
-        return null;
+        return (
+            <div className="AppContainer">
+                <MenuComponent/>
+                <br/>
+                <SearchComponent/>
+                <LoginComponent/>
+                <RegisterComponent/>
+                <EventSearchResultComponent/>
+                <EventDetailComponent/>
+            </div>
+        );
     }
 }
 

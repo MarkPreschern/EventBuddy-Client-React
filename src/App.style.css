@@ -1,0 +1,49 @@
+.AppContainer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.btn-dark {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--font-color)
+}
+
+a {
+    color: var(--font-color)
+}
+
+.EB-dark-component {
+    background-color: var(--font-color);
+    padding: 15px;
+    overflow: scroll;
+}
+
+.on-dark-background {
+    color: #F2F2F2;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+:root {
+    --primary-color: #385D84;
+    --secondary-color: #E77557;
+    --font-color: #23303B;
+    --bg-color: #F2F2F2;
+    --heading-color: #AED3F2;
+}
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.min.css';
