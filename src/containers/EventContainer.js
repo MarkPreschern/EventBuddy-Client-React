@@ -43,7 +43,7 @@ export default class EventContainer extends React.Component {
                                                 events={this.state.events}
                                                 selectEventHandler={this.selectEventHandler}/>}
                 />
-                <Route path={`/event/:${this.state.event.id}`} render={(props) =>
+                <Route path={`/event/${this.state.event.id}`} render={(props) =>
                     <EventDetailComponent {...props}
                                           event={this.state.event}
                                           selectEventHandler={this.selectEventHandler}/>}

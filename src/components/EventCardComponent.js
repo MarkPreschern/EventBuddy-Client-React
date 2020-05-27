@@ -24,13 +24,13 @@ export default class EventCardComponent extends React.Component {
                 <img className="card-img-top" src={this.props.event.images[0].url} alt=""/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.event.name}</h5>
-                    <p className="card-text">{this.props.event.dates.start.localDate}</p>
+                    <h6 className="card-text">{this.props.event.dates.start.localDate}</h6>
                     <p className="card-text">{this.venueInformation()}</p>
                     <p className="card-text">
                         <Link className="text-muted float-right"
                               to={`/event/:${this.props.event.id}`}
                               onClick={this.props.selectEventHandler.bind(this, this.props.event.id)}>
-                            Click for more info
+                            More info >
                         </Link>
                     </p>
                 </div>

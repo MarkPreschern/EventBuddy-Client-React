@@ -4,6 +4,21 @@
     padding: 10px;
 }
 
+.EB-list {
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 20px;
+    /*background: #AED3F2;*/
+    border-style: dashed;
+    border-color: var(--secondary-color);
+    line-height: 250%;
+    font-size: 120%;
+}
+
+.btn {
+    vertical-align: unset;
+}
+
 .btn-dark {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
@@ -25,6 +40,9 @@ a {
 .EB-dark-component {
     background-color: var(--font-color);
     padding: 15px;
+}
+
+.EB-content-overflow-scroll {
     overflow: scroll;
 }
 

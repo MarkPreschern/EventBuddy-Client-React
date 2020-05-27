@@ -44,11 +44,11 @@ export default class EventDetailComponent extends React.Component {
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
-                        <img src={this.props.event.images[0].url} className="img-fluid " alt=""/>
-                        <p className="text-muted">This is a caption</p>
+                        <img src={this.props.event.images[0].url} className="img-fluid" alt=""/>
+                        <p className="text-muted">Photo from EventBrite</p>
                     </div>
                     <div className="col-md-5 align-self-center">
-                        <ul>
+                        <ul className="EB-list">
                             <li>
                                 <b>Location: </b>
                                 {this.venueInformation()}
@@ -63,7 +63,7 @@ export default class EventDetailComponent extends React.Component {
                             </li>
                             <li>
                                 <b>Tickets: </b>
-                                <a href={this.props.event.url}>{this.props.event.url}</a>
+                                <a href={this.props.event.url}>Click here!</a>
                             </li>
                         </ul>
                     </div>

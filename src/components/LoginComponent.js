@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 export default class LoginComponent
     extends React.Component {
@@ -20,9 +21,16 @@ export default class LoginComponent
                                type="password"/>
                     </div>
                 </div>
-                <button className="btn btn-dark">
-                    Login
-                </button>
+                <Link to='/event/search'>
+                    <button className="btn btn-dark">
+                        Login
+                    </button>
+                </Link>
+                <Link to='/event/search'>
+                    <button className="btn ">
+                        Cancel
+                    </button>
+                </Link>
             </div>
         )
     }

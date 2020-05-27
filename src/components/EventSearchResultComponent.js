@@ -7,7 +7,7 @@ export default class EventSearchResultComponent extends React.Component {
     render() {
         return(
             <div>
-                <h1>Search results</h1>
+                <h1>{this.props.events.length + " search results"}</h1>
                 <div className="row card-row">
                     {
                         this.props.events.map(event =>

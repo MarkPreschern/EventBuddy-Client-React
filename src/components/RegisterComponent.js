@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from "react-router-dom";
 
 export default class RegisterComponent
     extends React.Component {
@@ -26,9 +27,16 @@ export default class RegisterComponent
                                type="password"/>
                     </div>
                 </div>
-                <button className="btn btn-dark">
-                    Register
-                </button>
+                <Link to='/profile'>
+                    <button className="btn btn-dark">
+                        Register
+                    </button>
+                </Link>
+                <Link to='/event/search'>
+                    <button className="btn ">
+                        Cancel
+                    </button>
+                </Link>
             </div>
         )
     }
