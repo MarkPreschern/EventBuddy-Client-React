@@ -28,7 +28,7 @@ export default class EventCardComponent extends React.Component {
                     <p className="card-text">{this.venueInformation()}</p>
                     <p className="card-text">
                         <Link className="text-muted float-right"
-                              to={`/event/:${this.props.event.id}`}
+                              to={`/event/${this.props.event.id}`}
                               onClick={this.props.selectEventHandler.bind(this, this.props.event.id)}>
                             More info >
                         </Link>
