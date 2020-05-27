@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Redirect} from "react-router-dom";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import UserContainer from "./containers/UserContainer"

@@ -11,7 +11,7 @@ export default class EventCardComponent extends React.Component {
         const venues = this.props.event._embedded.venues;
         let venueInfo = [];
         let venueLocation = "";
-        venues.map(venue => {
+        venues.forEach(venue => {
             venueInfo.push(venue.name);
             venueLocation = venue.city.name + ", " + (venue.state === undefined ? venue.country.countryCode : venue.state.stateCode);
         });

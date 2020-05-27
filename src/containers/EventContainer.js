@@ -22,7 +22,7 @@ export default class EventContainer extends React.Component {
         if(data.hasOwnProperty('_embedded')){
             this.setState({events: data._embedded.events});
         } else {
-            // TODO: message saying no events found
+            this.setState({events: []});
         }
     };
 

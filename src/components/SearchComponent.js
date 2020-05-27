@@ -13,7 +13,6 @@ export default class SearchComponent extends React.Component {
     }
 
     searchClicked = () => {
-        console.log(this.state.date);
         const params = {};
         if (this.state.location !== "") {
             params.city = this.state.location;
@@ -32,7 +31,7 @@ export default class SearchComponent extends React.Component {
         const params = {};
         params.keyword = search;
         this.props.searchEventHandler.bind(this, params)();
-    }
+    };
 
     render() {
         return (
