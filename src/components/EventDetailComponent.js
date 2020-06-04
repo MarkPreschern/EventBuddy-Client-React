@@ -65,6 +65,9 @@ export default class EventDetailComponent extends React.Component {
                                 <b>Tickets: </b>
                                 <a href={this.props.event.url}>Click here!</a>
                             </li>
+                            <button className="btn btn-dark d-block align-items-center">
+                                Add to favorite
+                            </button>
                         </ul>
                     </div>
                 </div>

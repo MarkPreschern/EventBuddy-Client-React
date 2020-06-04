@@ -7,6 +7,7 @@ import EventContainer from "./containers/EventContainer"
 import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
+import ProfileVisitComponent from "./components/ProfileVisitComponent";
 
 class App extends React.Component {
 
@@ -18,8 +19,8 @@ class App extends React.Component {
                     <Route path='/' component={MenuComponent}/>
                     <Route path='/user' component={UserContainer}/>
                     <Route path='/event/search' component={EventContainer}/>
-                    <Route path='/profile' component={ProfileComponent}/>
-                    <Route path='/profile/:userId' component={ProfileComponent}/>
+                    <Route path='/profile' exact component={ProfileComponent}/>
+                    <Route path='/profile/:userId' component={ProfileVisitComponent}/>
                     <Route path='/login' component={LoginComponent}/>
                     <Route path='/register' component={RegisterComponent}/>
                 </BrowserRouter>

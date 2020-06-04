@@ -19,10 +19,6 @@
     text-overflow: ellipsis;
 }
 
-.card:hover {
-    box-shadow: #23303B;
-}
-
 .card-row {
     width: 100%;
     margin: 0;
@@ -32,6 +28,7 @@
 @media screen and (min-width: 993px) {
     .card {
         width: 21.7%;
+        height: 290px;
         margin-left: 2%;
         margin-right: 1%;
         margin-bottom: 3%;
@@ -41,6 +38,7 @@
 @media screen and (min-width: 769px) and (max-width: 992px) {
     .card {
         width: 28.7%;
+        height: 308px;
         margin-left: 3%;
         margin-right: 1%;
         margin-bottom: 4%;
