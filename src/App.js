@@ -8,6 +8,9 @@ import ProfileComponent from "./components/ProfileComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import ProfileVisitComponent from "./components/ProfileVisitComponent";
+import HomeComponent from "./components/HomeComponent";
+import FooterComponent from "./components/FooterComponent";
+import OrganizerProfileComponent from "./components/OrganizerProfileComponent";
 
 class App extends React.Component {
 
@@ -15,14 +18,16 @@ class App extends React.Component {
         return (
             <div className="AppContainer">
                 <BrowserRouter>
-                    <Redirect exact from="/" to='/event/search'/>
+                    <Redirect exact from="/home" to='/home'/>
                     <Route path='/' component={MenuComponent}/>
+                    <Route path='/home' component={HomeComponent}/>
                     <Route path='/user' component={UserContainer}/>
                     <Route path='/event/search' component={EventContainer}/>
                     <Route path='/profile' exact component={ProfileComponent}/>
                     <Route path='/profile/:userId' component={ProfileVisitComponent}/>
                     <Route path='/login' component={LoginComponent}/>
                     <Route path='/register' component={RegisterComponent}/>
+                    <Route path='/' component={FooterComponent}/>
                 </BrowserRouter>
             </div>
         );

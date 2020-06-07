@@ -20,6 +20,7 @@ export default class ProfileVisitComponent
                     <div className="col-sm-8 col-12">
                         <h2>Danny Tran</h2>
                         <p>Username: dtran</p>
+                        <p>Gender: Male</p>
                         <p>Birthday: June 12, 1998</p>
                         <p>Email: dtran@gmail.com</p>
                     </div>

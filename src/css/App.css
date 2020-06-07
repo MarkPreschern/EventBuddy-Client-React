@@ -1,7 +1,7 @@
 .AppContainer {
     max-width: 960px;
     margin: 0 auto;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 .EB-list {
@@ -80,4 +80,14 @@ a {
     height: 100px;
     object-fit: cover;
     margin: 5px;
+}
+
+.home-container {
+    padding: 20%;
+}
+
+.EB-footer {
+    background-color: var(--font-color);
+    color: var(--bg-color);
+    font-size: 75%;
 }
