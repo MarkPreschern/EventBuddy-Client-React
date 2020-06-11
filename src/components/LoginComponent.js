@@ -8,6 +8,13 @@ export default class LoginComponent
             <div className="text-center">
                 <h3>Login</h3>
                 <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Role</label>
+                    <div className="col-sm-9">
+                        <select className="form-control mb-2">
+                            <option>Event attendee</option>
+                            <option>Event organizer</option>
+                        </select>
+                    </div>
                     <label className="col-sm-3 col-form-label">Username</label>
                     <div className="col-sm-9">
                         <input className="form-control mb-2"

@@ -1,5 +1,6 @@
 import React from 'react'
-import ProfileItemListComponent from "./ProfileItemListComponent";
+import UPEventListComponent from "./UP-EventListComponent";
+import UPMessageListComponent from "./UP-MessageListComponent";
 
 export default class ProfileVisitComponent
     extends React.Component {
@@ -25,13 +26,11 @@ export default class ProfileVisitComponent
                         <p>Email: dtran@gmail.com</p>
                     </div>
                 </div>
-                <div className="row col-12 mb-3">
+                <div className="row d-inline">
                     <h4>Liked events</h4>
-                    <ProfileItemListComponent/>
-                </div>
-                <div className="row col-12">
-                    <h4>Friends</h4>
-                    <ProfileItemListComponent/>
+                    <div className="EB-scroll-list">
+                        <UPEventListComponent/>
+                    </div>
                 </div>
             </div>
         )

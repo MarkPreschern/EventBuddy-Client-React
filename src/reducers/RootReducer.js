@@ -5,7 +5,7 @@ import EventReducer from "./EventReducer"
 import MessageReducer from "./MessageReducer"
 import OrganizerReducer from "./OrganizerReducer"
 import VenueReducer from "./VenueReducer"
-import {RESET_ACTION} from "../actions/rootActions";
+import {RESET_ACTION} from "../actions/RootActions";
 
 const appReducer = combineReducers(
     {

@@ -4,6 +4,7 @@ import TicketMasterService from "../services/TicketMasterService"
 import SearchComponent from "../components/SearchComponent";
 import EventSearchResultComponent from "../components/EventSearchResultComponent";
 import EventDetailComponent from "../components/EventDetailComponent";
+import EventHighlightComponent from "../components/EventHighlightComponent";
 
 export default class EventContainer extends React.Component {
     constructor(props) {
@@ -34,6 +35,13 @@ export default class EventContainer extends React.Component {
     render() {
         return(
             <BrowserRouter>
+                <Route path="/event" exact render={(props) =>
+                    <div>
+                        <SearchComponent {...props}
+                                         searchEventHandler={this.searchEventHandler}/>
+                        <EventHighlightComponent/>
+                    </div>}
+                />
                 <Route path="/event/search/" render={(props) =>
                     <SearchComponent {...props}
                                      searchEventHandler={this.searchEventHandler}/>}

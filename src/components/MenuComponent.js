@@ -24,8 +24,11 @@ export default class MenuComponent
                         <Link to='/register'>
                             <button className="btn btn-dark mr-2">Register</button>
                         </Link>
-                        <Link to='/profile'>
-                            <button className="btn btn-dark">Profile</button>
+                        <Link to='/user/profile'>
+                            <button className="btn btn-dark mr-2">User Profile</button>
+                        </Link>
+                        <Link to='/organizer/profile'>
+                            <button className="btn btn-dark">Organizer Profile</button>
                         </Link>
                     </span>
                 </div>

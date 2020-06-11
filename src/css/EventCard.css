@@ -19,14 +19,19 @@
     text-overflow: ellipsis;
 }
 
-.card-row {
+.EB-card-row {
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
+.EB-contact-img {
+    height: 40%;
+    width: 40%;
+}
+
 @media screen and (min-width: 993px) {
-    .card {
+    .EB-card {
         width: 21.7%;
         height: 290px;
         margin-left: 2%;
@@ -36,7 +41,7 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 992px) {
-    .card {
+    .EB-card {
         width: 28.7%;
         height: 308px;
         margin-left: 3%;
@@ -46,7 +51,7 @@
 }
 
 @media screen and (min-width: 577px) and (max-width: 768px) {
-    .card {
+    .EB-card {
         width: 43.3%;
         height: 290px;
         margin-left: 4%;
@@ -56,7 +61,7 @@
 }
 
 @media screen and (max-width: 576px) {
-    .card {
+    .EB-card {
         width: 94%;
         height: 300px;
         margin-left: 3%;

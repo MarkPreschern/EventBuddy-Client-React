@@ -3,7 +3,7 @@ import React from 'react'
 export default class FooterComponent extends React.Component {
     render() {
         return(
-            <div className="EB-footer mt-5 text-center">
+            <footer className="EB-footer mt-5 text-center">
                 <div className="row pt-3">
                     <div className="col-4 ">
                         <h5 className="on-dark-background">EventBuddy</h5>
@@ -24,7 +24,7 @@ export default class FooterComponent extends React.Component {
                     <small>© 2020 Copyright:
                         CS4550 Summer 1 2020 - Mark Preschern & Duy (Danny) Tran</small>
                 </div>
-            </div>
+            </footer>
         )
     }
 }

@@ -8,7 +8,7 @@ export default class EventSearchResultComponent extends React.Component {
         return(
             <div>
                 <h1>{this.props.events.length + " search results"}</h1>
-                <div className="row card-row">
+                <div className="row card-row EB-card-row">
                     {
                         this.props.events.map(event =>
                                                   <EventCardComponent

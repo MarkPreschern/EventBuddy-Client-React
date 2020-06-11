@@ -20,7 +20,7 @@ export default class EventCardComponent extends React.Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="card EB-card">
                 <img className="card-img-top" src={this.props.event.images[0].url} alt=""/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.event.name}</h5>

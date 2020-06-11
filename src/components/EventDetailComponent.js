@@ -40,7 +40,7 @@ export default class EventDetailComponent extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
