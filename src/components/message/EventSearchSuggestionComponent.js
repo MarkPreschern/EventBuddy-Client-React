@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class SearchSuggestionComponent
+export default class EventSearchSuggestionComponent
     extends React.Component {
     state= {
         content: this.props.content

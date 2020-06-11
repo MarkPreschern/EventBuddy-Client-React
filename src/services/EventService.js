@@ -3,7 +3,7 @@ import {API_URL} from "../common/Constants";
 export default {
 
     getEvents : (params) => {
-        fetch(API_URL + "/events/" + new URLSearchParams(params)).then(res => {
+        return fetch(API_URL + "/events/search?" + new URLSearchParams(params)).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -11,7 +11,7 @@ export default {
     },
 
     getEvent : (eventId) => {
-        fetch(`${API_URL}/events/${eventId}`).then(res => {
+        return fetch(`${API_URL}/events/${eventId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -19,7 +19,7 @@ export default {
     },
 
     getExternalEvent : (externalEventId) => {
-        fetch(`${API_URL}/events/external/${externalEventId}`).then(res => {
+        return fetch(`${API_URL}/events/external/${externalEventId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -27,7 +27,7 @@ export default {
     },
 
     createEvent : (event) => {
-        fetch(`${API_URL}/events/`, {
+        return fetch(`${API_URL}/events/`, {
             method: 'POST',
             body: JSON.stringify(event),
             headers: {
@@ -41,7 +41,7 @@ export default {
     },
 
     deleteEvent : (eventId) => {
-        fetch(`${API_URL}/events/${eventId}`, {
+        return fetch(`${API_URL}/events/${eventId}`, {
             method: 'DELETE',
         }).then(res => {
             return res.json();
@@ -51,7 +51,7 @@ export default {
     },
 
     updateEvent : (eventId, event) => {
-        fetch(`${API_URL}/events/${eventId}`, {
+        return fetch(`${API_URL}/events/${eventId}`, {
             method: 'PUT',
             body: JSON.stringify(event),
             headers: {
@@ -65,7 +65,7 @@ export default {
     },
 
     addEventAttendee : (eventId, attendeeId) => {
-        fetch(`${API_URL}/events/${eventId}/attendee/${attendeeId}`, {
+        return fetch(`${API_URL}/events/${eventId}/attendee/${attendeeId}`, {
             method: 'POST'
         }).then(res => {
             return res.json();
@@ -75,7 +75,7 @@ export default {
     },
 
     removeEventAttendee : (eventId, attendeeId) => {
-        fetch(`${API_URL}/events/${eventId}/attendee/${attendeeId}`, {
+        return fetch(`${API_URL}/events/${eventId}/attendee/${attendeeId}`, {
             method: 'DELETE'
         }).then(res => {
             return res.json();

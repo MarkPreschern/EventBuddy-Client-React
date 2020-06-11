@@ -1,20 +1,16 @@
 import React from 'react'
+import {selectEvent} from "../../actions/EventActions";
+import {connect} from "react-redux";
 
-export default class EventDetailComponent extends React.Component {
+class EventDetailComponent extends React.Component {
 
     venueInformation = () => {
-        if (this.props.event._embedded === undefined || this.props.event._embedded.venues === undefined) {
+        if (!this.props.event.hasOwnProperty("venue")) {
             return "";
         }
 
-        const venues = this.props.event._embedded.venues;
-        let venueInfo = [];
-        let venueLocation = "";
-        venues.forEach(venue => {
-            venueInfo.push(venue.name);
-            venueLocation = venue.city.name + ", " + (venue.state === undefined ? venue.country.countryCode : venue.state.stateCode);
-        });
-        return venueInfo.join(" & ") + " " + venueLocation;
+        const venue = this.props.event.venue;
+        return venue.name + " " + venue.city + ", " + venue.state === undefined ? venue.country : venue.state;
     };
 
     renderDescription = () => {
@@ -44,7 +40,7 @@ export default class EventDetailComponent extends React.Component {
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
-                        <img src={this.props.event.images[0].url} className="img-fluid" alt=""/>
+                        <img src={this.props.event.image_url} className="img-fluid" alt=""/>
                         <p className="text-muted">Photo from EventBrite</p>
                     </div>
                     <div className="col-md-5 align-self-center">
@@ -55,18 +51,18 @@ export default class EventDetailComponent extends React.Component {
                             </li>
                             <li>
                                 <b>Date: </b>
-                                {this.props.event.dates.start.localDate}
+                                {this.props.event.start_date}
                             </li>
                             <li>
                                 <b>Doors open: </b>
-                                {this.props.event.dates.start.localTime}
+                                {this.props.event.start_date}
                             </li>
                             <li>
                                 <b>Tickets: </b>
                                 <a href={this.props.event.url}>Click here!</a>
                             </li>
                             <button className="btn btn-dark d-block align-items-center">
-                                Add to favorite
+                                Like event
                             </button>
                         </ul>
                     </div>
@@ -81,11 +77,11 @@ export default class EventDetailComponent extends React.Component {
                 </div>
                 <div className={this.renderAccessibility()}>
                     <h4>Accessibility</h4>
-                    <p>{this.props.event.accessibility === undefined ? "" : this.props.event.accessibility.info}</p>
+                    <p>{this.props.event.accessibility === undefined ? "" : this.props.event.accessibility}</p>
                 </div>
                 <div className={this.renderTicketLimit()}>
                     <h4>Ticket Limit</h4>
-                    <p>{this.props.event.ticketLimit === undefined ? "" : this.props.event.ticketLimit.info}</p>
+                    <p>{this.props.event.ticketLimit === undefined ? "" : this.props.event.ticketLimit}</p>
                 </div>
                 <div className={this.renderPleaseNote()}>
                     <h4>Please Note</h4>
@@ -95,3 +91,17 @@ export default class EventDetailComponent extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    event: state.EventReducer.event
+});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        selectEvent: (event) => {
+            dispatch(selectEvent(event))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(EventDetailComponent);

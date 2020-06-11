@@ -17,7 +17,7 @@ export default class HomeComponent extends React.Component {
                         Created by Mark Preschern & Duy (Danny) Tran
                     </small>
                 </p>
-                <Link to="/event">
+                <Link to="/event/search/results">
                     <button className="btn btn-lg btn-dark">
                         Learn more
                     </button>

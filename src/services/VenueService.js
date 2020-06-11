@@ -3,7 +3,7 @@ import {API_URL} from "../common/Constants";
 export default {
 
     getVenue : (organizerId, venueId) => {
-        fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`).then(res => {
+        return fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -11,7 +11,7 @@ export default {
     },
 
     createVenue : (organizerId, venue) => {
-        fetch(`${API_URL}/organizers/${organizerId}/venues/`, {
+        return fetch(`${API_URL}/organizers/${organizerId}/venues/`, {
             method: 'POST',
             body: JSON.stringify(venue),
             headers: {
@@ -25,7 +25,7 @@ export default {
     },
 
     deleteVenue : (organizerId, venueId) => {
-        fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`, {
+        return fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`, {
             method: 'DELETE',
         }).then(res => {
             return res.json();
@@ -35,7 +35,7 @@ export default {
     },
 
     updateVenue : (organizerId, venueId, venue) => {
-        fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`, {
+        return fetch(`${API_URL}/organizers/${organizerId}/venues/${venueId}`, {
             method: 'PUT',
             body: JSON.stringify(venue),
             headers: {

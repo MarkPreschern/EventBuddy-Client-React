@@ -3,7 +3,7 @@ import {API_URL} from "../common/Constants";
 export default {
 
     getOrganizer : (organizerId) => {
-        fetch(`${API_URL}/organizers/${organizerId}`).then(res => {
+        return fetch(`${API_URL}/organizers/${organizerId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -11,7 +11,7 @@ export default {
     },
 
     createOrganizer : (organizer) => {
-        fetch(`${API_URL}/organizers/`, {
+        return fetch(`${API_URL}/organizers/`, {
             method: 'POST',
             body: JSON.stringify(organizer),
             headers: {
@@ -25,7 +25,7 @@ export default {
     },
 
     deleteOrganizer : (organizerId) => {
-        fetch(`${API_URL}/organizers/${organizerId}`, {
+        return fetch(`${API_URL}/organizers/${organizerId}`, {
             method: 'DELETE',
         }).then(res => {
             return res.json();
@@ -35,7 +35,7 @@ export default {
     },
 
     updateOrganizer : (organizerId, organizer) => {
-        fetch(`${API_URL}/organizers/${organizerId}`, {
+        return fetch(`${API_URL}/organizers/${organizerId}`, {
             method: 'PUT',
             body: JSON.stringify(organizer),
             headers: {
@@ -49,7 +49,7 @@ export default {
     },
 
     loginOrganizer : (organizer) => {
-        fetch(`${API_URL}/organizers/login`, {
+        return fetch(`${API_URL}/organizers/login`, {
             method: 'POST',
             body: JSON.stringify(organizer),
             headers: {

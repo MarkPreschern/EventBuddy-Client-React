@@ -1,9 +1,7 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import UPEventListComponent from "../userprofile/UP-EventListComponent";
 import OPEventListComponent from "./OP-EventListComponent";
 import OPVenueListComponent from "./OP-VenueListComponent";
-import UPMessageListComponent from "../userprofile/UP-MessageListComponent";
 
 export default class OrganizerProfileComponent extends React.Component {
     constructor(props) {

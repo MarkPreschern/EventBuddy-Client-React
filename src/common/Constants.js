@@ -1,1 +1,1 @@
-export const API_URL = "https://*****************/api"; // TODO
+export const API_URL =  "https://eventbuddy-server-p4.herokuapp.com/api";

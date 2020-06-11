@@ -22,3 +22,9 @@ export const deleteEvent = (eventId) => ({
     type: DELETE_EVENT,
     eventId: eventId
 });
+
+export const SELECT_EVENT = "SELECT_EVENT";
+export const selectEvent = (event) => ({
+    type: SELECT_EVENT,
+    event: event
+});

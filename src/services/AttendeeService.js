@@ -3,7 +3,7 @@ import {API_URL} from "../common/Constants";
 export default {
 
     getAttendee : (attendeeId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}`).then(res => {
+        return fetch(`${API_URL}/attendees/${attendeeId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -11,7 +11,7 @@ export default {
     },
 
     createAttendee : (attendee) => {
-        fetch(`${API_URL}/attendees/`, {
+        return fetch(`${API_URL}/attendees/`, {
             method: 'POST',
             body: JSON.stringify(attendee),
             headers: {
@@ -25,7 +25,7 @@ export default {
     },
 
     deleteAttendee : (attendeeId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}`, {
             method: 'DELETE',
         }).then(res => {
             return res.json();
@@ -35,7 +35,7 @@ export default {
     },
 
     updateAttendee : (attendeeId, attendee) => {
-        fetch(`${API_URL}/attendees/${attendeeId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}`, {
             method: 'PUT',
             body: JSON.stringify(attendee),
             headers: {
@@ -49,7 +49,7 @@ export default {
     },
 
     addLikedEvent : (attendeeId, eventId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/event/${eventId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}/event/${eventId}`, {
             method: 'POST'
         }).then(res => {
             return res.json();
@@ -59,7 +59,7 @@ export default {
     },
 
     removeLikedEvent : (attendeeId, eventId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/event/${eventId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}/event/${eventId}`, {
             method: 'DELETE'
         }).then(res => {
             return res.json();
@@ -69,7 +69,7 @@ export default {
     },
 
     loginAttendee : (attendee) => {
-        fetch(`${API_URL}/attendees/login`, {
+        return fetch(`${API_URL}/attendees/login`, {
             method: 'POST',
             body: JSON.stringify(attendee),
             headers: {

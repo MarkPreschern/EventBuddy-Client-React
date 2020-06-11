@@ -3,7 +3,7 @@ import {API_URL} from "../common/Constants";
 export default {
 
     getMessage : (attendeeId, conversationId, messageId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`).then(res => {
+        return fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`).then(res => {
             return res.json();
         }).catch(err => {
             return err;
@@ -11,7 +11,7 @@ export default {
     },
 
     createMessage : (attendeeId, conversation) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/`, {
             method: 'POST',
             body: JSON.stringify(conversation),
             headers: {
@@ -25,7 +25,7 @@ export default {
     },
 
     deleteMessage : (attendeeId, conversationId, messageId) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`, {
             method: 'DELETE',
         }).then(res => {
             return res.json();
@@ -35,7 +35,7 @@ export default {
     },
 
     updateMessage : (attendeeId, conversationId, messageId, message) => {
-        fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`, {
+        return fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/${messageId}`, {
             method: 'PUT',
             body: JSON.stringify(message),
             headers: {

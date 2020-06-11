@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import SearchSuggestionComponent from "./SearchSuggestionComponent";
+import { connect } from "react-redux"
+import EventSearchSuggestionComponent from "../message/EventSearchSuggestionComponent";
+import EventService from "../../services/EventService";
+import {getEvents} from "../../actions/EventActions";
 
-export default class SearchComponent extends React.Component {
+class EventSearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +15,16 @@ export default class SearchComponent extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const params = new URLSearchParams(window.location.search);
+        this.props.getEvents(params);
+    }
+
     searchClicked = () => {
+        this.props.getEvents(this.getParams());
+    };
+
+    getParams = () => {
         const params = {};
         if (this.state.location !== "") {
             params.city = this.state.location;
@@ -24,13 +36,13 @@ export default class SearchComponent extends React.Component {
         if (this.state.search !== "") {
             params.keyword = this.state.search;
         }
-        this.props.searchEventHandler.bind(this, params)();
+        return params
     };
 
     suggestionClick = (search) => {
         const params = {};
         params.keyword = search;
-        this.props.searchEventHandler.bind(this, params)();
+        this.props.getEvents(params);
     };
 
     render() {
@@ -56,30 +68,43 @@ export default class SearchComponent extends React.Component {
                                value={this.state.search}
                                onChange={(event) => this.setState({search: event.target.value})}
                         />
-                        <Link to="/event/search/results" onClick={this.searchClicked}>
+                        <Link to={`/event/search/results?${new URLSearchParams(this.getParams())}`} onClick={this.searchClicked}>
                             <button className="btn btn-dark d-inline">
                                 <i className="fa fa-search"/>
                             </button>
                         </Link>
                 </div>
                 <div className="row justify-content-between flex-nowrap EB-content-overflow-scroll">
-                    <Link to="/event/search/results" onClick={() => this.suggestionClick('One Direction')}>
-                        <SearchSuggestionComponent content="One Direction"/>
+                    <Link to="/event/search/results?keyword=One+Direction" onClick={() => this.suggestionClick('One Direction')}>
+                        <EventSearchSuggestionComponent content="One Direction"/>
                     </Link>
-                    <Link to="/event/search/results" onClick={() => this.suggestionClick('Boston Celtics')}>
-                        <SearchSuggestionComponent content="Boston Celtics"/>
+                    <Link to="/event/search/results?keyword=Boston+Celtics" onClick={() => this.suggestionClick('Boston Celtics')}>
+                        <EventSearchSuggestionComponent content="Boston Celtics"/>
                     </Link>
-                    <Link to="/event/search/results" onClick={() => this.suggestionClick('New York')}>
-                        <SearchSuggestionComponent content="New York"/>
+                    <Link to="/event/search/results?keyword=New+York" onClick={() => this.suggestionClick('New York')}>
+                        <EventSearchSuggestionComponent content="New York"/>
                     </Link>
-                    <Link to="/event/search/results" onClick={() => this.suggestionClick('Music')}>
-                        <SearchSuggestionComponent content="Music"/>
+                    <Link to="/event/search/results?keyword=Music" onClick={() => this.suggestionClick('Music')}>
+                        <EventSearchSuggestionComponent content="Music"/>
                     </Link>
-                    <Link to="/event/search/results" onClick={() => this.suggestionClick('Comedy')}>
-                        <SearchSuggestionComponent content="Comedy"/>
+                    <Link to="/event/search/results?Keyword=Comedy" onClick={() => this.suggestionClick('Comedy')}>
+                        <EventSearchSuggestionComponent content="Comedy"/>
                     </Link>
                 </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        getEvents: async (params) => {
+            const data = await EventService.getEvents(params);
+            dispatch(getEvents(data))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(EventSearchComponent);

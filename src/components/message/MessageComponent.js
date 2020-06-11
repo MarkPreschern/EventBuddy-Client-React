@@ -1,7 +1,6 @@
 import React from 'react'
 import MessageContactListComponent from "./MessageContactListComponent";
 import MessageChatComponent from "./MessageChatComponent";
-import ChatBubbleComponent from "./ChatBubbleComponent";
 
 export default class MessageComponent extends React.Component {
     render() {

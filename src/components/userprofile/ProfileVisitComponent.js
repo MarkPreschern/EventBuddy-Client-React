@@ -1,6 +1,5 @@
 import React from 'react'
 import UPEventListComponent from "./UP-EventListComponent";
-import UPMessageListComponent from "./UP-MessageListComponent";
 
 export default class ProfileVisitComponent
     extends React.Component {
