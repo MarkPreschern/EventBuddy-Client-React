@@ -6,10 +6,10 @@ export default class ContactCardComponent extends React.Component {
 
     render() {
         return(
-            <Link to='/messages/userIdaiajwioj'>
-                <div className="card d-flex flex-row align-items-center">
+            <Link to='/messages/abcde'>
+                <div className="card EB-contact-card d-flex flex-row align-items-center">
                     <img className=" EB-contact-img" src={this.imageurl} alt="..."/>
-                    <h6 className="card-title ml-1">Danny Tran</h6>
+                    <h6 className="ml-2 mt-2">Danny Tran</h6>
                 </div>
             </Link>
         )

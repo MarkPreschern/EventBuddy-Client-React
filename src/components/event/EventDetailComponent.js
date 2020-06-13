@@ -36,7 +36,7 @@ class EventDetailComponent extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">

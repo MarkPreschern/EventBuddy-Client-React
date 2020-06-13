@@ -8,13 +8,13 @@ export default class MessageComponent extends React.Component {
             <div className="m-2">
                 <h3>Your Messages</h3>
                 <div className="row">
-                <div className="col-3 d-none d-md-inline">
+                <div className="col-3 d-none d-md-inline EB-contact-list">
                     <MessageContactListComponent/>
                 </div>
                 <div className="col-md-9 col-12">
+                    <MessageChatComponent/>
                     <input className="form-control "
                            placeholder="Write your message here"/>
-                    <MessageChatComponent/>
                 </div>
                 </div>
             </div>

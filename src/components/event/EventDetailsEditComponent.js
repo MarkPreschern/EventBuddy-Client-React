@@ -109,7 +109,7 @@ export default class EventDetailsEditComponent extends React.Component {
                 }
                 <div className="row">
                     <div className="col-md-7">
-                        <img src="..." className="img-fluid" alt=""/>
+                        <img src={this.imageurl} className="img-fluid" alt=""/>
                         <p className="text-muted">Photo from EventBrite</p>
                     </div>
                     <div className="col-md-5 align-self-center">
@@ -147,7 +147,7 @@ export default class EventDetailsEditComponent extends React.Component {
                             }
                             {
                                 !this.state.editingDate &&
-                                <li onClick={this.toggleEditLocation}>
+                                <li onClick={this.toggleEditDate}>
                                     <b>Date: </b>
                                     bla bla
                                 </li>
@@ -298,7 +298,7 @@ export default class EventDetailsEditComponent extends React.Component {
                         </div>
                     }
                 </div>
-                <div className="d-flex">
+                <div className="d-flex mt-2">
                     <button className="mr-2 btn btn-success d-block align-items-center">
                         Save
                     </button>

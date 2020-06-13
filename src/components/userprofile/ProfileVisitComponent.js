@@ -7,14 +7,14 @@ export default class ProfileVisitComponent
 
     render() {
         return(
-            <div>
+            <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-3 col-12 mb-3">
                         <img src={this.imageurl}
                              className="rounded EB-profile-pic mb-3"
                              alt=""/>
                         <button className="btn btn-dark d-block align-items-center">
-                            Add friend
+                            Send message
                         </button>
                     </div>
                     <div className="col-sm-8 col-12">

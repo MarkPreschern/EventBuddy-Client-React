@@ -13,7 +13,7 @@ export default class OrganizerProfileComponent extends React.Component {
             editingPhoneNumber: false,
             editingEmail: false,
             editingAddress: false,
-            editingPicture: false,
+            editingImageUrl: false,
             editingCompanyName: false,
             editingCompanyUrl: false,
             editingVenues: false
@@ -42,8 +42,8 @@ export default class OrganizerProfileComponent extends React.Component {
         editingAddress: !this.state.editingAddress
     })
 
-    toggleEditPicture = () => this.setState({
-        editingPicture: !this.state.editingPicture
+    toggleEditImage = () => this.setState({
+        editingImageUrl: !this.state.editingImageUrl
     })
 
     toggleEditCompanyName = () => this.setState({
@@ -61,13 +61,26 @@ export default class OrganizerProfileComponent extends React.Component {
 
     render() {
         return(
-            <div className="">
+            <div className="container-fluid">
                 <div className="row">
                     <h3 className="col-12">Your Profile</h3>
                     <div className="col-sm-3 col-12">
                         <img src={this.imageurl}
+                             onClick={this.toggleEditImage}
                              className="rounded EB-profile-pic mb-3"
                              alt=""/>
+                        {
+                            this.state.editingImageUrl &&
+                            <div className="d-flex mb-2">
+                                <input className="form-control"
+                                       placeholder="Image URL"
+                                       type="text"/>
+                                <button className="btn btn-outline-success"
+                                        onClick={this.toggleEditImage}>
+                                    <i className="fa fa-check"/>
+                                </button>
+                            </div>
+                        }
                     </div>
                     <div className="form-group col-sm-9 col-12">
 
@@ -224,12 +237,6 @@ export default class OrganizerProfileComponent extends React.Component {
                                 </label>
                             }
                         </div>
-
-                        <Link to='/organizer/profile/aaaaaaa'>
-                            <button className="btn btn-outline-success">
-                                View as guest
-                            </button>
-                        </Link>
                     </div>
                 </div>
 
@@ -237,9 +244,11 @@ export default class OrganizerProfileComponent extends React.Component {
                     <div className="row col-12 col-sm-6 d-inline">
                         <div className="d-flex">
                             <h4 className="">Events</h4>
-                            <div className="ml-2 EB-add-circle">
-                                <i className="fa fa-plus"/>
-                            </div>
+                            <Link to='/event/new'>
+                                <div className="ml-2 EB-add-circle">
+                                    <i className="fa fa-plus"/>
+                                </div>
+                            </Link>
                         </div>
                         <div className=" EB-scroll-list">
                             <OPEventListComponent/>
@@ -248,9 +257,11 @@ export default class OrganizerProfileComponent extends React.Component {
                     <div className="row col-12 col-sm-6  d-inline ">
                         <div className="d-flex">
                             <h4 className="">Venues</h4>
-                            <div className="ml-2 EB-add-circle">
-                                <i className="fa fa-plus"/>
-                            </div>
+                            <Link to='/venue/new'>
+                                <div className="ml-2 EB-add-circle">
+                                    <i className="fa fa-plus"/>
+                                </div>
+                            </Link>
                         </div>
                         <div className="EB-scroll-list">
                             <OPVenueListComponent/>

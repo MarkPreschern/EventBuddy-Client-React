@@ -15,7 +15,8 @@ export default class ProfileComponent extends React.Component {
             editingBirthday: false,
             editingGender: false,
             editingUsername: false,
-            editingPassword: false
+            editingPassword: false,
+            editingImageUrl: false
         }
 
         this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
@@ -53,16 +54,33 @@ export default class ProfileComponent extends React.Component {
         editingPassword: !this.state.editingPassword
     })
 
+    toggleEditImage = () => this.setState({
+        editingImageUrl: !this.state.editingImageUrl
+    })
+
 
     render() {
         return(
-            <div className="">
+            <div className="container-fluid">
                 <div className="row">
                 <h3 className="col-12">Your Profile</h3>
                     <div className="col-sm-3 col-12">
                         <img src={this.imageurl}
+                             onClick={this.toggleEditImage}
                              className="rounded EB-profile-pic mb-3"
                              alt=""/>
+                        {
+                            this.state.editingImageUrl &&
+                            <div className="d-flex">
+                                <input className="form-control"
+                                       placeholder="Image URL"
+                                       type="text"/>
+                                <button className="btn btn-outline-success"
+                                        onClick={this.toggleEditImage}>
+                                    <i className="fa fa-check"/>
+                                </button>
+                            </div>
+                        }
                     </div>
                     <div className="form-group col-sm-9 col-12">
                         <div className="d-flex align-items-center">

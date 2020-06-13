@@ -10,6 +10,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: black;
 }
 
 .card-text {
@@ -26,8 +27,9 @@
 }
 
 .EB-contact-img {
-    height: 40%;
-    width: 40%;
+    height: 30%;
+    width: 30%;
+    border-radius: 50%;
 }
 
 @media screen and (min-width: 993px) {

@@ -7,7 +7,7 @@ export default class MenuComponent
         return (
             <div className="">
                 <div className="navbar">
-                    <Link to='/home'>
+                    <Link to='/'>
                         <h1 className="navbar-brand">EventBuddy</h1>
                     </Link>
                     <span className="float-left d-none d-md-inline">

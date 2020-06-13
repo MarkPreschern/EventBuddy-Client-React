@@ -6,6 +6,7 @@ import EventSearchResultComponent from "./EventSearchResultComponent";
 import EventDetailComponent from "./EventDetailComponent";
 import EventService from "../../services/EventService";
 import {selectEvent} from "../../actions/EventActions";
+import EventAddFormComponent from "./EventAddFormComponent";
 
 class EventComponent extends React.Component {
 
@@ -24,6 +25,7 @@ class EventComponent extends React.Component {
         return (
             <div>
                 <Route path="/event/search/" component={EventSearchComponent}/>
+                <Route path="/event/new/" component={EventAddFormComponent}/>
                 <Route path="/event/search/results" component={EventSearchResultComponent}/>
                 <Route path={`/event/${this.props.event._id}`} component={EventDetailComponent}/>
                 <Route path={`/event/external/${this.props.event._id}`} component={EventDetailComponent}/>

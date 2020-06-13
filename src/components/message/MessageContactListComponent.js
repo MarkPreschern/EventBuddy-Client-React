@@ -4,7 +4,7 @@ import ContactCardComponent from "./ContactCardComponent";
 export default class MessageContactListComponent extends React.Component {
     render(){
         return(
-            <div>
+            <div className="">
                 <ContactCardComponent/>
                 <ContactCardComponent/>
                 <ContactCardComponent/>
