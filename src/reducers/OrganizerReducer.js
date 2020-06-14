@@ -1,49 +1,27 @@
 import {
-    GET_ORGANIZERS,
-    CREATE_ORGANIZER,
     DELETE_ORGANIZER,
     UPDATE_ORGANIZER,
     SELECT_ORGANIZER
 } from "../actions/OrganizerActions";
-import {SELECT_EVENT} from "../actions/EventActions";
 
 const initialState = {
     organizer: {_id: -1},
-    organizers: []
 };
 
 const organizerReducer = (state = initialState, action) => {
 
     switch (action.type){
-        case GET_ORGANIZERS:
-            return {
-                organizer: state.organizer,
-                organizers: action.organizers
-            };
-        case CREATE_ORGANIZER:
-            return {
-                organizer: state.organizer,
-                organizers: [
-                    ...state.organizers,
-                    action.newOrganizer
-                ]
-            };
         case UPDATE_ORGANIZER:
             return {
-                organizer: state.organizer,
-                organizers: state.organizers.map(organizer => {
-                    return (organizer._id === action.organizerId) ? action.organizer : organizer
-                })
+                organizer: action.organizer
             };
         case DELETE_ORGANIZER:
             return {
-                organizer: state.organizer,
-                organizers: state.organizers.filter(organizer => organizer._id !== action.organizerId)
+                organizer: {_id: -1}
             };
         case SELECT_ORGANIZER:
             return {
                 organizer: action.organizer,
-                organizers: state.organizers
             };
         default:
             return state

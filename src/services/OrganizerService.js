@@ -11,13 +11,15 @@ export default {
     },
 
     createOrganizer : (organizer) => {
+        console.log(`${API_URL}/organizers/`);
+
         return fetch(`${API_URL}/organizers/`, {
             method: 'POST',
             body: JSON.stringify(organizer),
             headers: {
                 'content-type': 'application/json'
             }
-        }).then(res => {
+        }).then(async res => {
             return res.json();
         }).catch(err => {
             return err;

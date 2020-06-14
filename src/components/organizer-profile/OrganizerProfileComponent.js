@@ -1,72 +1,111 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 import OPEventListComponent from "./OP-EventListComponent";
 import OPVenueListComponent from "./OP-VenueListComponent";
+import {updateOrganizer} from "../../actions/OrganizerActions";
+import OrganizerService from "../../services/OrganizerService";
 
-export default class OrganizerProfileComponent extends React.Component {
+class OrganizerProfileComponent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            organizer: {_id: -1},
+
             editingName: false,
             editingDescription: false,
             editingPhoneNumber: false,
             editingEmail: false,
-            editingAddress: false,
             editingImageUrl: false,
             editingCompanyName: false,
             editingCompanyUrl: false,
-            editingVenues: false
         };
-
-        this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     }
 
-    toggleEditName = () => this.setState({
-        editingName: !this.state.editingName
-    });
+    componentDidMount() {
+        const pathParts = window.location.pathname.split('/');
+        const id = pathParts.pop() || pathParts.pop();
+        OrganizerService.getOrganizer(id).then(data => {
+            if (data.hasOwnProperty("message")) {
+                // TODO: error handling
+            } else {
+                this.setState({organizer: data})
+            }
+        });
+    }
 
-    toggleEditDescription = () => this.setState({
-        editingDescription: !this.state.editingDescription
-    });
+    toggleEditName = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingName) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingName: !this.state.editingName});
+        }
+    };
 
-    toggleEditPhoneNumber = () => this.setState({
-        editingPhoneNumber: !this.state.editingPhoneNumber
-    });
+    toggleEditDescription = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingDescription) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingDescription: !this.state.editingDescription});
+        }
+    };
 
-    toggleEditEmail = () => this.setState({
-        editingEmail: !this.state.editingEmail
-    });
+    toggleEditPhoneNumber = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingPhoneNumber) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingPhoneNumber: !this.state.editingPhoneNumber});
+        }
+    };
 
-    toggleEditAddress = () => this.setState({
-        editingAddress: !this.state.editingAddress
-    });
+    toggleEditEmail = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingEmail) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingEmail: !this.state.editingEmail});
+        }
+    };
 
-    toggleEditImage = () => this.setState({
-        editingImageUrl: !this.state.editingImageUrl
-    });
+    toggleEditImage = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingImageUrl) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingImageUrl: !this.state.editingImageUrl});
+        }
+    };
 
-    toggleEditCompanyName = () => this.setState({
-        editingCompanyName: !this.state.editingCompanyName
-    });
+    toggleEditCompanyName = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingCompanyName) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingCompanyName: !this.state.editingCompanyName});
+        }
+    };
 
-    toggleEditCompanyURL = () => this.setState({
-        editingCompanyUrl: !this.state.editingCompanyUrl
-    });
-
-    toggleEditVenues = () => this.setState({
-        editingVenues: !this.state.editingVenues
-    });
-
+    toggleEditCompanyURL = () => {
+        if (this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id) {
+            if (this.state.editingCompanyUrl) {
+                this.props.updateOrganizer(this.state.organizer);
+            }
+            this.setState({editingCompanyUrl: !this.state.editingCompanyUrl});
+        }
+    };
 
     render() {
         return(
             <div className="container-fluid">
                 <div className="row">
-                    <h3 className="col-12">Your Profile</h3>
+                    <h3 className="col-12">{this.state.organizer.company_name}</h3>
                     <div className="col-sm-3 col-12">
-                        <img src={this.imageurl}
-                             onClick={this.toggleEditImage}
+                        <img src={this.state.organizer.image_url}
+                             onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
                              className="rounded EB-profile-pic mb-3"
                              alt=""/>
                         {
@@ -74,7 +113,9 @@ export default class OrganizerProfileComponent extends React.Component {
                             <div className="d-flex mb-2">
                                 <input className="form-control"
                                        placeholder="Image URL"
-                                       type="text"/>
+                                       type="text"
+                                       value={this.state.organizer.image_url}
+                                       onChange={(event) => this.setState({organizer: {...this.state.organizer, image_url: event.target.value}})}/>
                                 <button className="btn btn-outline-success"
                                         onClick={this.toggleEditImage}>
                                     <i className="fa fa-check"/>
@@ -82,118 +123,8 @@ export default class OrganizerProfileComponent extends React.Component {
                             </div>
                         }
                     </div>
+
                     <div className="form-group col-sm-9 col-12">
-
-                        <div className="d-flex align-items-center">
-                            <label className="mr-2">Username:</label>
-                            {
-                                this.state.editingName &&
-                                <div className="d-flex">
-                                    <input className="form-control"
-                                           placeholder="Username"
-                                           type="text"/>
-                                    <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditName}>
-                                        <i className="fa fa-check"/>
-                                    </button>
-                                </div>
-                            }
-                            {
-                                !this.state.editingName &&
-                                <label onClick={this.toggleEditName}>
-                                    dt-entertainment
-                                </label>
-                            }
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                            <label className="mr-2">Description:</label>
-                            {
-                                this.state.editingDescription &&
-                                <div className="d-flex">
-                                    <input className="form-control"
-                                           placeholder="Description"
-                                           type="text"/>
-                                    <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditDescription}>
-                                        <i className="fa fa-check"/>
-                                    </button>
-                                </div>
-                            }
-                            {
-                                !this.state.editingDescription &&
-                                <label onClick={this.toggleEditDescription}>
-                                    This is a great company
-                                </label>
-                            }
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                            <label className="mr-2">Phone Number:</label>
-                            {
-                                this.state.editingPhoneNumber &&
-                                <div className="d-flex">
-                                    <input className="form-control"
-                                           placeholder="Phone Number"
-                                           type="number"/>
-                                    <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditPhoneNumber}>
-                                        <i className="fa fa-check"/>
-                                    </button>
-                                </div>
-                            }
-                            {
-                                !this.state.editingPhoneNumber &&
-                                <label onClick={this.toggleEditPhoneNumber}>
-                                    6267344242
-                                </label>
-                            }
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                            <label className="mr-2">Email:</label>
-                            {
-                                this.state.editingEmail &&
-                                <div className="d-flex">
-                                    <input className="form-control"
-                                           placeholder="Email"
-                                           type="email"/>
-                                    <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditEmail}>
-                                        <i className="fa fa-check"/>
-                                    </button>
-                                </div>
-                            }
-                            {
-                                !this.state.editingEmail &&
-                                <label onClick={this.toggleEditEmail}>
-                                    dtran@dtran.co
-                                </label>
-                            }
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                            <label className="mr-2">Address:</label>
-                            {
-                                this.state.editingAddress &&
-                                <div className="d-flex">
-                                    <input className="form-control"
-                                           placeholder="Address"
-                                           type="text"/>
-                                    <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditAddress}>
-                                        <i className="fa fa-check"/>
-                                    </button>
-                                </div>
-                            }
-                            {
-                                !this.state.editingAddress &&
-                                <label onClick={this.toggleEditAddress}>
-                                    253 Columbus Ave, Boston, MA
-                                </label>
-                            }
-                        </div>
-
                         <div className="d-flex align-items-center">
                             <label className="mr-2">Company Name:</label>
                             {
@@ -201,7 +132,9 @@ export default class OrganizerProfileComponent extends React.Component {
                                 <div className="d-flex">
                                     <input className="form-control"
                                            placeholder="Company Name"
-                                           type="text"/>
+                                           type="text"
+                                           value={this.state.organizer.company_name}
+                                           onChange={(event) => this.setState({organizer: {...this.state.organizer, company_name: event.target.value}})}/>
                                     <button className="btn btn-outline-success"
                                             onClick={this.toggleEditCompanyName}>
                                         <i className="fa fa-check"/>
@@ -210,33 +143,119 @@ export default class OrganizerProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingCompanyName &&
-                                <label onClick={this.toggleEditCompanyName}>
-                                    Danny Tran Co.
-                                </label>
+                                <label onClick={this.toggleEditCompanyName}>{this.state.organizer.company_name}</label>
                             }
                         </div>
 
                         <div className="d-flex align-items-center">
-                            <label className="mr-2">Company URL:</label>
+                            <label className="mr-2">Username:</label>
                             {
-                                this.state.editingCompanyUrl &&
+                                this.state.editingName &&
                                 <div className="d-flex">
                                     <input className="form-control"
-                                           placeholder="Company URL"
-                                           type="text"/>
+                                           placeholder="Username"
+                                           type="text"
+                                           value={this.state.organizer.username}
+                                           onChange={(event) => this.setState({organizer: {...this.state.organizer, username: event.target.value}})}/>
                                     <button className="btn btn-outline-success"
-                                            onClick={this.toggleEditCompanyURL}>
+                                            onClick={this.toggleEditName}>
                                         <i className="fa fa-check"/>
                                     </button>
                                 </div>
                             }
                             {
-                                !this.state.editingCompanyUrl &&
-                                <label onClick={this.toggleEditCompanyURL}>
-                                    dtran.co
-                                </label>
+                                !this.state.editingName &&
+                                <label onClick={this.toggleEditName}>{this.state.organizer.username}</label>
                             }
                         </div>
+
+                            <div className="d-flex align-items-center">
+                                <label className="mr-2">Description:</label>
+                                {
+                                    this.state.editingDescription &&
+                                    <div className="d-flex">
+                                        <input className="form-control"
+                                               placeholder="Description"
+                                               type="text"
+                                               value={this.state.organizer.description}
+                                               onChange={(event) => this.setState({organizer: {...this.state.organizer, description: event.target.value}})}/>
+                                        <button className="btn btn-outline-success"
+                                                onClick={this.toggleEditDescription}>
+                                            <i className="fa fa-check"/>
+                                        </button>
+                                    </div>
+                                }
+                                {
+                                    !this.state.editingDescription &&
+                                    <label onClick={this.toggleEditDescription}>{this.state.organizer.description}</label>
+                                }
+                            </div>
+
+                            <div className="d-flex align-items-center">
+                                <label className="mr-2">Phone Number:</label>
+                                {
+                                    this.state.editingPhoneNumber &&
+                                    <div className="d-flex">
+                                        <input className="form-control"
+                                               placeholder="Phone Number"
+                                               type="number"
+                                               value={this.state.organizer.phone_number}
+                                               onChange={(event) => this.setState({organizer: {...this.state.organizer, phone_number: event.target.value}})}/>
+                                        <button className="btn btn-outline-success"
+                                                onClick={this.toggleEditPhoneNumber}>
+                                            <i className="fa fa-check"/>
+                                        </button>
+                                    </div>
+                                }
+                                {
+                                    !this.state.editingPhoneNumber &&
+                                    <label onClick={this.toggleEditPhoneNumber}>{this.state.organizer.phone_number}</label>
+                                }
+                            </div>
+
+                            <div className="d-flex align-items-center">
+                                <label className="mr-2">Email:</label>
+                                {
+                                    this.state.editingEmail &&
+                                    <div className="d-flex">
+                                        <input className="form-control"
+                                               placeholder="Email"
+                                               type="email"
+                                               value={this.state.organizer.email}
+                                               onChange={(event) => this.setState({organizer: {...this.state.organizer, email: event.target.value}})}/>
+                                        <button className="btn btn-outline-success"
+                                                onClick={this.toggleEditEmail}>
+                                            <i className="fa fa-check"/>
+                                        </button>
+                                    </div>
+                                }
+                                {
+                                    !this.state.editingEmail &&
+                                    <label onClick={this.toggleEditEmail}>{this.state.organizer.email}</label>
+                                }
+                            </div>
+
+                            <div className="d-flex align-items-center">
+                                <label className="mr-2">Company URL:</label>
+                                {
+                                    this.state.editingCompanyUrl &&
+                                    <div className="d-flex">
+                                        <input className="form-control"
+                                               placeholder="Company URL"
+                                               type="text"
+                                               value={this.state.organizer.company_url}
+                                               onChange={(event) => this.setState({organizer: {...this.state.organizer, company_url: event.target.value}})}/>
+                                        <button className="btn btn-outline-success"
+                                                onClick={this.toggleEditCompanyURL}>
+                                            <i className="fa fa-check"/>
+                                        </button>
+                                    </div>
+                                }
+                                {
+                                    !this.state.editingCompanyUrl &&
+                                    <label onClick={this.toggleEditCompanyURL}>{this.state.organizer.company_url}</label>
+                                }
+                            </div>
                     </div>
                 </div>
 
@@ -278,3 +297,18 @@ export default class OrganizerProfileComponent extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    organizer: state.OrganizerReducer.organizer
+});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        updateOrganizer: async (organizer) => {
+            const data = await OrganizerService.updateOrganizer(organizer._id, organizer);
+            dispatch(updateOrganizer(data))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(OrganizerProfileComponent);

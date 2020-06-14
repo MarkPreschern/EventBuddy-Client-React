@@ -3,8 +3,8 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
-import {createAttendee} from "../actions/AttendeeActions";
-import {createOrganizer} from "../actions/OrganizerActions";
+import {selectAttendee} from "../actions/AttendeeActions";
+import {selectOrganizer} from "../actions/OrganizerActions";
 
 class RegisterComponent extends React.Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class RegisterComponent extends React.Component {
                 phone_number: "",
                 email: "",
                 company_url: "",
-                image_url: "",
+                image_url: ""
             },
             userType: "attendee",
             verifyPassword: ""
@@ -68,7 +68,14 @@ class RegisterComponent extends React.Component {
             } else if (this.state.newAttendee.password.length < 8) {
                 // TODO: error handling
             } else {
-                this.props.createAttendee(this.state.newAttendee);
+                AttendeeService.createAttendee(this.state.newAttendee).then(data => {
+                    if (data.hasOwnProperty("message")) {
+                        // TODO: handle error message
+                    } else {
+                        this.props.selectAttendee(data);
+                        this.props.history.push(`/attendee/profile/${data._id}`)
+                    }
+                });
             }
         } else if (this.state.userType === "organizer") {
             if (this.state.newOrganizer.password !== this.state.verifyPassword) {
@@ -76,7 +83,14 @@ class RegisterComponent extends React.Component {
             } else if (this.state.newOrganizer.password.length < 8) {
                 // TODO: error handling
             } else {
-                this.props.createOrganizer(this.state.newOrganizer);
+                OrganizerService.createOrganizer(this.state.newOrganizer).then(data => {
+                    if (data.hasOwnProperty("message")) {
+                        // TODO: handle error message
+                    } else {
+                        this.props.selectOrganizer(data);
+                        this.props.history.push(`/organizer/profile/${data._id}`)
+                    }
+                });
             }
         }
     };
@@ -220,7 +234,7 @@ class RegisterComponent extends React.Component {
                                 <div className="col-sm-9">
                                     <input className="form-control mb-2"
                                            placeholder="Description"
-                                           type="password"
+                                           type="text"
                                            value={this.state.newOrganizer.description}
                                            onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, description: event.target.value}})}/>
                                 </div>
@@ -263,11 +277,9 @@ class RegisterComponent extends React.Component {
                             </div>
                         }
                 </div>
-                <Link to='/profile'>
-                    <button className="btn btn-dark" onClick={() => this.register()}>
-                        Register
-                    </button>
-                </Link>
+                <button className="btn btn-dark" onClick={() => this.register()}>
+                    Register
+                </button>
                 <Link to='/event/search'>
                     <button className="btn ">
                         Cancel
@@ -282,15 +294,11 @@ const mapStateToProps = state => ({});
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
-        createAttendee: async (attendee) => {
-            const data = await AttendeeService.createAttendee(attendee);
-            // TODO: handle error message
-            dispatch(createAttendee(data))
+        selectAttendee: async (attendee) => {
+            dispatch(selectAttendee(attendee))
         },
-        createOrganizer: async (organizer) => {
-            const data = await OrganizerService.createOrganizer(organizer);
-            // TODO: handle error message
-            dispatch(createOrganizer(data))
+        selectOrganizer: async (organizer) => {
+            dispatch(selectOrganizer(organizer))
         }
     }
 };

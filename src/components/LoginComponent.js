@@ -28,9 +28,23 @@ class LoginComponent extends React.Component {
     // attempts to register user
     login = () => {
         if (this.state.userType === "attendee") {
-            this.props.loginAttendee({username: this.state.username, password: this.state.password});
+            AttendeeService.loginAttendee({username: this.state.username, password: this.state.password}).then(data => {
+                if (data.hasOwnProperty("message")) {
+                    // TODO: handle error message
+                } else {
+                    this.props.loginAttendee(data);
+                    this.props.history.push(`/attendee/profile/${data._id}`)
+                }
+            });
         } else if (this.state.userType === "organizer") {
-            this.props.loginOrganizer({username: this.state.username, password: this.state.password});
+            OrganizerService.loginOrganizer({username: this.state.username, password: this.state.password}).then(data => {
+                if (data.hasOwnProperty("message")) {
+                    // TODO: handle error message
+                } else {
+                    this.props.loginOrganizer(data);
+                    this.props.history.push(`/organizer/profile/${data._id}`)
+                }
+            });
         }
     };
 
@@ -63,11 +77,9 @@ class LoginComponent extends React.Component {
                                onChange={(event) => this.setState({password: event.target.value})}/>
                     </div>
                 </div>
-                <Link to='/event/search'>
                     <button className="btn btn-dark" onClick={() => this.login()}>
                         Login
                     </button>
-                </Link>
                 <Link to='/event/search'>
                     <button className="btn ">
                         Cancel
@@ -82,15 +94,11 @@ const mapStateToProps = state => ({});
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
-        loginAttendee: async (attendee) => {
-            const data = await AttendeeService.loginAttendee(attendee);
-            // TODO: handle error message
-            dispatch(selectAttendee(data))
+        loginAttendee: (attendee) => {
+            dispatch(selectAttendee(attendee))
         },
-        loginOrganizer: async (organizer) => {
-            const data = await OrganizerService.loginOrganizer(organizer);
-            // TODO: handle error message
-            dispatch(selectOrganizer(data))
+        loginOrganizer: (organizer) => {
+            dispatch(selectOrganizer(organizer))
         }
     }
 };
