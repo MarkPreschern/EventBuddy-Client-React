@@ -22,3 +22,9 @@ export const deleteOrganizer = (organizerId) => ({
     type: DELETE_ORGANIZER,
     organizerId: organizerId
 });
+
+export const SELECT_ORGANIZER = "SELECT_ORGANIZER";
+export const selectOrganizer = (organizer) => ({
+    type: SELECT_ORGANIZER,
+    organizer: organizer
+});

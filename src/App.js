@@ -13,8 +13,6 @@ import OrganizerProfileComponent from "./components/organizer-profile/OrganizerP
 import MessageComponent from "./components/message/MessageComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
 import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
-import EventAddFormComponent from "./components/event/EventAddFormComponent";
-import VenueDetailsEditComponent from "./components/venue/VenueDetailsEditComponent";
 
 class App extends React.Component {
 

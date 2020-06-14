@@ -5,7 +5,6 @@ import {
     UPDATE_VENUE,
     SELECT_VENUE
 } from "../actions/VenueActions";
-import {SELECT_EVENT} from "../actions/EventActions";
 
 const initialState = {
     venue: {_id: -1},

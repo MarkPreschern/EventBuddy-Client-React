@@ -1,8 +1,86 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import AttendeeService from "../services/AttendeeService";
+import OrganizerService from "../services/OrganizerService";
+import {createAttendee} from "../actions/AttendeeActions";
+import {createOrganizer} from "../actions/OrganizerActions";
 
-export default class RegisterComponent
-    extends React.Component {
+class RegisterComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            newAttendee: {
+                name: "",
+                username: "",
+                password: "",
+                phone_number: "",
+                email: "",
+                dob: "",
+                gender: "",
+                image_url: ""
+            },
+            newOrganizer: {
+                company_name: "",
+                username: "",
+                password: "",
+                description: "",
+                phone_number: "",
+                email: "",
+                company_url: "",
+                image_url: "",
+            },
+            userType: "attendee",
+            verifyPassword: ""
+        }
+    }
+
+    // transfers duplicate fields
+    userTypeChange = (newUserType) => {
+        if (newUserType === "attendee") {
+            var attendee = {...this.state.newAttendee};
+            const organizer = {...this.state.newOrganizer};
+            attendee.name = organizer.company_name;
+            attendee.username = organizer.username;
+            attendee.password = organizer.password;
+            attendee.phone_number = organizer.phone_number;
+            attendee.email = organizer.email;
+            attendee.image_url = organizer.image_url;
+            this.setState({userType: newUserType, newAttendee: attendee});
+        } else if (newUserType === "organizer") {
+            var organizer = {...this.state.newOrganizer};
+            const attendee = {...this.state.newAttendee};
+            organizer.company_name = attendee.name;
+            organizer.username = attendee.username;
+            organizer.password = attendee.password;
+            organizer.phone_number = attendee.phone_number;
+            organizer.email = attendee.email;
+            organizer.image_url = attendee.image_url;
+            this.setState({userType: newUserType, newOrganizer: organizer});
+        }
+    };
+
+    // attempts to register user
+    register = () => {
+        if (this.state.userType === "attendee") {
+            if (this.state.newAttendee.password !== this.state.verifyPassword) {
+                // TODO: error handling
+            } else if (this.state.newAttendee.password.length < 8) {
+                // TODO: error handling
+            } else {
+                this.props.createAttendee(this.state.newAttendee);
+            }
+        } else if (this.state.userType === "organizer") {
+            if (this.state.newOrganizer.password !== this.state.verifyPassword) {
+                // TODO: error handling
+            } else if (this.state.newOrganizer.password.length < 8) {
+                // TODO: error handling
+            } else {
+                this.props.createOrganizer(this.state.newOrganizer);
+            }
+        }
+    };
+
     render() {
         return (
             <div className="text-center">
@@ -11,61 +89,182 @@ export default class RegisterComponent
                     <label className="col-sm-3 col-form-label">Role</label>
                     <div className="col-sm-9">
                         <select className="form-control mb-2">
-                            <option>Event attendee</option>
-                            <option>Event organizer</option>
+                            <option onClick={() => this.userTypeChange("attendee")}>Event attendee</option>
+                            <option onClick={() => this.userTypeChange("organizer")}>Event organizer</option>
                         </select>
                     </div>
-                    <label className="col-sm-3 col-form-label">Username</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Username"
-                               type="text"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Password</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Password"
-                               type="password"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Verify Password</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Verify password"
-                               type="password"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Full Name</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Full Name"
-                               type="text"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Email</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Email"
-                               type="text"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Phone Number</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               placeholder="Phone Number"
-                               type="text"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Date of Birth</label>
-                    <div className="col-sm-9">
-                        <input className="form-control mb-2"
-                               type="date"/>
-                    </div>
-                    <label className="col-sm-3 col-form-label">Gender</label>
-                    <div className="col-sm-9">
-                        <select className="form-control">
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
-                    </div>
+                        {
+                            this.state.userType === "attendee" &&
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Full Name</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Full Name"
+                                           type="text"
+                                           value={this.state.newAttendee.name}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, name: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Username</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Username"
+                                           type="text"
+                                           value={this.state.newAttendee.username}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, username: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Password</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Password"
+                                           type="password"
+                                           value={this.state.newAttendee.password}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, password: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Verify Password</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Verify password"
+                                           type="password"
+                                           value={this.state.verifyPassword}
+                                           onChange={(event) => this.setState({verifyPassword: event.target.value})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Phone Number</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Phone Number"
+                                           type="text"
+                                           value={this.state.newAttendee.phone_number}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, phone_number: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Email</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Email"
+                                           type="text"
+                                           value={this.state.newAttendee.email}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, email: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Date of Birth</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           type="date"
+                                           value={this.state.newAttendee.dob}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, dob: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Gender</label>
+                                <div className="col-sm-9">
+                                    <select className="form-control">
+                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Male"}})}>Male</option>
+                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Female"}})}>Female</option>
+                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Other"}})}>Other</option>
+                                    </select>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Image URL</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Image URL"
+                                           type="text"
+                                           value={this.state.newAttendee.image_url}
+                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, image_url: event.target.value}})}/>
+                                </div>
+                            </div>
+                        }
+                        {
+                            this.state.userType === "organizer" &&
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label">Company Name</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Company Name"
+                                           type="text"
+                                           value={this.state.newOrganizer.company_name}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, company_name: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Username</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Username"
+                                           type="text"
+                                           value={this.state.newOrganizer.username}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, username: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Password</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Password"
+                                           type="password"
+                                           value={this.state.newOrganizer.password}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, password: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Verify Password</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Verify password"
+                                           type="password"
+                                           value={this.state.verifyPassword}
+                                           onChange={(event) => this.setState({verifyPassword: event.target.value})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Description</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Description"
+                                           type="password"
+                                           value={this.state.newOrganizer.description}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, description: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Phone Number</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Phone Number"
+                                           type="text"
+                                           value={this.state.newOrganizer.phone_number}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, phone_number: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Email</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Email"
+                                           type="text"
+                                           value={this.state.newOrganizer.email}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, email: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Company URL</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Company URL"
+                                           type="password"
+                                           value={this.state.newOrganizer.company_url}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, company_url: event.target.value}})}/>
+                                </div>
+
+                                <label className="col-sm-3 col-form-label">Image URL</label>
+                                <div className="col-sm-9">
+                                    <input className="form-control mb-2"
+                                           placeholder="Image URL"
+                                           type="text"
+                                           value={this.state.newOrganizer.image_url}
+                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, image_url: event.target.value}})}/>
+                                </div>
+                            </div>
+                        }
                 </div>
                 <Link to='/profile'>
-                    <button className="btn btn-dark">
+                    <button className="btn btn-dark" onClick={() => this.register()}>
                         Register
                     </button>
                 </Link>
@@ -78,3 +277,22 @@ export default class RegisterComponent
         )
     }
 }
+
+const mapStateToProps = state => ({});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        createAttendee: async (attendee) => {
+            const data = await AttendeeService.createAttendee(attendee);
+            // TODO: handle error message
+            dispatch(createAttendee(data))
+        },
+        createOrganizer: async (organizer) => {
+            const data = await OrganizerService.createOrganizer(organizer);
+            // TODO: handle error message
+            dispatch(createOrganizer(data))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(RegisterComponent);

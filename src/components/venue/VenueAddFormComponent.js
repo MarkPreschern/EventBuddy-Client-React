@@ -127,4 +127,4 @@ const dispatchToPropertyMapper = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, dispatchToPropertyMapper)(EventAddFormComponent);
+export default connect(mapStateToProps, dispatchToPropertyMapper)(VenueAddFormComponent);

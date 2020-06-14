@@ -22,3 +22,9 @@ export const deleteAttendee = (attendeeId) => ({
     type: DELETE_ATTENDEE,
     attendeeId: attendeeId
 });
+
+export const SELECT_ATTENDEE = "SELECT_ATTENDEE";
+export const selectAttendee = (attendee) => ({
+    type: SELECT_ATTENDEE,
+    attendee: attendee
+});
