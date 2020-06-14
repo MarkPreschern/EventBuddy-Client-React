@@ -1,6 +1,23 @@
 import React from 'react'
+import {connect} from "react-redux";
+import VenueService from "../../services/VenueService";
+import {createVenue} from "../../actions/VenueActions";
 
-export default class VenueAddFormComponent extends React.Component {
+class VenueAddFormComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            newVenue: {
+                name: "",
+                country: "",
+                state: "",
+                city: "",
+                address: "",
+                phone_number: "",
+            }
+        }
+    }
+
     render() {
         return(
             <div className="container-fluid">
@@ -13,7 +30,9 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Venue name"
-                            type="text"/>
+                            type="text"
+                            value={this.state.newVenue.name}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, name: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -25,7 +44,9 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Country"
-                            type="text"/>
+                            type="text"
+                            value={this.state.newVenue.country}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, country: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -37,7 +58,9 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="State"
-                            type="text"/>
+                            type="text"
+                            value={this.state.newVenue.state}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, state: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -49,7 +72,9 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="City"
-                            type="text"/>
+                            type="text"
+                            value={this.state.newVenue.city}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, city: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -61,7 +86,9 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Address"
-                            type="text"/>
+                            type="text"
+                            value={this.state.newVenue.address}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, address: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -73,13 +100,31 @@ export default class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Phone number"
-                            type="number"/>
+                            type="number"
+                            value={this.state.newVenue.phone_number}
+                            onChange={(event) => this.setState({newVenue: {...this.state.newVenue, phone_number: event.target.value}})}/>
                     </div>
                 </div>
 
-                <button className="btn btn-success">Save</button>
+                <button className="btn btn-success"
+                        onClick={this.props.createVenue(this.state.venue)}>
+                    Save
+                </button>
                 <button className="btn btn-danger ml-2">Cancel</button>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        createVenue: async (venue) => {
+            const data = await VenueService.createVenue(venue);
+            dispatch(createVenue(data))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(EventAddFormComponent);

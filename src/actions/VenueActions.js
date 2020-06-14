@@ -22,3 +22,9 @@ export const deleteVenue = (venueId) => ({
     type: DELETE_VENUE,
     venueId: venueId
 });
+
+export const SELECT_VENUE = "SELECT_VENUE";
+export const selectVenue = (venue) => ({
+    type: SELECT_VENUE,
+    venue: venue
+});

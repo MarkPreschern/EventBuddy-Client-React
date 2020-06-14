@@ -3,18 +3,18 @@ import {BrowserRouter, Route} from "react-router-dom";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import EventComponent from "./components/event/EventComponent"
-import ProfileComponent from "./components/userprofile/ProfileComponent";
+import ProfileComponent from "./components/user-profile/ProfileComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
-import ProfileVisitComponent from "./components/userprofile/ProfileVisitComponent";
+import ProfileVisitComponent from "./components/user-profile/ProfileVisitComponent";
 import HomeComponent from "./components/HomeComponent";
 import FooterComponent from "./components/FooterComponent";
-import OrganizerProfileComponent from "./components/organizerprofile/OrganizerProfileComponent";
+import OrganizerProfileComponent from "./components/organizer-profile/OrganizerProfileComponent";
 import MessageComponent from "./components/message/MessageComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
-import VenueAddFormComponent from "./components/VenueAddFormComponent";
+import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
 import EventAddFormComponent from "./components/event/EventAddFormComponent";
-import VenueDetailsEditComponent from "./components/VenueDetailsEditComponent";
+import VenueDetailsEditComponent from "./components/venue/VenueDetailsEditComponent";
 
 class App extends React.Component {
 
@@ -32,7 +32,6 @@ class App extends React.Component {
                         <Route path='/organizer/profile' exact component={OrganizerProfileComponent}/>
                         <Route path='/organizer/event/:eventId' exact component={EventDetailsEditComponent}/>
                         <Route path='/venue/new' exact component={VenueAddFormComponent}/>
-                        <Route path='/venue/:venueId' exact component={VenueDetailsEditComponent}/>
                         <Route path='/login' component={LoginComponent}/>
                         <Route path='/register' component={RegisterComponent}/>
                     </BrowserRouter>

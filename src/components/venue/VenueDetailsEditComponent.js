@@ -19,37 +19,37 @@ export default class VenueDetailsEditComponent extends React.Component {
         this.setState({
             editingVenueName: !this.state.editingVenueName
         })
-    }
+    };
 
     toggleEditCountry = () => {
         this.setState({
             editingCountry: !this.state.editingCountry
         })
-    }
+    };
 
     toggleEditState = () => {
         this.setState({
             editingState: !this.state.editingState
         })
-    }
+    };
 
     toggleEditCity = () => {
         this.setState({
             editingCity: !this.state.editingCity
         })
-    }
+    };
 
     toggleEditAddress = () => {
         this.setState({
             editingAddress: !this.state.editingAddress
         })
-    }
+    };
 
     toggleEditPhoneNumber = () => {
         this.setState({
             editingPhoneNumber: !this.state.editingPhoneNumber
         })
-    }
+    };
 
     render() {
         return (

@@ -17,46 +17,46 @@ export default class OrganizerProfileComponent extends React.Component {
             editingCompanyName: false,
             editingCompanyUrl: false,
             editingVenues: false
-        }
+        };
 
         this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     }
 
     toggleEditName = () => this.setState({
         editingName: !this.state.editingName
-    })
+    });
 
     toggleEditDescription = () => this.setState({
         editingDescription: !this.state.editingDescription
-    })
+    });
 
     toggleEditPhoneNumber = () => this.setState({
         editingPhoneNumber: !this.state.editingPhoneNumber
-    })
+    });
 
     toggleEditEmail = () => this.setState({
         editingEmail: !this.state.editingEmail
-    })
+    });
 
     toggleEditAddress = () => this.setState({
         editingAddress: !this.state.editingAddress
-    })
+    });
 
     toggleEditImage = () => this.setState({
         editingImageUrl: !this.state.editingImageUrl
-    })
+    });
 
     toggleEditCompanyName = () => this.setState({
         editingCompanyName: !this.state.editingCompanyName
-    })
+    });
 
     toggleEditCompanyURL = () => this.setState({
         editingCompanyUrl: !this.state.editingCompanyUrl
-    })
+    });
 
     toggleEditVenues = () => this.setState({
         editingVenues: !this.state.editingVenues
-    })
+    });
 
 
     render() {
