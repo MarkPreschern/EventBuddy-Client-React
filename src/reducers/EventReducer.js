@@ -29,7 +29,7 @@ const eventReducer = (state = initialState, action) => {
             };
         case UPDATE_EVENT:
             return {
-                event: state.event,
+                event: action.event,
                 events: state.events.map(event => {
                     return (event._id === action.eventId) ? action.event : event
                 })

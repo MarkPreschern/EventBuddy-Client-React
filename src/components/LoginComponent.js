@@ -32,6 +32,9 @@ class LoginComponent extends React.Component {
                 if (data.hasOwnProperty("message")) {
                     // TODO: handle error message
                 } else {
+                    window.sessionStorage.setItem("userType", JSON.stringify("attendee") + ',');
+                    window.sessionStorage.setItem("username", JSON.stringify(this.state.username) + ',');
+                    window.sessionStorage.setItem("password", JSON.stringify(this.state.password) + ',');
                     this.props.loginAttendee(data);
                     this.props.history.push(`/attendee/profile/${data._id}`)
                 }
@@ -41,6 +44,9 @@ class LoginComponent extends React.Component {
                 if (data.hasOwnProperty("message")) {
                     // TODO: handle error message
                 } else {
+                    window.sessionStorage.setItem("userType", "organizer");
+                    window.sessionStorage.setItem("username", this.state.username);
+                    window.sessionStorage.setItem("password", this.state.password);
                     this.props.loginOrganizer(data);
                     this.props.history.push(`/organizer/profile/${data._id}`)
                 }

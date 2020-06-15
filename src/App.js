@@ -1,5 +1,6 @@
 import React from "react";
 import {BrowserRouter, Route} from "react-router-dom";
+import {connect} from "react-redux";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import EventComponent from "./components/event/EventComponent"
@@ -12,8 +13,38 @@ import OrganizerProfileComponent from "./components/organizer-profile/OrganizerP
 import MessageComponent from "./components/message/MessageComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
 import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
+import AttendeeService from "./services/AttendeeService";
+import OrganizerService from "./services/OrganizerService";
+import {selectAttendee} from "./actions/AttendeeActions";
+import {selectOrganizer} from "./actions/OrganizerActions";
 
 class App extends React.Component {
+
+    // attempts to login user if possible via sessionStorage
+    componentDidMount() {
+        if (window.sessionStorage.hasOwnProperty("userType")) {
+            const userType = window.sessionStorage.getItem("userType").replace(/"/g, "").replace(",", "");
+            const args = {
+                username: window.sessionStorage.getItem("username").replace(/"/g, "").replace(",", ""),
+                password: window.sessionStorage.getItem("password").replace(/"/g, "").replace(",", "")
+            };
+            if (userType === "attendee") {
+                AttendeeService.loginAttendee(args)
+                    .then(data => {
+                    if (!data.hasOwnProperty("message")) {
+                        this.props.loginAttendee(data);
+                    }
+                });
+            } else if (userType === "organizer") {
+                OrganizerService.loginOrganizer(args)
+                    .then(data => {
+                    if (!data.hasOwnProperty("message")) {
+                        this.props.loginOrganizer(data);
+                    }
+                });
+            }
+        }
+    }
 
     render() {
         return (
@@ -38,4 +69,17 @@ class App extends React.Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => ({});
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        loginAttendee: (attendee) => {
+            dispatch(selectAttendee(attendee))
+        },
+        loginOrganizer: (organizer) => {
+            dispatch(selectOrganizer(organizer))
+        }
+    }
+};
+
+export default connect(mapStateToProps, dispatchToPropertyMapper)(App);

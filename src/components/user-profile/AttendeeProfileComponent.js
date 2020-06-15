@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import UPEventListComponent from "./UP-EventListComponent";
 import UPMessageListComponent from "./UP-MessageListComponent";
 import AttendeeService from "../../services/AttendeeService";
-import {selectAttendee, updateAttendee} from "../../actions/AttendeeActions";
+import {updateAttendee} from "../../actions/AttendeeActions";
+import {resetAction} from "../../actions/RootActions";
 
 class AttendeeProfileComponent extends React.Component {
     constructor(props) {
@@ -20,8 +21,6 @@ class AttendeeProfileComponent extends React.Component {
             editingUsername: false,
             editingImageUrl: false
         };
-
-        this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     }
 
     componentDidMount() {
@@ -199,27 +198,36 @@ class AttendeeProfileComponent extends React.Component {
                 </div>
 
                 <div className="row mb-3 ">
-                    <div className="row col-sm-6 col-12 d-inline">
-                        <h4>Liked events</h4>
-                        <div className="EB-scroll-list">
-                            <UPEventListComponent/>
+                    {
+                        this.props.attendee.hasOwnProperty("events_liked") && this.props.attendee.events_liked.length > 0 &&
+                        <div className="row col-sm-6 col-12 d-inline">
+                            <h4>Liked events</h4>
+                            <div className="EB-scroll-list">
+                                <UPEventListComponent/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row col-sm-6 col-12 d-inline">
-                        <Link to="/messages">
-                            <h4>Messages</h4>
-                        </Link>
-                        <div className="EB-scroll-list">
-                            <UPMessageListComponent/>
+                    }
+                    {
+                        this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                        this.props.attendee.hasOwnProperty("messages") && this.props.attendee.messages.length > 0 &&
+                        <div className="row col-sm-6 col-12 d-inline">
+                            <Link to="/messages">
+                                <h4>Messages</h4>
+                            </Link>
+                            <div className="EB-scroll-list">
+                                <UPMessageListComponent/>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-
-                <Link to='/event/search'>
-                    <button className="btn btn-dark mt-3">
-                        Logout
-                    </button>
-                </Link>
+                {
+                    this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                    <Link to='/event/search'>
+                        <button className="btn btn-dark mt-3" onClick={() => this.props.resetState()}>
+                            Logout
+                        </button>
+                    </Link>
+                }
             </div>
         )
     }
@@ -234,6 +242,10 @@ const dispatchToPropertyMapper = (dispatch) => {
         updateAttendee: async (attendee) => {
             const data = await AttendeeService.updateAttendee(attendee._id, attendee);
             dispatch(updateAttendee(data))
+        },
+        resetState: () => {
+            window.sessionStorage.clear();
+            dispatch(resetAction())
         }
     }
 };

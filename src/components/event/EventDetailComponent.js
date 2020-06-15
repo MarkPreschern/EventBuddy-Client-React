@@ -1,6 +1,10 @@
 import React from 'react'
-import {selectEvent} from "../../actions/EventActions";
+import {selectEvent, updateEvent} from "../../actions/EventActions";
 import {connect} from "react-redux";
+import EventService from "../../services/EventService";
+import AttendeeService from "../../services/AttendeeService";
+import {updateAttendee} from "../../actions/AttendeeActions";
+import VenueService from "../../services/VenueService";
 
 class EventDetailComponent extends React.Component {
 
@@ -33,6 +37,55 @@ class EventDetailComponent extends React.Component {
         return this.props.event.pleaseNote === undefined ? "d-none" : "";
     };
 
+    likeEvent = async () => {
+        try {
+            let event = this.props.event;
+            const attendee = this.props.attendee;
+
+            // create event first if needed
+            if (event.external && !event.integrated) {
+                event.venue = await this.createVenue(event.venue);
+                event = await this.createEvent(event);
+                this.likeEventHelper(event, attendee);
+            } else {
+                this.likeEventHelper(event, attendee);
+            }
+        } catch (e) {
+            // TODO: error handling
+        }
+    };
+
+    likeEventHelper = (event, attendee) => {
+        // likes event
+        Promise.all([EventService.addEventAttendee(event._id, attendee._id), AttendeeService.addLikedEvent(attendee._id, event._id)])
+            .then(values => {
+                const response1 = values[0];
+                const response2 = values[1];
+
+                const ok1 = !response1.hasOwnProperty('message');
+                const ok2 = !response2.hasOwnProperty('message');
+
+                if (ok1 && ok2) {
+                    AttendeeService.getAttendee(attendee._id).then(data => this.props.updateAttendee(data));
+                    EventService.getEvent(event._id).then(data => this.props.updateEvent(data));
+                    this.props.history.push(`/event/${event._id}`)
+                } else {
+                    // TODO: error handling
+                }
+            });
+    };
+
+    createEvent = async (event) => {
+        delete event._id;
+        event.integrated = true;
+        const data = await EventService.createEvent(event);
+        this.props.selectEvent(data);
+        return data;
+    };
+
+    createVenue = async (venue) => {
+        return await VenueService.createVenue(-1, venue);
+    };
 
     render() {
         return (
@@ -61,9 +114,13 @@ class EventDetailComponent extends React.Component {
                                 <b>Tickets: </b>
                                 <a href={this.props.event.url}>Click here!</a>
                             </li>
-                            <button className="btn btn-dark d-block align-items-center">
-                                Like event
-                            </button>
+                            {
+                                this.props.attendee._id !== -1 &&
+                                <button className="btn btn-dark d-block align-items-center"
+                                        onClick={() => this.likeEvent()}>
+                                    Like event
+                                </button>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -93,14 +150,21 @@ class EventDetailComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    event: state.EventReducer.event
+    event: state.EventReducer.event,
+    attendee: state.AttendeeReducer.attendee
 });
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
         selectEvent: (event) => {
             dispatch(selectEvent(event))
-        }
+        },
+        updateEvent: (event) => {
+            dispatch(updateEvent(event._id, event))
+        },
+        updateAttendee: (attendee) => {
+            dispatch(updateAttendee(attendee))
+        },
     }
 };
 

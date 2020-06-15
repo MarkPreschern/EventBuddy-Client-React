@@ -5,6 +5,7 @@ import OPEventListComponent from "./OP-EventListComponent";
 import OPVenueListComponent from "./OP-VenueListComponent";
 import {updateOrganizer} from "../../actions/OrganizerActions";
 import OrganizerService from "../../services/OrganizerService";
+import {resetAction} from "../../actions/RootActions";
 
 class OrganizerProfileComponent extends React.Component {
     constructor(props) {
@@ -287,12 +288,14 @@ class OrganizerProfileComponent extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <Link to='/event/search'>
-                    <button className="btn btn-dark mt-3">
-                        Logout
-                    </button>
-                </Link>
+                {
+                    this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                    <Link to='/event/search'>
+                        <button className="btn btn-dark mt-3" onClick={() => this.props.resetState()}>
+                            Logout
+                        </button>
+                    </Link>
+                }
             </div>
         )
     }
@@ -307,6 +310,10 @@ const dispatchToPropertyMapper = (dispatch) => {
         updateOrganizer: async (organizer) => {
             const data = await OrganizerService.updateOrganizer(organizer._id, organizer);
             dispatch(updateOrganizer(data))
+        },
+        resetState: () => {
+            window.sessionStorage.clear();
+            dispatch(resetAction())
         }
     }
 };

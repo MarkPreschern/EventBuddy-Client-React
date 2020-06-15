@@ -1,17 +1,11 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
-export default class UPEventItemComponent
-    extends React.Component {
-    imageurl='https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+const UPEventItemComponent = (props) =>
+    <div className="">
+        <Link to={(props.event.external && !props.event.integrated) ? `/event/external/${props.event._id}` : `/event/${props.event._id}`}>
+            <img src={props.event.image_url} className="rounded EB-item-pic" alt=""/>
+        </Link>
+    </div>;
 
-    render() {
-        return(
-            <div className="">
-                <Link to='/event/external/eventId'>
-                    <img src={this.imageurl} className="rounded EB-item-pic" alt=""/>
-                </Link>
-            </div>
-        )
-    }
-}
+export default UPEventItemComponent;

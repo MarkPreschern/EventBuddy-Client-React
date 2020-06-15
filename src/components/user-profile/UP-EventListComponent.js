@@ -1,14 +1,18 @@
 import React from 'react'
+import {connect} from "react-redux";
 import UPEventItemComponent from "./UP-EventItemComponent";
 
-export default class UPEventListComponent
-    extends React.Component {
-    render() {
-        return(
-            <div className="row">
-                <UPEventItemComponent/>
-                <UPEventItemComponent/>
-            </div>
-        )
+const UPEventListComponent = (props) =>
+    <div className="row">{
+        props.attendee.hasOwnProperty("events_liked") &&
+        props.attendee.events_liked.map(event => {
+            return <UPEventItemComponent event={event}/>
+        })
     }
-}
+    </div>;
+
+const mapStateToProps = state => ({
+    attendee: state.AttendeeReducer.attendee
+});
+
+export default connect(mapStateToProps)(UPEventListComponent);
