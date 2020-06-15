@@ -6,7 +6,7 @@ const UPEventListComponent = (props) =>
     <div className="row">{
         props.attendee.hasOwnProperty("events_liked") &&
         props.attendee.events_liked.map(event => {
-            return <UPEventItemComponent event={event}/>
+            return <UPEventItemComponent key={event._id} event={event}/>
         })
     }
     </div>;

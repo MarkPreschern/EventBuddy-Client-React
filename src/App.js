@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import EventComponent from "./components/event/EventComponent"
-import AttendeeProfileComponent from "./components/user-profile/AttendeeProfileComponent";
+import AttendeeProfileComponent from "./components/attendee-profile/AttendeeProfileComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import HomeComponent from "./components/HomeComponent";
@@ -29,15 +29,13 @@ class App extends React.Component {
                 password: window.sessionStorage.getItem("password").replace(/"/g, "").replace(",", "")
             };
             if (userType === "attendee") {
-                AttendeeService.loginAttendee(args)
-                    .then(data => {
+                AttendeeService.loginAttendee(args).then(data => {
                     if (!data.hasOwnProperty("message")) {
                         this.props.loginAttendee(data);
                     }
                 });
             } else if (userType === "organizer") {
-                OrganizerService.loginOrganizer(args)
-                    .then(data => {
+                OrganizerService.loginOrganizer(args).then(data => {
                     if (!data.hasOwnProperty("message")) {
                         this.props.loginOrganizer(data);
                     }
@@ -75,6 +73,7 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         loginAttendee: (attendee) => {
             dispatch(selectAttendee(attendee))
+
         },
         loginOrganizer: (organizer) => {
             dispatch(selectOrganizer(organizer))

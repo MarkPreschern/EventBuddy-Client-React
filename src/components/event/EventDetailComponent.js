@@ -14,7 +14,7 @@ class EventDetailComponent extends React.Component {
         }
 
         const venue = this.props.event.venue;
-        return venue.name + " " + venue.city + ", " + venue.state === undefined ? venue.country : venue.state;
+        return `${venue.name} ${venue.city}, ${venue.state === undefined ? venue.country : venue.state}`;
     };
 
     renderDescription = () => {
@@ -104,11 +104,7 @@ class EventDetailComponent extends React.Component {
                             </li>
                             <li>
                                 <b>Date: </b>
-                                {this.props.event.start_date}
-                            </li>
-                            <li>
-                                <b>Doors open: </b>
-                                {this.props.event.start_date}
+                                {this.props.event.start_date.split("T")[0]}
                             </li>
                             <li>
                                 <b>Tickets: </b>

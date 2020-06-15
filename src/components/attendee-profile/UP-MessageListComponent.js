@@ -6,7 +6,7 @@ const UPMessageListComponent = (props) =>
     <div className="row">{
         props.attendee.hasOwnProperty("messages") &&
         props.attendee.messages.map(message => {
-            return <UPMessageItemComponent message={message}/>
+            return <UPMessageItemComponent key={message._id} message={message}/>
         })
     }
     </div>;

@@ -1,8 +1,9 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import EventService from "../../services/EventService";
-import {createEvent} from "../../actions/EventActions";
 import {connect} from "react-redux";
+import EventService from "../../services/EventService";
+import {updateOrganizer} from "../../actions/OrganizerActions";
+import OrganizerService from "../../services/OrganizerService";
 
 class EventAddFormComponent extends React.Component {
     constructor(props) {
@@ -21,10 +22,28 @@ class EventAddFormComponent extends React.Component {
                 external: false,
                 integrated: true,
                 venue: -1,
-                organizer: this.props.organizer
             }
         }
     }
+
+    createEvent = async () => {
+        try {
+            let event = this.state.newEvent;
+            event.organizer = this.props.organizer;
+            const data = await EventService.createEvent(event);
+            if (data.hasOwnProperty("message")) {
+                // TODO: error handling
+            } else {
+                let organizer = this.props.organizer;
+                organizer.events.push(data);
+                await OrganizerService.updateOrganizer(organizer._id, organizer);
+                this.props.updateOrganizer(organizer);
+                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+            }
+        } catch (e) {
+            // TODO: error handling
+        }
+    };
 
     render() {
         return(
@@ -52,8 +71,8 @@ class EventAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             type="date"
-                            value={this.state.newEvent.date}
-                            onChange={(event) => this.setState({newEvent: {...this.state.newEvent, date: event.target.value}})}/>
+                            value={this.state.newEvent.start_date}
+                            onChange={(event) => this.setState({newEvent: {...this.state.newEvent, start_date: event.target.value}})}/>
                     </div>
                 </div>
 
@@ -63,8 +82,12 @@ class EventAddFormComponent extends React.Component {
                             Venue:
                         </label>
                         <select className="col-md-10 col-12 form-control">
-                            <option>Venue A</option>
-                            <option>Venue B</option>
+                            {
+                                this.props.organizer.hasOwnProperty("venues") &&
+                                this.props.organizer.venues.map(venue => {
+                                    return <option key={venue._id} onClick={() => this.setState({newEvent: {...this.state.newEvent, venue: venue}})}>{venue.name}</option>
+                                })
+                            }
                         </select>
                     </div>
                 </div>
@@ -77,7 +100,7 @@ class EventAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Ticket URL"
-                            type="url"
+                            type="text"
                             value={this.state.newEvent.url}
                             onChange={(event) => this.setState({newEvent: {...this.state.newEvent, url: event.target.value}})}/>
                     </div>
@@ -167,11 +190,10 @@ class EventAddFormComponent extends React.Component {
                     </div>
                 </div>
 
-                <button className="btn btn-success"
-                        onClick={() => this.props.createEvent(this.state.event)}>
+                <button className="btn btn-success" onClick={() => this.createEvent()}>
                     Save
                 </button>
-                <Link to="/organizer/profile">
+                <Link to={`/organizer/profile/${this.props.organizer._id}`}>
                     <button className="btn btn-danger ml-2">Cancel</button>
                 </Link>
             </div>
@@ -185,9 +207,8 @@ const mapStateToProps = state => ({
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
-        createEvent: async (event) => {
-            const data = await EventService.createEvent(event);
-            dispatch(createEvent(data))
+        updateOrganizer: (organizer) => {
+            dispatch(updateOrganizer(organizer))
         }
     }
 };

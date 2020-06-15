@@ -16,7 +16,7 @@ export default class EventDetailsEditComponent extends React.Component {
             editingTicketLimit: false,
             editingNote: false,
             editingPicture: false
-        }
+        };
 
         this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     }
@@ -25,67 +25,67 @@ export default class EventDetailsEditComponent extends React.Component {
         this.setState({
             editingName: !this.state.editingName
         })
-    }
+    };
 
     toggleEditLocation = () => {
         this.setState({
             editingLocation: !this.state.editingLocation
         })
-    }
+    };
 
     toggleEditDate = () => {
         this.setState({
             editingDate: !this.state.editingDate
         })
-    }
+    };
 
     toggleEditDoorsOpen = () => {
         this.setState({
             editingDoorsOpen: !this.state.editingDoorsOpen
         })
-    }
+    };
 
     toggleEditTicketLink = () => {
         this.setState({
             editingTicketLink: !this.state.editingTicketLink
         })
-    }
+    };
 
     toggleEditDescription = () => {
         this.setState({
             editingDescription: !this.state.editingDescription
         })
-    }
+    };
 
     toggleEditInformation = () => {
         this.setState({
             editingInformation: !this.state.editingInformation
         })
-    }
+    };
 
     toggleEditAccessibility = () => {
         this.setState({
             editingAccessibility: !this.state.editingAccessibility
         })
-    }
+    };
 
     toggleEditTicketLimit = () => {
         this.setState({
             editingTicketLimit: !this.state.editingTicketLimit
         })
-    }
+    };
 
     toggleEditNote = () => {
         this.setState({
             editingNote: !this.state.editingNote
         })
-    }
+    };
 
     toggleEditPicture = () => {
         this.setState({
             editingPicture: !this.state.editingPicture
         })
-    }
+    };
 
     render() {
         return (

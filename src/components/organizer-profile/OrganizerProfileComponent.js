@@ -28,7 +28,7 @@ class OrganizerProfileComponent extends React.Component {
         const pathParts = window.location.pathname.split('/');
         const id = pathParts.pop() || pathParts.pop();
         OrganizerService.getOrganizer(id).then(data => {
-            if (data.hasOwnProperty("message")) {
+            if (data === null || data.hasOwnProperty("message")) {
                 // TODO: error handling
             } else {
                 this.setState({organizer: data})
@@ -289,7 +289,7 @@ class OrganizerProfileComponent extends React.Component {
                     </div>
                 </div>
                 {
-                    this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                    this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
                     <Link to='/event/search'>
                         <button className="btn btn-dark mt-3" onClick={() => this.props.resetState()}>
                             Logout

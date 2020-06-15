@@ -4,26 +4,21 @@ import {connect} from "react-redux";
 import VenueDetailsEditComponent from "../venue/VenueDetailsEditComponent";
 import {selectVenue} from "../../actions/VenueActions";
 
-class OPVenueListComponent extends React.Component {
-    render() {
-        return(
-            <div>
-                <Route path={`/venue/${this.props.venue._id}`} exact component={VenueDetailsEditComponent}/>
-                <div className="row EB-scroll-list">{
-                    this.props.venues.map(venue =>
-                                              <Link to={`/venue/${venue._id}`}
-                                                    onClick={() => this.props.selectVenue(venue)}>
-                                                  {venue.name}
-                                              </Link>)}
-                </div>
-            </div>
-        )
-    }
-}
+const OPVenueListComponent = (props) =>
+    <div>
+        <Route path={`/venue/${props.venue._id}`} exact component={VenueDetailsEditComponent}/>
+        <div className="row EB-scroll-list">{
+            props.organizer.hasOwnProperty("venues") &&
+            props.organizer.venues.map(venue =>
+                 <Link to={`/venue/${venue._id}`} key={venue._id} onClick={() => props.selectVenue(venue)}>
+                     {venue.name}
+                 </Link>)}
+        </div>
+    </div>;
 
 const mapStateToProps = state => ({
     venue: state.VenueReducer.venue,
-    venues: state.VenueReducer.venues
+    organizer: state.OrganizerReducer.organizer
 });
 
 const dispatchToPropertyMapper = (dispatch) => {

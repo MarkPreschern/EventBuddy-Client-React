@@ -1,7 +1,8 @@
 import React from 'react'
+import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import VenueService from "../../services/VenueService";
-import {createVenue} from "../../actions/VenueActions";
+import {updateOrganizer} from "../../actions/OrganizerActions";
 
 class VenueAddFormComponent extends React.Component {
     constructor(props) {
@@ -17,6 +18,22 @@ class VenueAddFormComponent extends React.Component {
             }
         }
     }
+
+    createVenue = async () => {
+        try {
+            const data = await VenueService.createVenue(this.props.organizer._id, this.state.newVenue);
+            if (data.hasOwnProperty("message")) {
+                // TODO: error handling
+            } else {
+                let organizer = this.props.organizer;
+                organizer.venues.push(data);
+                this.props.updateOrganizer(organizer);
+                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+            }
+        } catch (e) {
+            // TODO: error handling
+        }
+    };
 
     render() {
         return(
@@ -100,29 +117,31 @@ class VenueAddFormComponent extends React.Component {
                         <input
                             className="col-md-10 col-12 form-control"
                             placeholder="Phone number"
-                            type="number"
+                            type="text"
                             value={this.state.newVenue.phone_number}
                             onChange={(event) => this.setState({newVenue: {...this.state.newVenue, phone_number: event.target.value}})}/>
                     </div>
                 </div>
 
-                <button className="btn btn-success"
-                        onClick={this.props.createVenue(this.state.venue)}>
+                <button className="btn btn-success" onClick={() => this.createVenue()}>
                     Save
                 </button>
-                <button className="btn btn-danger ml-2">Cancel</button>
+                <Link to={`/organizer/profile/${this.props.organizer._id}`}>
+                    <button className="btn btn-danger ml-2">Cancel</button>
+                </Link>
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    organizer: state.OrganizerReducer.organizer
+});
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
-        createVenue: async (venue) => {
-            const data = await VenueService.createVenue(venue);
-            dispatch(createVenue(data))
+        updateOrganizer: async (organizer) => {
+            dispatch(updateOrganizer(organizer))
         }
     }
 };
