@@ -190,3 +190,11 @@ a {
     display: block;
 
 }
+
+.EB-pencil {
+    margin-left: 10px;
+}
+
+.EB-pencil:hover {
+    cursor: pointer;
+}

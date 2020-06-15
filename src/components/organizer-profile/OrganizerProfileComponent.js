@@ -144,7 +144,12 @@ class OrganizerProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingCompanyName &&
-                                <label onClick={this.toggleEditCompanyName}>{this.state.organizer.company_name}</label>
+                                <label onClick={this.toggleEditCompanyName}>
+                                    {this.state.organizer.company_name}
+                                    {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
 
@@ -166,7 +171,12 @@ class OrganizerProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingName &&
-                                <label onClick={this.toggleEditName}>{this.state.organizer.username}</label>
+                                <label onClick={this.toggleEditName}>
+                                    {this.state.organizer.username}
+                                    {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
 
@@ -188,7 +198,12 @@ class OrganizerProfileComponent extends React.Component {
                                 }
                                 {
                                     !this.state.editingDescription &&
-                                    <label onClick={this.toggleEditDescription}>{this.state.organizer.description}</label>
+                                    <label onClick={this.toggleEditDescription}>
+                                        {this.state.organizer.description}
+                                        {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                         <i className="fa fa-pencil EB-pencil"/>
+                                        }
+                                    </label>
                                 }
                             </div>
 
@@ -210,7 +225,12 @@ class OrganizerProfileComponent extends React.Component {
                                 }
                                 {
                                     !this.state.editingPhoneNumber &&
-                                    <label onClick={this.toggleEditPhoneNumber}>{this.state.organizer.phone_number}</label>
+                                    <label onClick={this.toggleEditPhoneNumber}>
+                                        {this.state.organizer.phone_number}
+                                        {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                         <i className="fa fa-pencil EB-pencil"/>
+                                        }
+                                    </label>
                                 }
                             </div>
 
@@ -232,7 +252,12 @@ class OrganizerProfileComponent extends React.Component {
                                 }
                                 {
                                     !this.state.editingEmail &&
-                                    <label onClick={this.toggleEditEmail}>{this.state.organizer.email}</label>
+                                    <label onClick={this.toggleEditEmail}>
+                                        {this.state.organizer.email}
+                                        {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                         <i className="fa fa-pencil EB-pencil"/>
+                                        }
+                                    </label>
                                 }
                             </div>
 
@@ -254,7 +279,12 @@ class OrganizerProfileComponent extends React.Component {
                                 }
                                 {
                                     !this.state.editingCompanyUrl &&
-                                    <label onClick={this.toggleEditCompanyURL}>{this.state.organizer.company_url}</label>
+                                    <label onClick={this.toggleEditCompanyURL}>
+                                        {this.state.organizer.company_url}
+                                        {this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                         <i className="fa fa-pencil EB-pencil"/>
+                                        }
+                                    </label>
                                 }
                             </div>
                     </div>

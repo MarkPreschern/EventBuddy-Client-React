@@ -15,10 +15,11 @@ class AttendeeProfileComponent extends React.Component {
             attendee: {_id: -1},
 
             editingName: false,
-            editingAddress: false,
+            editingUsername: false,
+            editingPhoneNumber: false,
+            editingEmail: false,
             editingBirthday: false,
             editingGender: false,
-            editingUsername: false,
             editingImageUrl: false
         };
     }
@@ -44,6 +45,33 @@ class AttendeeProfileComponent extends React.Component {
         }
     };
 
+    toggleEditUsername = () => {
+        if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
+            if (this.state.editingUsername) {
+                this.props.updateAttendee(this.state.attendee);
+            }
+            this.setState({editingUsername: !this.state.editingUsername});
+        }
+    };
+
+    toggleEditPhoneNumber = () => {
+        if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
+            if (this.state.editingPhoneNumber) {
+                this.props.updateAttendee(this.state.attendee);
+            }
+            this.setState({editingPhoneNumber: !this.state.editingPhoneNumber});
+        }
+    };
+
+    toggleEditEmail = () => {
+        if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
+            if (this.state.editingEmail) {
+                this.props.updateAttendee(this.state.attendee);
+            }
+            this.setState({editingEmail: !this.state.editingEmail});
+        }
+    };
+
     toggleEditBirthday = () => {
         if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
             if (this.state.editingBirthday) {
@@ -59,15 +87,6 @@ class AttendeeProfileComponent extends React.Component {
                 this.props.updateAttendee(this.state.attendee);
             }
             this.setState({editingGender: !this.state.editingGender});
-        }
-    };
-
-    toggleEditUsername = () => {
-        if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
-            if (this.state.editingUsername) {
-                this.props.updateAttendee(this.state.attendee);
-            }
-            this.setState({editingUsername: !this.state.editingUsername});
         }
     };
 
@@ -125,7 +144,12 @@ class AttendeeProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingName &&
-                                <label onClick={this.toggleEditName}>{this.state.attendee.name}</label>
+                                <label onClick={this.toggleEditName}>
+                                    {this.state.attendee.name}
+                                    {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
 
@@ -147,9 +171,72 @@ class AttendeeProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingUsername &&
-                                <label onClick={this.toggleEditUsername}>{this.state.attendee.username}</label>
+                                <label onClick={this.toggleEditUsername}>
+                                    {this.state.attendee.username}
+                                    {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
+
+                        {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                         <div className="d-flex align-items-center">
+                             <label className="mr-2">Phone Number:</label>
+                             {
+                                 this.state.editingPhoneNumber &&
+                                 <div className="d-flex">
+                                     <input className="form-control"
+                                            placeholder="Username"
+                                            type="text"
+                                            value={this.state.attendee.phone_number}
+                                            onChange={(event) => this.setState({attendee: {...this.state.attendee, phone_number: event.target.value}})}/>
+                                     <button className="btn btn-outline-success"
+                                             onClick={this.toggleEditPhoneNumber}>
+                                         <i className="fa fa-check"/>
+                                     </button>
+                                 </div>
+                             }
+                             {
+                                 !this.state.editingPhoneNumber &&
+                                 <label onClick={this.toggleEditPhoneNumber}>
+                                     {this.state.attendee.phone_number}
+                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                      <i className="fa fa-pencil EB-pencil"/>
+                                     }
+                                 </label>
+                             }
+                         </div>
+                        }
+
+                        {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                         <div className="d-flex align-items-center">
+                             <label className="mr-2">Email:</label>
+                             {
+                                 this.state.editingEmail &&
+                                 <div className="d-flex">
+                                     <input className="form-control"
+                                            placeholder="Username"
+                                            type="text"
+                                            value={this.state.attendee.email}
+                                            onChange={(event) => this.setState({attendee: {...this.state.attendee, email: event.target.value}})}/>
+                                     <button className="btn btn-outline-success"
+                                             onClick={this.toggleEditEmail}>
+                                         <i className="fa fa-check"/>
+                                     </button>
+                                 </div>
+                             }
+                             {
+                                 !this.state.editingEmail &&
+                                 <label onClick={this.toggleEditEmail}>
+                                     {this.state.attendee.email}
+                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                      <i className="fa fa-pencil EB-pencil"/>
+                                     }
+                                 </label>
+                             }
+                         </div>
+                        }
 
                         <div className="d-flex align-items-center">
                             <label className="mr-2">Gender:</label>
@@ -170,7 +257,12 @@ class AttendeeProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingGender &&
-                                <label onClick={this.toggleEditGender}>{this.state.attendee.gender}</label>
+                                <label onClick={this.toggleEditGender}>
+                                    {this.state.attendee.gender}
+                                    {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
 
@@ -191,7 +283,12 @@ class AttendeeProfileComponent extends React.Component {
                             }
                             {
                                 !this.state.editingBirthday &&
-                                <label onClick={this.toggleEditBirthday}>{this.state.attendee.dob === undefined ? "" : this.state.attendee.dob.split('T')[0]}</label>
+                                <label onClick={this.toggleEditBirthday}>
+                                    {this.state.attendee.dob === undefined ? "" : this.state.attendee.dob.split('T')[0]}
+                                    {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                                     <i className="fa fa-pencil EB-pencil"/>
+                                    }
+                                </label>
                             }
                         </div>
                     </div>

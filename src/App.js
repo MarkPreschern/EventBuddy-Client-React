@@ -11,13 +11,13 @@ import HomeComponent from "./components/HomeComponent";
 import FooterComponent from "./components/FooterComponent";
 import OrganizerProfileComponent from "./components/organizer-profile/OrganizerProfileComponent";
 import MessageComponent from "./components/message/MessageComponent";
+import VenueDetailsEditComponent from "./components/venue/VenueDetailsEditComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
 import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
 import AttendeeService from "./services/AttendeeService";
 import OrganizerService from "./services/OrganizerService";
 import {selectAttendee} from "./actions/AttendeeActions";
 import {selectOrganizer} from "./actions/OrganizerActions";
-
 class App extends React.Component {
 
     // attempts to login user if possible via sessionStorage
@@ -54,8 +54,9 @@ class App extends React.Component {
                         <Route path='/event' component={EventComponent}/>
                         <Route path='/attendee/profile' component={AttendeeProfileComponent}/>
                         <Route path='/organizer/profile' component={OrganizerProfileComponent}/>
+                        <Route path="/organizer/:organizerId/venue/:venueId/edit" component={VenueDetailsEditComponent}/>
+                        <Route path="/organizer/:organizerId/event/:eventId/edit" component={EventDetailsEditComponent}/>
                         <Route path='/messages' component={MessageComponent}/>
-                        <Route exact path='/organizer/event/:eventId' component={EventDetailsEditComponent}/>
                         <Route exact path='/venue/new' component={VenueAddFormComponent}/>
                         <Route path='/login' component={LoginComponent}/>
                         <Route path='/register' component={RegisterComponent}/>

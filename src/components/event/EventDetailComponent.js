@@ -45,8 +45,16 @@ class EventDetailComponent extends React.Component {
             // create event first if needed
             if (event.external && !event.integrated) {
                 event.venue = await this.createVenue(event.venue);
-                event = await this.createEvent(event);
-                this.likeEventHelper(event, attendee);
+                if (event.venue.hasOwnProperty("message")) {
+                    // TODO: error handling
+                } else {
+                    event = await this.createEvent(event);
+                    if (event.hasOwnProperty("message")) {
+                        // TODO: error handling
+                    } else {
+                        this.likeEventHelper(event, attendee);
+                    }
+                }
             } else {
                 this.likeEventHelper(event, attendee);
             }
@@ -84,7 +92,36 @@ class EventDetailComponent extends React.Component {
     };
 
     createVenue = async (venue) => {
+        if (!venue.hasOwnProperty("state")) {
+            venue.state = ""
+        }
         return await VenueService.createVenue(-1, venue);
+    };
+
+    unlikeEvent = async () => {
+        const event = this.props.event;
+        const attendee = this.props.attendee;
+
+        try {
+            Promise.all([EventService.removeEventAttendee(event._id, attendee._id), AttendeeService.removeLikedEvent(attendee._id, event._id)])
+                .then(values => {
+                    const response1 = values[0];
+                    const response2 = values[1];
+
+                    const ok1 = !response1.hasOwnProperty('message');
+                    const ok2 = !response2.hasOwnProperty('message');
+
+                    if (ok1 && ok2) {
+                        AttendeeService.getAttendee(attendee._id).then(data => this.props.updateAttendee(data));
+                        EventService.getEvent(event._id).then(data => this.props.updateEvent(data));
+                        this.props.history.push(`/event/${event._id}`)
+                    } else {
+                        // TODO: error handling
+                    }
+                });
+        } catch (e) {
+            // TODO: error handling
+        }
     };
 
     render() {
@@ -111,10 +148,17 @@ class EventDetailComponent extends React.Component {
                                 <a href={this.props.event.url}>Click here!</a>
                             </li>
                             {
-                                this.props.attendee._id !== -1 &&
+                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length === 0 &&
                                 <button className="btn btn-dark d-block align-items-center"
                                         onClick={() => this.likeEvent()}>
                                     Like event
+                                </button>
+                            }
+                            {
+                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length > 0 &&
+                                <button className="btn btn-dark d-block align-items-center"
+                                        onClick={() => this.unlikeEvent()}>
+                                    unlike event
                                 </button>
                             }
                         </ul>
