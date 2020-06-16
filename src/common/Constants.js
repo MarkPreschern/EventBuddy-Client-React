@@ -1,1 +1,2 @@
 export const API_URL =  "https://eventbuddy-server.herokuapp.com/api";
+export const DEFAULT_IMAGE_URL = "https://static-cdn.jtvnw.net/jtv_user_pictures/danieldepotato-profile_image-76e8e625de4b51b1-300x300.jpeg"

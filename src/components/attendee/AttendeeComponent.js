@@ -147,15 +147,26 @@ class AttendeeComponent extends React.Component {
         return(
             <div className="container-fluid">
                 <div className="row">
-                <h3 className="col-12">{this.state.attendee.name}</h3>
+                    <h3 className="col-12">{this.state.attendee.name}</h3>
                     <div className="col-sm-3 col-12">
-                        <img src={this.state.attendee.image_url}
-                             onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
-                             className="rounded EB-profile-pic mb-3"
-                             alt=""/>
                         {
+                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                            !this.state.editingImageUrl &&
+                            <div className="text-center">
+                                <img src={this.state.attendee.image_url}
+                                     className="rounded EB-profile-pic"
+                                     alt=""/>
+                                <button className="btn"
+                                    onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
+                                    <small>Change profile picture URL</small>
+                                    <i className="fa fa-pencil ml-2"/>
+                                </button>
+                            </div>
+                        }
+                        {
+                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
                             this.state.editingImageUrl &&
-                            <div className="d-flex">
+                            <div className="d-flex mr-4">
                                 <input className="form-control"
                                        placeholder="Image URL"
                                        type="text"
@@ -351,10 +362,10 @@ class AttendeeComponent extends React.Component {
                     </div>
                 </div>
 
-                <div className="row mb-3 ">
+                <div className="row mb-3">
                     {
                         this.props.attendee.hasOwnProperty("events_liked") && this.props.attendee.events_liked.length > 0 &&
-                        <div className="row col-sm-6 col-12 d-inline">
+                        <div className="row col-12 d-inline">
                             <h4>Liked events</h4>
                             <div className="EB-scroll-list">
                                 <AttendeeEventListComponent/>
@@ -364,7 +375,7 @@ class AttendeeComponent extends React.Component {
                     {
                         this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
                         this.props.attendee.hasOwnProperty("messages") && this.props.attendee.messages.length > 0 &&
-                        <div className="row col-sm-6 col-12 d-inline">
+                        <div className="row col-12 d-inline">
                             <Link to="/messages">
                                 <h4>Messages</h4>
                             </Link>

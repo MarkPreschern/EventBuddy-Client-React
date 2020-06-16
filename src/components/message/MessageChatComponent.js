@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import MessageChatBubbleComponent from "./MessageChatBubbleComponent";
 import ConversationService from "../../services/ConversationService";
 import {selectConversation} from "../../actions/ConversationActions";
+import {Route} from "react-router-dom";
 
 class MessageChatComponent extends React.Component {
     componentDidMount() {
@@ -19,17 +20,20 @@ class MessageChatComponent extends React.Component {
 
     render() {
         return(
-            <div className="EB-chatbox">
-                <MessageChatBubbleComponent
-                    userId="123"
-                    messageUserId="123"/>
-                <MessageChatBubbleComponent
-                    userId="123"
-                    messageUserId="234"/>
-                <MessageChatBubbleComponent
-                    userId="123"
-                    messageUserId="123"/>
-            </div>
+            <span>
+                <div className="EB-chatbox">
+                    <MessageChatBubbleComponent
+                        userId="123"
+                        messageUserId="123"/>
+                    <MessageChatBubbleComponent
+                        userId="123"
+                        messageUserId="234"/>
+                    <MessageChatBubbleComponent
+                        userId="123"
+                        messageUserId="123"/>
+                </div>
+                <input className="form-control " placeholder="Write your message here"/>
+            </span>
         )
     }
 }

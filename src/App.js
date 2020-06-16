@@ -19,6 +19,10 @@ import OrganizerService from "./services/OrganizerService";
 import VenueDetailsComponent from "./components/venue/VenueDetailsComponent"
 import {selectAttendee} from "./actions/AttendeeActions";
 import {selectOrganizer} from "./actions/OrganizerActions";
+import PopupComponent from "./components/PopupComponent";
+import AttendeeMessageListComponent from "./components/attendee/AttendeeMessageListComponent";
+import EventDetailComponent from "./components/event/EventDetailComponent";
+import EventAttendeesComponent from "./components/event/EventAttendeesComponent";
 class App extends React.Component {
 
     // attempts to login user if possible via sessionStorage
@@ -51,6 +55,7 @@ class App extends React.Component {
                 <div className="wrapper">
                     <BrowserRouter>
                         <Route path='/' component={MenuComponent}/>
+                        {/*<Route path='/' component={EventAttendeesComponent}/>*/}
                         <Route exact path='/' component={HomeComponent}/>
                         <Route path='/event' component={EventComponent}/>
                         <Route path='/attendee/profile' component={AttendeeComponent}/>

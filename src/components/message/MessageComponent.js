@@ -18,7 +18,6 @@ class MessageComponent extends React.Component {
                             </div>
                             <div className="col-md-9 col-12">
                                 <Route path='/attendee/:attendeeId/messages/:conversationId' component={MessageChatComponent}/>
-                                <input className="form-control " placeholder="Write your message here"/>
                             </div>
                         </div>
                     </div>

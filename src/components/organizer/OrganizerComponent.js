@@ -119,13 +119,23 @@ class OrganizerComponent extends React.Component {
                 <div className="row">
                     <h3 className="col-12">{this.state.organizer.company_name}</h3>
                     <div className="col-sm-3 col-12">
-                        <img src={this.state.organizer.image_url}
-                             onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
-                             className="rounded EB-profile-pic mb-3"
-                             alt=""/>
+                        {
+                            !this.state.editingImageUrl &&
+                            <div className="text-center">
+                                <img src={this.state.organizer.image_url}
+                                     onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
+                                     className="rounded EB-profile-pic mb-3"
+                                     alt=""/>
+                                <button className="btn"
+                                        onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
+                                <small>Change profile picture URL</small>
+                                    <i className="fa fa-pencil ml-2"/>
+                                </button>
+                            </div>
+                        }
                         {
                             this.state.editingImageUrl &&
-                            <div className="d-flex mb-2">
+                            <div className="d-flex mr-4">
                                 <input className="form-control"
                                        placeholder="Image URL"
                                        type="text"
@@ -317,7 +327,7 @@ class OrganizerComponent extends React.Component {
                                 </Link>
                             }
                         </div>
-                        <div className=" EB-scroll-list">
+                        <div className="EB-scroll-list">
                             <OrganizerEventListComponent events={this.state.organizer.events}/>
                         </div>
                     </div>
@@ -333,7 +343,7 @@ class OrganizerComponent extends React.Component {
                                 </Link>
                             }
                         </div>
-                        <div className="EB-scroll-list">
+                        <div className="">
                             <OrganizerVenueListComponent venues={this.state.organizer.venues}/>
                         </div>
                     </div>

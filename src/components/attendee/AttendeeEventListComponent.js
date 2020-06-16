@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import AttendeeEventItemComponent from "./AttendeeEventItemComponent";
 
 const AttendeeEventListComponent = (props) =>
-    <div className="row">{
+    <div className="">{
         props.attendee.hasOwnProperty("events_liked") &&
         props.attendee.events_liked.map(event => {
             return <AttendeeEventItemComponent key={event._id} event={event}/>

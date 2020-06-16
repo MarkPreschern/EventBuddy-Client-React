@@ -83,7 +83,7 @@ a {
 :root {
     --primary-color: #385D84;
     --secondary-color: #E77557;
-    --font-color: #23303B;
+    --font-color: #23303b;
     --bg-color: #F2F2F2;
     --heading-color: #AED3F2;
 }
@@ -99,10 +99,11 @@ a {
 }
 
 .EB-item-pic {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
-    margin: 5px;
+    /*margin: 5px;*/
+    display: inline-flex;
 }
 
 .EB-item-pic-lg {
@@ -129,6 +130,7 @@ a {
 .EB-scroll-list {
     max-height: 300px;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .EB-event-highlight-pic {
@@ -205,3 +207,61 @@ a {
 .EB-pencil:hover {
     cursor: pointer;
 }
+
+.EB-popup {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    position: fixed;
+    top: 50px;
+    right: 20%;
+    left: 20%;
+}
+
+.EB-popup-content {
+
+}
+
+.EB-list-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.EB-list-content {
+    max-width: 70%;
+    margin-left: 10px;
+    color: black;
+}
+
+.EB-list-content-horizontal {
+    max-width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: black;
+    display: block;
+}
+
+
+.EB-scroll-list-horizontal {
+    width: 500px;
+    height: 125px;
+    overflow: auto;
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(35, 48, 59, 0.5);
+}
+
+.EB-list-horizontal {
+    max-width: 500px;
+    display: inline-flex;
+    align-self: center;
+}
+

@@ -176,7 +176,6 @@ class EventDetailsEditComponent extends React.Component {
                 <div className="row">
                     <div className="col-md-7">
                         <img src={this.state.event.image_url} className="img-fluid" alt=""/>
-                        <p className="text-muted">Photo from EventBrite</p>
                     </div>
                     <div className="col-md-5 align-self-center">
                         <ul className="EB-list">
@@ -214,11 +213,9 @@ class EventDetailsEditComponent extends React.Component {
                     </div>
                 </div>
                 <div>
-                    {this.state.event.hasOwnProperty("attendee_likes") && this.state.event.attendee_likes.length > 0 &&
-                     <div>
-                         <h4>Attendee likes</h4>
-                         <EventAttendeesComponent attendees={this.state.event.attendee_likes}/>
-                     </div>
+                    {
+                        this.state.event.hasOwnProperty("attendee_likes") && this.state.event.attendee_likes.length > 0 &&
+                        <EventAttendeesComponent attendees={this.state.event.attendee_likes}/>
                     }
                 </div>
                 <div>

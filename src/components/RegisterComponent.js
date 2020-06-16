@@ -5,6 +5,8 @@ import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
 import {selectAttendee} from "../actions/AttendeeActions";
 import {selectOrganizer} from "../actions/OrganizerActions";
+import {DEFAULT_IMAGE_URL} from "../common/Constants";
+
 
 class RegisterComponent extends React.Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class RegisterComponent extends React.Component {
                 email: "",
                 dob: "",
                 gender: "",
-                image_url: ""
+                image_url: DEFAULT_IMAGE_URL
             },
             newOrganizer: {
                 company_name: "",
@@ -28,7 +30,7 @@ class RegisterComponent extends React.Component {
                 phone_number: "",
                 email: "",
                 company_url: "",
-                image_url: ""
+                image_url: DEFAULT_IMAGE_URL
             },
             userType: "attendee",
             verifyPassword: ""
@@ -174,7 +176,7 @@ class RegisterComponent extends React.Component {
 
                                 <label className="col-sm-3 col-form-label">Gender</label>
                                 <div className="col-sm-9">
-                                    <select className="form-control">
+                                    <select className="form-control mb-2">
                                         <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Male"}})}>Male</option>
                                         <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Female"}})}>Female</option>
                                         <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Other"}})}>Other</option>
@@ -183,7 +185,7 @@ class RegisterComponent extends React.Component {
 
                                 <label className="col-sm-3 col-form-label">Image URL</label>
                                 <div className="col-sm-9">
-                                    <input className="form-control mb-2"
+                                    <input className="form-control "
                                            placeholder="Image URL"
                                            type="text"
                                            value={this.state.newAttendee.image_url}
@@ -268,7 +270,7 @@ class RegisterComponent extends React.Component {
 
                                 <label className="col-sm-3 col-form-label">Image URL</label>
                                 <div className="col-sm-9">
-                                    <input className="form-control mb-2"
+                                    <input className="form-control"
                                            placeholder="Image URL"
                                            type="text"
                                            value={this.state.newOrganizer.image_url}

@@ -8,13 +8,7 @@ const MenuComponent = (props) =>
             <Link to='/'>
                 <h1 className="navbar-brand">EventBuddy</h1>
             </Link>
-            <span className="float-left d-none d-md-inline">
-                <Link to='/event/search/results'>
-                    <button className="btn mr-2">
-                        Search for events
-                    </button>
-                </Link>
-            </span>
+
             <span className="float-right">
                 {
                     props.attendee._id === -1 && props.organizer._id === -1 &&
@@ -40,6 +34,11 @@ const MenuComponent = (props) =>
                         <button className="btn btn-dark">Profile</button>
                     </Link>
                 }
+                <Link to='/event/search/results'>
+                    <button className="btn">
+                        <i className="fa fa-search"/>
+                    </button>
+                </Link>
             </span>
         </div>
     </div>;

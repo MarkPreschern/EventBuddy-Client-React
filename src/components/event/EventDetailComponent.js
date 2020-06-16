@@ -7,6 +7,7 @@ import AttendeeService from "../../services/AttendeeService";
 import VenueService from "../../services/VenueService";
 import {selectEvent, updateEvent} from "../../actions/EventActions";
 import {updateAttendee} from "../../actions/AttendeeActions";
+import {DEFAULT_IMAGE_URL} from "../../common/Constants";
 
 class EventDetailComponent extends React.Component {
 
@@ -132,10 +133,35 @@ class EventDetailComponent extends React.Component {
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
-                        <img src={this.props.event.image_url} className="rounded EB-item-pic-lg" alt=""/>
+                        {
+                            !(this.props.event.image_url === '' || this.props.event.image_url === undefined) ?
+                            <img src={this.props.event.image_url} className="rounded EB-item-pic-lg" alt=""/>
+                            :
+                            <img src={DEFAULT_IMAGE_URL} className="rounded EB-item-pic-lg" alt=""/>
+                        }
+                        {
+                            !this.props.event.hasOwnProperty("organizer") &&
+                            <p className="text-muted">Photo from EventBrite</p>
+                        }
                     </div>
                     <div className="col-md-5 align-self-center">
                         <ul className="EB-list">
+                            {
+                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length === 0 &&
+                                <button className="btn"
+                                        onClick={() => this.likeEvent()}>
+                                    <i className="fa fa-2x fa-thumbs-o-up"/>
+                                    <small className="ml-2">Like this event</small>
+                                </button>
+                            }
+                            {
+                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length > 0 &&
+                                <button className="btn text-muted"
+                                        onClick={() => this.unlikeEvent()}>
+                                    <i className="fa fa-2x fa-thumbs-up "/>
+                                    <small className="ml-2">Liked</small>
+                                </button>
+                            }
                             <li>
                                 <b>Location: </b>
                                 {this.venueInformation()}
@@ -148,20 +174,6 @@ class EventDetailComponent extends React.Component {
                                 <b>Tickets: </b>
                                 <a href={this.props.event.url}>Click here!</a>
                             </li>
-                            {
-                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length === 0 &&
-                                <button className="btn btn-dark d-block align-items-center"
-                                        onClick={() => this.likeEvent()}>
-                                    Like event
-                                </button>
-                            }
-                            {
-                                this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length > 0 &&
-                                <button className="btn btn-dark d-block align-items-center"
-                                        onClick={() => this.unlikeEvent()}>
-                                    unlike event
-                                </button>
-                            }
                             {
                                 this.props.event.hasOwnProperty("organizer") &&
                                 <li>
@@ -176,10 +188,7 @@ class EventDetailComponent extends React.Component {
                 </div>
                 <div>
                     {this.props.event.hasOwnProperty("attendee_likes") && this.props.event.attendee_likes.length > 0 &&
-                     <div>
-                         <h4>Attendee likes</h4>
-                         <EventAttendeesComponent attendees={this.props.event.attendee_likes}/>
-                     </div>
+                        <EventAttendeesComponent attendees={this.props.event.attendee_likes}/>
                     }
                 </div>
                 <div className={this.renderDescription()}>

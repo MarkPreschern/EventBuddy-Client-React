@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-export default class HomeComponent extends React.Component {
+
+export default class HomeComponent extends React.Component {Ω
     render() {
         return(
             <div className="text-center home-container">

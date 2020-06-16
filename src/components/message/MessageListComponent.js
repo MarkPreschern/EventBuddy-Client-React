@@ -6,10 +6,10 @@ class MessageListComponent extends React.Component {
     render(){
         return(
             <div>
-                {this.props.attendee.hasOwnProperty("conversations") &&
-                 this.props.attendee.conversations.map(conversation =>
-                     <MessageCardComponent key={conversation._id} conversation={conversation}/>
-                 )
+                {
+                    this.props.attendee.hasOwnProperty("conversations") &&
+                    this.props.attendee.conversations.map(conversation =>
+                        <MessageCardComponent key={conversation._id} conversation={conversation}/>)
                 }
             </div>
         )

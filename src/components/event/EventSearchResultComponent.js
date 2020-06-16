@@ -5,7 +5,7 @@ import EventCardComponent from "./EventCardComponent";
 
 const EventSearchResultComponent = (props) =>
     <div>
-        <h1>{props.events.length + " search results"}</h1>
+        <p>{props.events.length + " search results"}</p>
         <div className="row card-row EB-card-row">
             {
                 props.events.map(event => <EventCardComponent event={event} key={event._id}/>)
