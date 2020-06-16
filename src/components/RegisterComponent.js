@@ -5,8 +5,6 @@ import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
 import {selectAttendee} from "../actions/AttendeeActions";
 import {selectOrganizer} from "../actions/OrganizerActions";
-import {DEFAULT_EVENT_IMAGE_URL} from "../common/Constants";
-
 
 class RegisterComponent extends React.Component {
     constructor(props) {
@@ -20,7 +18,7 @@ class RegisterComponent extends React.Component {
                 email: "",
                 dob: "",
                 gender: "",
-                image_url: DEFAULT_EVENT_IMAGE_URL
+                image_url: ""
             },
             newOrganizer: {
                 company_name: "",
@@ -30,7 +28,7 @@ class RegisterComponent extends React.Component {
                 phone_number: "",
                 email: "",
                 company_url: "",
-                image_url: DEFAULT_EVENT_IMAGE_URL
+                image_url: ""
             },
             userType: "attendee",
             verifyPassword: ""
@@ -74,6 +72,11 @@ class RegisterComponent extends React.Component {
                     if (data.hasOwnProperty("message")) {
                         // TODO: handle error message
                     } else {
+                        console.log("here");
+                        window.sessionStorage.setItem("userType", JSON.stringify("attendee") + ',');
+                        window.sessionStorage.setItem("username", JSON.stringify(this.state.newAttendee.username) + ',');
+                        window.sessionStorage.setItem("password", JSON.stringify(this.state.newAttendee.password) + ',');
+                        console.log("here");
                         this.props.selectAttendee(data);
                         this.props.history.push(`/attendee/profile/${data._id}`)
                     }
@@ -89,6 +92,9 @@ class RegisterComponent extends React.Component {
                     if (data.hasOwnProperty("message")) {
                         // TODO: handle error message
                     } else {
+                        window.sessionStorage.setItem("userType", JSON.stringify("organizer") + ',');
+                        window.sessionStorage.setItem("username", JSON.stringify(this.state.newOrganizer.username) + ',');
+                        window.sessionStorage.setItem("password", JSON.stringify(this.state.newOrganizer.password) + ',');
                         this.props.selectOrganizer(data);
                         this.props.history.push(`/organizer/profile/${data._id}`)
                     }

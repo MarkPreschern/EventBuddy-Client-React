@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from "react-redux";
-import {Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import MessageListComponent from "./MessageListComponent";
 import MessageChatComponent from "./MessageChatComponent";
 
@@ -17,7 +17,10 @@ class MessageComponent extends React.Component {
                                 <MessageListComponent/>
                             </div>
                             <div className="col-md-9 col-12">
-                                <Route path='/attendee/:attendeeId/messages/:conversationId' component={MessageChatComponent}/>
+                                <Switch>
+                                    <Route path='/attendee/:attendeeId/messages/:conversationId' component={MessageChatComponent}/>
+                                    <Route path='/attendee/:attendeeId/messages' component={MessageChatComponent}/>
+                                </Switch>
                             </div>
                         </div>
                     </div>

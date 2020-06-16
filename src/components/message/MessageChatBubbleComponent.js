@@ -1,47 +1,29 @@
 import React from 'react'
 
-export default class MessageChatBubbleComponent extends React.Component {
-    state = {
-        userId: this.props.userId,
-        messageUserId: this.props.messageUserId,
-        incoming: true
-    }
-
-    componentDidMount() {
-        if(this.state.messageUserId === this.state.userId) {
-            this.setState({
-                incoming: true
-            })
-        } else {
-            this.setState({
-                incoming: false
-            })
+const MessageChatBubbleComponent = (props) =>
+    <div className="text-center">
+        {
+            props.message.datetime !== undefined &&
+            <small>{props.message.datetime}</small>
         }
-    }
-
-
-    render() {
-        return(
-            <div className="row d-flex ">
-                {
-                    this.state.incoming &&
-                    <div className="EB-sent-message">
-                        <small>Danny Tran</small>
-                        <div className="EB-receive-bubble">
-                            hello this is a message sent from danny
-                        </div>
+        <div className="row d-flex">
+            {
+                props.messageUserId === props.userId &&
+                <div className="EB-sent-bubble-wrapper">
+                    <div className="EB-sent-bubble text-left">
+                        {props.message.content}
                     </div>
-                }
-                {
-                    !this.state.incoming &&
-                    <div className="">
-                        <small>Mark Preschern</small>
-                        <div className="EB-sent-bubble">
-                            hello this is a message received from Mark
-                        </div>
+                </div>
+            }
+            {
+                props.messageUserId !== props.userId &&
+                <div className="EB-receive-bubble-wrapper">
+                    <div className="EB-receive-bubble text-left">
+                        {props.message.content}
                     </div>
-                }
-            </div>
-        )
-    }
-}
+                </div>
+            }
+        </div>
+    </div>;
+
+export default MessageChatBubbleComponent;

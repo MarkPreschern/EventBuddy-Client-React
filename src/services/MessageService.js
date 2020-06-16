@@ -10,7 +10,7 @@ export default {
         });
     },
 
-    createMessage : (attendeeId, conversation) => {
+    createMessage : (attendeeId, conversationId, conversation) => {
         return fetch(`${API_URL}/attendees/${attendeeId}/conversations/${conversationId}/messages/`, {
             method: 'POST',
             body: JSON.stringify(conversation),

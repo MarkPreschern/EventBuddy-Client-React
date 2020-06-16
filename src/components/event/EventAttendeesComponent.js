@@ -1,6 +1,10 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
+import {
+    DEFAULT_EVENT_IMAGE_URL,
+    DEFAULT_PROFILE_FEMALE_IMAGE_URL,
+    DEFAULT_PROFILE_MALE_IMAGE_URL, DEFAULT_PROFILE_OTHER_IMAGE_URL
+} from "../../common/Constants";
 
 const EventAttendeesComponent = (props) =>
     <span className="text-center m-2">
@@ -16,7 +20,7 @@ const EventAttendeesComponent = (props) =>
                                     !(attendee.image_url === '' || attendee.image_url === undefined) ?
                                     <img className="rounded EB-item-pic" src={attendee.image_url} alt={DEFAULT_EVENT_IMAGE_URL}/>
                                     :
-                                    <img className="rounded EB-item-pic" src={DEFAULT_EVENT_IMAGE_URL} alt=""/>
+                                    <img className="rounded EB-item-pic" src={defaultImage(attendee.gender)} alt=""/>
                                 }
                                 <h6 className='EB-list-text'>
                                     {attendee.name}
@@ -28,5 +32,15 @@ const EventAttendeesComponent = (props) =>
             </div>
         </div>
     </span>;
+
+const defaultImage = (gender) => {
+    if (gender === "Male") {
+        return DEFAULT_PROFILE_MALE_IMAGE_URL;
+    } else if (gender === "Female") {
+        return DEFAULT_PROFILE_FEMALE_IMAGE_URL;
+    } else {
+        return DEFAULT_PROFILE_OTHER_IMAGE_URL;
+    }
+};
 
 export default EventAttendeesComponent;

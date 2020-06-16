@@ -41,7 +41,7 @@ const conversationReducer = (state = initialState, action) => {
             };
         case SELECT_CONVERSATION:
             return {
-                organizer: action.organizer,
+                conversation: action.conversation,
                 conversations: state.conversations
             };
         default:

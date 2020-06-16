@@ -58,7 +58,9 @@ class AttendeeComponent extends React.Component {
 
     message = async () => {
         // if the sender & receiver don't already have a conversation history
-        let existingConversations = this.props.attendee.conversations.filter(conversation => conversation.receiver._id === this.state.attendee._id);
+        let existingConversations = this.props.attendee.conversations.filter(conversation => {
+            return (conversation.sender._id === this.state.attendee._id || conversation.receiver._id === this.state.attendee._id);
+        });
         if (existingConversations.length === 0) {
             let conversation = {
                 sender: this.props.attendee,
@@ -68,16 +70,15 @@ class AttendeeComponent extends React.Component {
             if (data.hasOwnProperty("message")) {
                 // TODO: error handling
             } else {
-                this.props.selectConversation(data);
+                await this.props.selectConversation(data);
                 this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
             }
         } else {
             const data = await ConversationService.getConversation(this.props.attendee._id, existingConversations[0]._id);
             if (data.hasOwnProperty("message")) {
-                console.log(data);
                 // TODO: error handling
             } else {
-                this.props.selectConversation(data);
+                await this.props.selectConversation(data);
                 this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
             }
         }
@@ -382,7 +383,7 @@ class AttendeeComponent extends React.Component {
                         </div>
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                            <Link to={`/attendee/${this.props.attendee._id}/messages/-1`}>
+                            <Link to={`/attendee/${this.props.attendee._id}/messages`}>
                                 <button className="btn btn-dark d-block align-items-center">
                                     Messages
                                 </button>

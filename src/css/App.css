@@ -148,7 +148,7 @@ a {
     padding: 10px;
 }
 
-.EB-sent-bubble {
+.EB-receive-bubble {
     color: white;
     background-color: #E77557;
     border-color: #ea9f8c;
@@ -165,7 +165,7 @@ a {
     position: relative;
 }
 
-.EB-receive-bubble {
+.EB-sent-bubble {
     background-color: white;
     border-color: antiquewhite;
     border-style: solid;
@@ -181,9 +181,14 @@ a {
     position: relative;
 }
 
-.EB-sent-message {
+.EB-receive-bubble-wrapper {
+    width: 50%;
+}
+
+.EB-sent-bubble-wrapper {
     margin-left: auto;
     margin-right: 0;
+    max-width: 50%;
 }
 
 .EB-add-circle {
@@ -272,3 +277,38 @@ a {
     margin-bottom: 0 !important;
 }
 
+.EB-conversation-selected {
+    border-radius: 10px;
+    background-color: lightsteelblue;
+}
+
+.EB-message-form {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.EB-message-form:focus, .EB-message-form:hover {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+
+.EB-message-input {
+    flex-grow: 2;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.EB-message-button {
+    color: var(--secondary-color);
+}
+
+.EB-margin-sides-15 {
+    margin-right: 15px;
+    margin-left: 15px;
+}
