@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom"
 import {connect} from "react-redux";
 import EventAttendeesComponent from "./EventAttendeesComponent"
 import EventService from "../../services/EventService";
@@ -131,8 +132,7 @@ class EventDetailComponent extends React.Component {
                 <h1>{this.props.event.name}</h1>
                 <div className="row">
                     <div className="col-md-7">
-                        <img src={this.props.event.image_url} className="img-fluid" alt=""/>
-                        <p className="text-muted">Photo from EventBrite</p>
+                        <img src={this.props.event.image_url} className="rounded EB-item-pic-lg" alt=""/>
                     </div>
                     <div className="col-md-5 align-self-center">
                         <ul className="EB-list">
@@ -161,6 +161,15 @@ class EventDetailComponent extends React.Component {
                                         onClick={() => this.unlikeEvent()}>
                                     unlike event
                                 </button>
+                            }
+                            {
+                                this.props.event.hasOwnProperty("organizer") &&
+                                <li>
+                                    <b>Organizer: </b>
+                                    <Link to={`/organizer/profile/${this.props.event.organizer._id}`}>
+                                            {this.props.event.organizer.company_name}
+                                    </Link>
+                                </li>
                             }
                         </ul>
                     </div>

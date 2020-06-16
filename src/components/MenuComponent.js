@@ -9,7 +9,7 @@ const MenuComponent = (props) =>
                 <h1 className="navbar-brand">EventBuddy</h1>
             </Link>
             <span className="float-left d-none d-md-inline">
-                <Link to='/event/search'>
+                <Link to='/event/search/results'>
                     <button className="btn mr-2">
                         Search for events
                     </button>

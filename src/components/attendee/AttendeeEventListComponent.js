@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from "react-redux";
-import UPEventItemComponent from "./UP-EventItemComponent";
+import AttendeeEventItemComponent from "./AttendeeEventItemComponent";
 
-const UPEventListComponent = (props) =>
+const AttendeeEventListComponent = (props) =>
     <div className="row">{
         props.attendee.hasOwnProperty("events_liked") &&
         props.attendee.events_liked.map(event => {
-            return <UPEventItemComponent key={event._id} event={event}/>
+            return <AttendeeEventItemComponent key={event._id} event={event}/>
         })
     }
     </div>;
@@ -15,4 +15,4 @@ const mapStateToProps = state => ({
     attendee: state.AttendeeReducer.attendee
 });
 
-export default connect(mapStateToProps)(UPEventListComponent);
+export default connect(mapStateToProps)(AttendeeEventListComponent);

@@ -1,21 +1,22 @@
 import React from "react";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import EventComponent from "./components/event/EventComponent"
-import AttendeeProfileComponent from "./components/attendee-profile/AttendeeProfileComponent";
+import AttendeeComponent from "./components/attendee/AttendeeComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import HomeComponent from "./components/HomeComponent";
 import FooterComponent from "./components/FooterComponent";
-import OrganizerProfileComponent from "./components/organizer-profile/OrganizerProfileComponent";
+import OrganizerComponent from "./components/organizer/OrganizerComponent";
 import MessageComponent from "./components/message/MessageComponent";
 import VenueDetailsEditComponent from "./components/venue/VenueDetailsEditComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
 import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
 import AttendeeService from "./services/AttendeeService";
 import OrganizerService from "./services/OrganizerService";
+import VenueDetailsComponent from "./components/venue/VenueDetailsComponent"
 import {selectAttendee} from "./actions/AttendeeActions";
 import {selectOrganizer} from "./actions/OrganizerActions";
 class App extends React.Component {
@@ -52,12 +53,15 @@ class App extends React.Component {
                         <Route path='/' component={MenuComponent}/>
                         <Route exact path='/' component={HomeComponent}/>
                         <Route path='/event' component={EventComponent}/>
-                        <Route path='/attendee/profile' component={AttendeeProfileComponent}/>
-                        <Route path='/organizer/profile' component={OrganizerProfileComponent}/>
+                        <Route path='/attendee/profile' component={AttendeeComponent}/>
+                        <Route path='/organizer/profile' component={OrganizerComponent}/>
                         <Route path="/organizer/:organizerId/venue/:venueId/edit" component={VenueDetailsEditComponent}/>
                         <Route path="/organizer/:organizerId/event/:eventId/edit" component={EventDetailsEditComponent}/>
-                        <Route path='/messages' component={MessageComponent}/>
-                        <Route exact path='/venue/new' component={VenueAddFormComponent}/>
+                        <Route path='/attendee/:attendeeId/messages' component={MessageComponent}/>
+                        <Switch>
+                            <Route exact path='/venue/new' component={VenueAddFormComponent}/>
+                            <Route path='/venue/:venueId' component={VenueDetailsComponent}/>
+                        </Switch>
                         <Route path='/login' component={LoginComponent}/>
                         <Route path='/register' component={RegisterComponent}/>
                     </BrowserRouter>

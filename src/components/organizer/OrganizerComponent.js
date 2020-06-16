@@ -1,13 +1,13 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import OPEventListComponent from "./OP-EventListComponent";
-import OPVenueListComponent from "./OP-VenueListComponent";
+import OrganizerEventListComponent from "./OrganizerEventListComponent";
+import OrganizerVenueListComponent from "./OrganizerVenueListComponent";
 import {updateOrganizer} from "../../actions/OrganizerActions";
 import OrganizerService from "../../services/OrganizerService";
 import {resetAction} from "../../actions/RootActions";
 
-class OrganizerProfileComponent extends React.Component {
+class OrganizerComponent extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,6 +34,20 @@ class OrganizerProfileComponent extends React.Component {
                 this.setState({organizer: data})
             }
         });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.organizer._id !== this.props.organizer._id) {
+            const pathParts = window.location.pathname.split('/');
+            const id = pathParts.pop() || pathParts.pop();
+            OrganizerService.getOrganizer(id).then(data => {
+                if (data === null || data.hasOwnProperty("message")) {
+                    // TODO: error handling
+                } else {
+                    this.setState({organizer: data})
+                }
+            });
+        }
     }
 
     toggleEditName = () => {
@@ -294,27 +308,33 @@ class OrganizerProfileComponent extends React.Component {
                     <div className="row col-12 col-sm-6 d-inline">
                         <div className="d-flex">
                             <h4 className="">Events</h4>
-                            <Link to='/event/new'>
-                                <div className="ml-2 EB-add-circle">
-                                    <i className="fa fa-plus"/>
-                                </div>
-                            </Link>
+                            {
+                                this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                <Link to='/event/new'>
+                                    <div className="ml-2 EB-add-circle">
+                                        <i className="fa fa-plus"/>
+                                    </div>
+                                </Link>
+                            }
                         </div>
                         <div className=" EB-scroll-list">
-                            <OPEventListComponent/>
+                            <OrganizerEventListComponent events={this.state.organizer.events}/>
                         </div>
                     </div>
                     <div className="row col-12 col-sm-6  d-inline ">
                         <div className="d-flex">
                             <h4 className="">Venues</h4>
-                            <Link to='/venue/new'>
-                                <div className="ml-2 EB-add-circle">
-                                    <i className="fa fa-plus"/>
-                                </div>
-                            </Link>
+                            {
+                                this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                <Link to='/venue/new'>
+                                    <div className="ml-2 EB-add-circle">
+                                        <i className="fa fa-plus"/>
+                                    </div>
+                                </Link>
+                            }
                         </div>
                         <div className="EB-scroll-list">
-                            <OPVenueListComponent/>
+                            <OrganizerVenueListComponent venues={this.state.organizer.venues}/>
                         </div>
                     </div>
                 </div>
@@ -348,4 +368,4 @@ const dispatchToPropertyMapper = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, dispatchToPropertyMapper)(OrganizerProfileComponent);
+export default connect(mapStateToProps, dispatchToPropertyMapper)(OrganizerComponent);

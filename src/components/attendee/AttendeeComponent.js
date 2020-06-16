@@ -1,13 +1,13 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import UPEventListComponent from "./UP-EventListComponent";
-import UPMessageListComponent from "./UP-MessageListComponent";
+import AttendeeEventListComponent from "./AttendeeEventListComponent";
+import AttendeeMessageListComponent from "./AttendeeMessageListComponent";
 import AttendeeService from "../../services/AttendeeService";
 import {updateAttendee} from "../../actions/AttendeeActions";
 import {resetAction} from "../../actions/RootActions";
 
-class AttendeeProfileComponent extends React.Component {
+class AttendeeComponent extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,6 +34,20 @@ class AttendeeProfileComponent extends React.Component {
                 this.setState({attendee: data})
             }
         });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.attendee._id !== this.props.attendee._id) {
+            const pathParts = window.location.pathname.split('/');
+            const id = pathParts.pop() || pathParts.pop();
+            AttendeeService.getAttendee(id).then(data => {
+                if (data.hasOwnProperty("message")) {
+                    // TODO: error handling
+                } else {
+                    this.setState({attendee: data})
+                }
+            });
+        }
     }
 
     toggleEditName = () => {
@@ -291,10 +305,17 @@ class AttendeeProfileComponent extends React.Component {
                                 </label>
                             }
                         </div>
-
+                        {
+                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
+                            <Link to={`/attendee/${this.props.attendee._id}/messages`}>
+                                <button className="btn btn-dark d-block align-items-center">
+                                    Messages
+                                </button>
+                            </Link>
+                        }
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id !== this.state.attendee._id &&
-                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.likeEvent()}>
+                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.createConversation()}>
                                 Message
                             </button>
                         }
@@ -307,7 +328,7 @@ class AttendeeProfileComponent extends React.Component {
                         <div className="row col-sm-6 col-12 d-inline">
                             <h4>Liked events</h4>
                             <div className="EB-scroll-list">
-                                <UPEventListComponent/>
+                                <AttendeeEventListComponent/>
                             </div>
                         </div>
                     }
@@ -319,7 +340,7 @@ class AttendeeProfileComponent extends React.Component {
                                 <h4>Messages</h4>
                             </Link>
                             <div className="EB-scroll-list">
-                                <UPMessageListComponent/>
+                                <AttendeeMessageListComponent/>
                             </div>
                         </div>
                     }
@@ -354,4 +375,4 @@ const dispatchToPropertyMapper = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, dispatchToPropertyMapper)(AttendeeProfileComponent);
+export default connect(mapStateToProps, dispatchToPropertyMapper)(AttendeeComponent);

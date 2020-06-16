@@ -105,6 +105,13 @@ a {
     margin: 5px;
 }
 
+.EB-item-pic-lg {
+    width: 500px;
+    height: 270px;
+    object-fit: cover;
+    margin: 5px;
+}
+
 .home-container {
     padding: 20%;
 }
