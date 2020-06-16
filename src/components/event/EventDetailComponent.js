@@ -7,7 +7,7 @@ import AttendeeService from "../../services/AttendeeService";
 import VenueService from "../../services/VenueService";
 import {selectEvent, updateEvent} from "../../actions/EventActions";
 import {updateAttendee} from "../../actions/AttendeeActions";
-import {DEFAULT_IMAGE_URL} from "../../common/Constants";
+import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
 
 class EventDetailComponent extends React.Component {
 
@@ -21,23 +21,23 @@ class EventDetailComponent extends React.Component {
     };
 
     renderDescription = () => {
-        return this.props.event.description === undefined ? "d-none" : "";
+        return (this.props.event.description === undefined || this.props.event.description === "") ? "d-none" : "";
     };
 
     renderInformation = () => {
-        return this.props.event.info === undefined ? "d-none" : "";
+        return (this.props.event.info === undefined || this.props.event.info === "") ? "d-none" : "";
     };
 
     renderAccessibility = () => {
-        return this.props.event.accessibility === undefined ? "d-none" : "";
+        return (this.props.event.accessibility === undefined || this.props.event.accessibility === "") ? "d-none" : "";
     };
 
     renderTicketLimit = () => {
-        return this.props.event.ticketLimit === undefined ? "d-none" : "";
+        return (this.props.event.ticketLimit === undefined || this.props.event.ticketLimit === "") ? "d-none" : "";
     };
 
     renderPleaseNote = () => {
-        return this.props.event.pleaseNote === undefined ? "d-none" : "";
+        return (this.props.event.pleaseNote === undefined || this.props.event.pleaseNote === "") ? "d-none" : "";
     };
 
     likeEvent = async () => {
@@ -137,7 +137,7 @@ class EventDetailComponent extends React.Component {
                             !(this.props.event.image_url === '' || this.props.event.image_url === undefined) ?
                             <img src={this.props.event.image_url} className="rounded EB-item-pic-lg" alt=""/>
                             :
-                            <img src={DEFAULT_IMAGE_URL} className="rounded EB-item-pic-lg" alt=""/>
+                            <img src={DEFAULT_EVENT_IMAGE_URL} className="rounded EB-item-pic-lg" alt=""/>
                         }
                         {
                             !this.props.event.hasOwnProperty("organizer") &&

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import {DEFAULT_IMAGE_URL} from "../../common/Constants";
+import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
 
 const AttendeeEventItemComponent = (props) =>
     <Link to={(props.event.external && !props.event.integrated) ? `/event/external/${props.event._id}` : `/event/${props.event._id}`}>
@@ -9,7 +9,7 @@ const AttendeeEventItemComponent = (props) =>
                 props.event.image_url !== '' ?
                 <img src={props.event.image_url} className="rounded EB-item-pic" alt=""/>
                 :
-                <img src={DEFAULT_IMAGE_URL} className="rounded EB-item-pic" alt=""/>
+                <img src={DEFAULT_EVENT_IMAGE_URL} className="rounded EB-item-pic" alt=""/>
             }
             <div className="EB-list-content">
                 <span>

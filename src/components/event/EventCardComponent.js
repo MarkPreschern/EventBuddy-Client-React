@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import {selectEvent} from "../../actions/EventActions";
-import {DEFAULT_IMAGE_URL} from "../../common/Constants";
+import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
 
 const EventCardComponent = (props) =>
     <div className="card EB-card">
@@ -10,7 +10,7 @@ const EventCardComponent = (props) =>
             !(props.event.image_url === '' || props.event.image_url === undefined) ?
             <img className="card-img-top" src={props.event.image_url} alt=""/>
             :
-            <img className="card-img-top" src={DEFAULT_IMAGE_URL} alt=""/>
+            <img className="card-img-top" src={DEFAULT_EVENT_IMAGE_URL} alt=""/>
         }
         <div className="card-body d-flex flex-column">
             <h5 className="card-title">{props.event.name}</h5>

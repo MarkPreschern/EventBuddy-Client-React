@@ -8,6 +8,10 @@ import {updateAttendee} from "../../actions/AttendeeActions";
 import {resetAction} from "../../actions/RootActions";
 import {selectConversation} from "../../actions/ConversationActions";
 import ConversationService from "../../services/ConversationService";
+import {
+    DEFAULT_PROFILE_FEMALE_IMAGE_URL,
+    DEFAULT_PROFILE_MALE_IMAGE_URL, DEFAULT_PROFILE_OTHER_IMAGE_URL
+} from "../../common/Constants";
 
 class AttendeeComponent extends React.Component {
     constructor(props) {
@@ -142,6 +146,15 @@ class AttendeeComponent extends React.Component {
         }
     };
 
+    defaultImage = () => {
+        if (this.state.attendee.gender === "Male") {
+            return DEFAULT_PROFILE_MALE_IMAGE_URL;
+        } else if (this.state.attendee.gender === "Female") {
+            return DEFAULT_PROFILE_FEMALE_IMAGE_URL;
+        } else {
+            return DEFAULT_PROFILE_OTHER_IMAGE_URL;
+        }
+    };
 
     render() {
         return(
@@ -150,22 +163,44 @@ class AttendeeComponent extends React.Component {
                     <h3 className="col-12">{this.state.attendee.name}</h3>
                     <div className="col-sm-3 col-12">
                         {
-                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                            !this.state.editingImageUrl &&
+                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id && !this.state.editingImageUrl &&
                             <div className="text-center">
-                                <img src={this.state.attendee.image_url}
-                                     className="rounded EB-profile-pic"
-                                     alt=""/>
+                                {
+                                    !(this.state.attendee.image_url === '' || this.state.attendee.image_url === undefined)  ?
+                                    <img src={this.state.attendee.image_url}
+                                         onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
+                                         className="rounded EB-profile-pic mb-3 EB-margin-bottom-0"
+                                         alt=""/>
+                                         :
+                                    <img src={this.defaultImage()}
+                                         onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
+                                         className="rounded EB-profile-pic mb-3 EB-margin-bottom-0"
+                                         alt=""/>
+                                }
                                 <button className="btn"
-                                    onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
-                                    <small>Change profile picture URL</small>
+                                        onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
+                                    <small>Picture URL</small>
                                     <i className="fa fa-pencil ml-2"/>
                                 </button>
                             </div>
                         }
                         {
-                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                            this.state.editingImageUrl &&
+                            this.props.attendee._id !== this.state.attendee._id &&
+                            <div className="text-center">
+                                {
+                                    !(this.state.attendee.image_url === '' || this.state.attendee.image_url === undefined)  ?
+                                    <img src={this.state.attendee.image_url}
+                                         className="rounded EB-profile-pic mb-3"
+                                         alt=""/>
+                                                                                                                            :
+                                    <img src={this.defaultImage()}
+                                         className="rounded EB-profile-pic mb-3"
+                                         alt=""/>
+                                }
+                            </div>
+                        }
+                        {
+                            this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id && this.state.editingImageUrl &&
                             <div className="d-flex mr-4">
                                 <input className="form-control"
                                        placeholder="Image URL"
@@ -347,7 +382,7 @@ class AttendeeComponent extends React.Component {
                         </div>
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                            <Link to={`/attendee/${this.props.attendee._id}/messages`}>
+                            <Link to={`/attendee/${this.props.attendee._id}/messages/-1`}>
                                 <button className="btn btn-dark d-block align-items-center">
                                     Messages
                                 </button>
@@ -364,11 +399,11 @@ class AttendeeComponent extends React.Component {
 
                 <div className="row mb-3">
                     {
-                        this.props.attendee.hasOwnProperty("events_liked") && this.props.attendee.events_liked.length > 0 &&
+                        this.state.attendee.hasOwnProperty("events_liked") && this.state.attendee.events_liked.length > 0 &&
                         <div className="row col-12 d-inline">
                             <h4>Liked events</h4>
                             <div className="EB-scroll-list">
-                                <AttendeeEventListComponent/>
+                                <AttendeeEventListComponent events={this.state.attendee.events_liked}/>
                             </div>
                         </div>
                     }

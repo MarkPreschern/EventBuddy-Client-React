@@ -6,6 +6,10 @@ import OrganizerVenueListComponent from "./OrganizerVenueListComponent";
 import {updateOrganizer} from "../../actions/OrganizerActions";
 import OrganizerService from "../../services/OrganizerService";
 import {resetAction} from "../../actions/RootActions";
+import {
+    DEFAULT_PROFILE_FEMALE_IMAGE_URL,
+    DEFAULT_PROFILE_MALE_IMAGE_URL, DEFAULT_PROFILE_OTHER_IMAGE_URL
+} from "../../common/Constants";
 
 class OrganizerComponent extends React.Component {
     constructor(props) {
@@ -113,6 +117,16 @@ class OrganizerComponent extends React.Component {
         }
     };
 
+    defaultImage = () => {
+        if (this.state.organizer.gender === "Male") {
+            return DEFAULT_PROFILE_MALE_IMAGE_URL;
+        } else if (this.state.organizer.gender === "Female") {
+            return DEFAULT_PROFILE_FEMALE_IMAGE_URL;
+        } else {
+            return DEFAULT_PROFILE_OTHER_IMAGE_URL;
+        }
+    };
+
     render() {
         return(
             <div className="container-fluid">
@@ -122,15 +136,26 @@ class OrganizerComponent extends React.Component {
                         {
                             !this.state.editingImageUrl &&
                             <div className="text-center">
-                                <img src={this.state.organizer.image_url}
-                                     onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
-                                     className="rounded EB-profile-pic mb-3"
-                                     alt=""/>
-                                <button className="btn"
-                                        onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
-                                <small>Change profile picture URL</small>
-                                    <i className="fa fa-pencil ml-2"/>
-                                </button>
+                                {
+                                    !(this.state.organizer.image_url === '' || this.state.organizer.image_url === undefined)  ?
+                                    <img src={this.state.organizer.image_url}
+                                         onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
+                                         className="rounded EB-profile-pic mb-3 EB-margin-bottom-0"
+                                         alt=""/>
+                                         :
+                                    <img src={this.defaultImage()}
+                                         onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}
+                                         className="rounded EB-profile-pic mb-3 EB-margin-bottom-0"
+                                         alt=""/>
+                                }
+                                {
+                                    this.props.organizer._id !== -1 && this.props.organizer._id === this.state.organizer._id &&
+                                    <button className="btn"
+                                            onClick={!this.state.editingImageUrl ? this.toggleEditImage : () => {}}>
+                                        <small>Picture URL</small>
+                                        <i className="fa fa-pencil ml-2"/>
+                                    </button>
+                                }
                             </div>
                         }
                         {

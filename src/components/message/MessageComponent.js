@@ -11,7 +11,7 @@ class MessageComponent extends React.Component {
                 {
                     this.props.attendee._id !== -1 &&
                     <div className="m-2">
-                        <h3>Messages</h3>
+                        <h3>Conversations</h3>
                         <div className="row">
                             <div className="col-3 d-none d-md-inline EB-contact-list">
                                 <MessageListComponent/>

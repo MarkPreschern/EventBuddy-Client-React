@@ -10,7 +10,7 @@ const OrganizerEventListComponent = (props) =>
             {
                 props.organizer.hasOwnProperty("events") &&
                 props.organizer.events.map(event =>
-                    <Link to={`/organizer/${props.organizer._id}/event/${event._id}/edit`}>
+                    <Link to={`/organizer/${props.organizer._id}/event/${event._id}/edit`} key={event._id}>
                         <OrganizerListItemComponent item={event}/>
                     </Link>)
             }

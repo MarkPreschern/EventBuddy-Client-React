@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import MessageChatBubbleComponent from "./MessageChatBubbleComponent";
 import ConversationService from "../../services/ConversationService";
 import {selectConversation} from "../../actions/ConversationActions";
-import {Route} from "react-router-dom";
 
 class MessageChatComponent extends React.Component {
     componentDidMount() {
@@ -21,7 +20,7 @@ class MessageChatComponent extends React.Component {
     render() {
         return(
             <span>
-                <div className="EB-chatbox">
+                <div className="EB-chatbox EB-rounded-corners">
                     <MessageChatBubbleComponent
                         userId="123"
                         messageUserId="123"/>

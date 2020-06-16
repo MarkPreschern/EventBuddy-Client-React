@@ -4,6 +4,7 @@ import EventAttendeesComponent from "./EventAttendeesComponent";
 import EventService from "../../services/EventService";
 import OrganizerService from "../../services/OrganizerService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
+import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
 
 class EventDetailsEditComponent extends React.Component {
     constructor(props) {
@@ -174,9 +175,38 @@ class EventDetailsEditComponent extends React.Component {
                     </div>
                 }
                 <div className="row">
-                    <div className="col-md-7">
-                        <img src={this.state.event.image_url} className="img-fluid" alt=""/>
-                    </div>
+                    {
+                        !this.state.editingPicture ?
+                        <div className="col-md-7">
+                            {
+                                !(this.state.event.image_url === '' || this.state.event.image_url
+                                  === undefined) ?
+                                <img src={this.state.event.image_url} className="rounded EB-item-pic-lg EB-margin-bottom-0" alt=""/>
+                                                 :
+                                <img src={DEFAULT_EVENT_IMAGE_URL} className="rounded EB-item-pic-lg EB-margin-bottom-0" alt=""/>
+                            }
+                            <div className="text-center">
+                                <button className="btn" onClick={!this.state.editingPicture ? this.toggleEditPicture : () => {}}>
+                                    <small>Picture URL</small>
+                                    <i className="fa fa-pencil ml-2"/>
+                                </button>
+                            </div>
+                        </div>
+                        :
+                        <div className="col-md-7">
+                             <div className="d-flex mr-4">
+                                 <input className="form-control"
+                                        placeholder="Image URL"
+                                        type="text"
+                                        value={this.state.event.image_url}
+                                        onChange={(event) => this.setState({event: {...this.state.event, image_url: event.target.value}})}/>
+                                 <button className="btn btn-outline-success"
+                                         onClick={this.toggleEditPicture}>
+                                     <i className="fa fa-check"/>
+                                 </button>
+                             </div>
+                        </div>
+                    }
                     <div className="col-md-5 align-self-center">
                         <ul className="EB-list">
                             <li onClick={this.toggleEditLocation}>

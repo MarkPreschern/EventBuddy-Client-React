@@ -5,7 +5,7 @@ import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
 import {selectAttendee} from "../actions/AttendeeActions";
 import {selectOrganizer} from "../actions/OrganizerActions";
-import {DEFAULT_IMAGE_URL} from "../common/Constants";
+import {DEFAULT_EVENT_IMAGE_URL} from "../common/Constants";
 
 
 class RegisterComponent extends React.Component {
@@ -20,7 +20,7 @@ class RegisterComponent extends React.Component {
                 email: "",
                 dob: "",
                 gender: "",
-                image_url: DEFAULT_IMAGE_URL
+                image_url: DEFAULT_EVENT_IMAGE_URL
             },
             newOrganizer: {
                 company_name: "",
@@ -30,7 +30,7 @@ class RegisterComponent extends React.Component {
                 phone_number: "",
                 email: "",
                 company_url: "",
-                image_url: DEFAULT_IMAGE_URL
+                image_url: DEFAULT_EVENT_IMAGE_URL
             },
             userType: "attendee",
             verifyPassword: ""

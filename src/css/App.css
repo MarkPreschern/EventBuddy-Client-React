@@ -102,14 +102,13 @@ a {
     width: 60px;
     height: 60px;
     object-fit: cover;
-    /*margin: 5px;*/
     display: inline-flex;
 }
 
 .EB-item-pic-lg {
     width: 500px;
     height: 270px;
-    object-fit: cover;
+    object-fit: contain;
     margin: 5px;
 }
 
@@ -263,5 +262,13 @@ a {
     max-width: 500px;
     display: inline-flex;
     align-self: center;
+}
+
+.EB-rounded-corners {
+    border-radius: 10px;
+}
+
+.EB-margin-bottom-0 {
+    margin-bottom: 0 !important;
 }
 
