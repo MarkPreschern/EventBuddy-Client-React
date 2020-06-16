@@ -1,10 +1,11 @@
 import React from 'react'
-import {selectEvent, updateEvent} from "../../actions/EventActions";
 import {connect} from "react-redux";
+import EventAttendeesComponent from "./EventAttendeesComponent"
 import EventService from "../../services/EventService";
 import AttendeeService from "../../services/AttendeeService";
-import {updateAttendee} from "../../actions/AttendeeActions";
 import VenueService from "../../services/VenueService";
+import {selectEvent, updateEvent} from "../../actions/EventActions";
+import {updateAttendee} from "../../actions/AttendeeActions";
 
 class EventDetailComponent extends React.Component {
 
@@ -163,6 +164,14 @@ class EventDetailComponent extends React.Component {
                             }
                         </ul>
                     </div>
+                </div>
+                <div>
+                    {this.props.event.hasOwnProperty("attendee_likes") && this.props.event.attendee_likes.length > 0 &&
+                     <div>
+                         <h4>Attendee likes</h4>
+                         <EventAttendeesComponent attendees={this.props.event.attendee_likes}/>
+                     </div>
+                    }
                 </div>
                 <div className={this.renderDescription()}>
                     <h4>Description</h4>

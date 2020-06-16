@@ -8,7 +8,7 @@ const EventCardComponent = (props) =>
         <img className="card-img-top" src={props.event.image_url} alt=""/>
         <div className="card-body">
             <h5 className="card-title">{props.event.name}</h5>
-            <h6 className="card-text">{props.event.start_date}</h6>
+            <h6 className="card-text">{props.event.start_date.split("T")[0]}</h6>
             <p className="card-text">{venueInformation(props)}</p>
             <Link className="text-muted float-right"
                   to={`/event/${(props.event.external && !props.event.integrated) ? "external/" : ""}${props.event._id}`}

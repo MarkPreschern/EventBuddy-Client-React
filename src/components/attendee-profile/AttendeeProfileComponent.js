@@ -291,6 +291,13 @@ class AttendeeProfileComponent extends React.Component {
                                 </label>
                             }
                         </div>
+
+                        {
+                            this.props.attendee._id !== -1 && this.props.attendee._id !== this.state.attendee._id &&
+                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.likeEvent()}>
+                                Message
+                            </button>
+                        }
                     </div>
                 </div>
 

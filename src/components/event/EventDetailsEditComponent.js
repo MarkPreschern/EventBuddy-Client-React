@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from "react-redux";
+import EventAttendeesComponent from "./EventAttendeesComponent";
 import EventService from "../../services/EventService";
 import OrganizerService from "../../services/OrganizerService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
@@ -211,6 +212,14 @@ class EventDetailsEditComponent extends React.Component {
                             }
                         </ul>
                     </div>
+                </div>
+                <div>
+                    {this.state.event.hasOwnProperty("attendee_likes") && this.state.event.attendee_likes.length > 0 &&
+                     <div>
+                         <h4>Attendee likes</h4>
+                         <EventAttendeesComponent attendees={this.state.event.attendee_likes}/>
+                     </div>
+                    }
                 </div>
                 <div>
                 {
