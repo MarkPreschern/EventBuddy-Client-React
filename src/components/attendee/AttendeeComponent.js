@@ -6,6 +6,8 @@ import AttendeeMessageListComponent from "./AttendeeMessageListComponent";
 import AttendeeService from "../../services/AttendeeService";
 import {updateAttendee} from "../../actions/AttendeeActions";
 import {resetAction} from "../../actions/RootActions";
+import {selectConversation} from "../../actions/ConversationActions";
+import ConversationService from "../../services/ConversationService";
 
 class AttendeeComponent extends React.Component {
     constructor(props) {
@@ -49,6 +51,33 @@ class AttendeeComponent extends React.Component {
             });
         }
     }
+
+    message = async () => {
+        // if the sender & receiver don't already have a conversation history
+        let existingConversations = this.props.attendee.conversations.filter(conversation => conversation.receiver._id === this.state.attendee._id);
+        if (existingConversations.length === 0) {
+            let conversation = {
+                sender: this.props.attendee,
+                receiver: this.state.attendee
+            };
+            const data = await ConversationService.createConversation(this.props.attendee._id, conversation);
+            if (data.hasOwnProperty("message")) {
+                // TODO: error handling
+            } else {
+                this.props.selectConversation(data);
+                this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
+            }
+        } else {
+            const data = await ConversationService.getConversation(this.props.attendee._id, existingConversations[0]._id);
+            if (data.hasOwnProperty("message")) {
+                console.log(data);
+                // TODO: error handling
+            } else {
+                this.props.selectConversation(data);
+                this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
+            }
+        }
+    };
 
     toggleEditName = () => {
         if (this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id) {
@@ -315,7 +344,7 @@ class AttendeeComponent extends React.Component {
                         }
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id !== this.state.attendee._id &&
-                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.createConversation()}>
+                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.message()}>
                                 Message
                             </button>
                         }
@@ -368,10 +397,13 @@ const dispatchToPropertyMapper = (dispatch) => {
             const data = await AttendeeService.updateAttendee(attendee._id, attendee);
             dispatch(updateAttendee(data))
         },
+        selectConversation: (conversation) => {
+            dispatch(selectConversation(conversation))
+        },
         resetState: () => {
             window.sessionStorage.clear();
             dispatch(resetAction())
-        }
+        },
     }
 };
 

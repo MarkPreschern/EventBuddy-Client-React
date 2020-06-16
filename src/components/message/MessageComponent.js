@@ -1,23 +1,35 @@
 import React from 'react'
-import MessageContactListComponent from "./MessageContactListComponent";
+import {connect} from "react-redux";
+import {Route} from "react-router-dom";
+import MessageListComponent from "./MessageListComponent";
 import MessageChatComponent from "./MessageChatComponent";
 
-export default class MessageComponent extends React.Component {
+class MessageComponent extends React.Component {
     render() {
         return (
-            <div className="m-2">
-                <h3>Your Messages</h3>
-                <div className="row">
-                <div className="col-3 d-none d-md-inline EB-contact-list">
-                    <MessageContactListComponent/>
-                </div>
-                <div className="col-md-9 col-12">
-                    <MessageChatComponent/>
-                    <input className="form-control "
-                           placeholder="Write your message here"/>
-                </div>
-                </div>
+            <div>
+                {
+                    this.props.attendee._id !== -1 &&
+                    <div className="m-2">
+                        <h3>Messages</h3>
+                        <div className="row">
+                            <div className="col-3 d-none d-md-inline EB-contact-list">
+                                <MessageListComponent/>
+                            </div>
+                            <div className="col-md-9 col-12">
+                                <Route path='/attendee/:attendeeId/messages/:conversationId' component={MessageChatComponent}/>
+                                <input className="form-control " placeholder="Write your message here"/>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    attendee: state.AttendeeReducer.attendee
+});
+
+export default connect(mapStateToProps)(MessageComponent);

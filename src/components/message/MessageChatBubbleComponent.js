@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class ChatBubbleComponent extends React.Component {
+export default class MessageChatBubbleComponent extends React.Component {
     state = {
         userId: this.props.userId,
         messageUserId: this.props.messageUserId,

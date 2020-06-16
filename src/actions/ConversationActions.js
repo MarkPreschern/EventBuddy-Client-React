@@ -22,3 +22,9 @@ export const deleteConversation = (conversationId) => ({
     type: DELETE_CONVERSATION,
     conversationId: conversationId
 });
+
+export const SELECT_CONVERSATION = "SELECT_CONVERSATION";
+export const selectConversation = (conversation) => ({
+    type: SELECT_CONVERSATION,
+    conversation: conversation
+});
