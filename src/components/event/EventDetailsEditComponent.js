@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from "react-redux";
-import EventAttendeesComponent from "./EventAttendeesComponent";
 import EventService from "../../services/EventService";
 import OrganizerService from "../../services/OrganizerService";
 import {updateOrganizer} from "../../actions/OrganizerActions";

@@ -16,8 +16,6 @@ class MessageChatComponent extends React.Component {
     }
 
     componentDidMount() {
-        this._isMounted = true;
-
         const pathParts = window.location.pathname.split('/');
         const id = pathParts.pop() || pathParts.pop();
         if (id !== "messages") {
@@ -28,6 +26,14 @@ class MessageChatComponent extends React.Component {
                     data.messages = data.messages.sort((m1, m2) => m1.timestamp > m2.timestamp);
                     this.props.selectConversation(data);
                     this.scrollBottom();
+                }
+            });
+        } else if (this.props.attendee.conversations.length > 0) {
+            ConversationService.getConversation(this.props.attendee._id, this.props.attendee.conversations[0]._id).then(data => {
+                if (data.hasOwnProperty("message")) {
+                    this.props.showAlert(data.message.msgBody);
+                } else {
+                    this.props.selectConversation(data);
                 }
             });
         }
@@ -43,13 +49,15 @@ class MessageChatComponent extends React.Component {
     sendMessage = async () => {
         let message = {
             content: this.state.message,
-            sender: this.props.attendee,
+            sender: this.props.attendee._id,
         };
         const data = await MessageService.createMessage(this.props.attendee._id, this.props.conversation._id, message);
         if (data.hasOwnProperty("message")) {
             this.props.showAlert(data.message.msgBody);
         } else {
-            message._id = data.sender;
+            message._id = data._id;
+            message.sender = {};
+            message.sender._id = data.sender;
             let conversation = this.props.conversation;
             conversation.messages.push(message);
             this.props.selectConversation(conversation);
@@ -73,8 +81,10 @@ class MessageChatComponent extends React.Component {
                 <div className="EB-chatbox EB-rounded-corners" id="EB-message-scroll">
                     {
                         this.props.conversation.messages.map(message => {
-                            return <MessageChatBubbleComponent key={message._id} userId={this.props.attendee._id}
-                                                               messageUserId={message.sender._id} message={message}/>
+                            return <MessageChatBubbleComponent key={message._id}
+                                                               userId={this.props.attendee._id}
+                                                               messageUserId={message.sender._id}
+                                                               message={message}/>
                         })
                     }
                 </div>

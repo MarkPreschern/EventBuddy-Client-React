@@ -10,7 +10,7 @@ const OrganizerVenueListComponent = (props) =>
             {
                 props.organizer.hasOwnProperty("venues") &&
                 props.organizer.venues.map(venue =>
-                     <Link to={`/organizer/${props.organizer._id}/venue/${venue._id}/edit`} key={venue._id}
+                     <Link to={venuePage(props.loggedInOrganizer, props.organizer, venue)} key={venue._id}
                            onClick={() => props.selectVenue(venue)}>
                          <OrganizerListItemComponent item={venue}/>
                      </Link>)
@@ -27,8 +27,16 @@ const OrganizerVenueListComponent = (props) =>
         </div>
     </div>;
 
+const venuePage = (loggedInOrganizer, organizer, venue) => {
+    if (loggedInOrganizer._id !== -1 && loggedInOrganizer._id === organizer._id) {
+        return `/organizer/${organizer._id}/venue/${venue._id}/edit`;
+    } else {
+        return `/venue/${venue._id}`;
+    }
+};
+
 const mapStateToProps = state => ({
-    organizer: state.OrganizerReducer.organizer
+    loggedInOrganizer: state.OrganizerReducer.organizer
 });
 
 const dispatchToPropertyMapper = (dispatch) => {

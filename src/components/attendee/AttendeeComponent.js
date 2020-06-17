@@ -43,7 +43,7 @@ class AttendeeComponent extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.attendee._id !== this.props.attendee._id) {
+        if (prevState.attendee._id !== this.state.attendee._id) {
             const pathParts = window.location.pathname.split('/');
             const id = pathParts.pop() || pathParts.pop();
             AttendeeService.getAttendee(id).then(data => {
@@ -70,17 +70,31 @@ class AttendeeComponent extends React.Component {
             if (data.hasOwnProperty("message")) {
                 this.props.showAlert(data.message.msgBody);
             } else {
-                await this.props.selectConversation(data);
-                this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
+                AttendeeService.getAttendee(this.props.attendee._id).then(attendee => {
+                    if (attendee.hasOwnProperty("message")) {
+                        this.props.showAlert(attendee.message.msgBody);
+                    } else {
+                        this.props.updateAttendee(attendee);
+                        this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
+                    }
+                });
             }
         } else {
-            const data = await ConversationService.getConversation(this.props.attendee._id, existingConversations[0]._id);
+            this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${existingConversations[0]._id}`)
+        }
+    };
+
+    messages = async () => {
+        if (this.props.attendee.conversations.length > 0) {
+            const data = await ConversationService.getConversation(this.props.attendee._id, this.props.attendee.conversations[0]._id);
             if (data.hasOwnProperty("message")) {
                 this.props.showAlert(data.message.msgBody);
             } else {
                 await this.props.selectConversation(data);
-                this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
+                this.props.history.push(`/attendee/${this.props.attendee._id}/messages`);
             }
+        } else {
+            this.props.history.push(`/attendee/${this.props.attendee._id}/messages`);
         }
     };
 
@@ -393,11 +407,9 @@ class AttendeeComponent extends React.Component {
                         </div>
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                            <Link to={`/attendee/${this.props.attendee._id}/messages`}>
-                                <button className="btn btn-dark align-items-center">
-                                    Messages
-                                </button>
-                            </Link>
+                            <button className="btn btn-dark align-items-center" onClick={() => this.messages()}>
+                                Messages
+                            </button>
                         }
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id !== this.state.attendee._id &&

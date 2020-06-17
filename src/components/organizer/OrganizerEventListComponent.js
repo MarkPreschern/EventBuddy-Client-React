@@ -8,15 +8,14 @@ const OrganizerEventListComponent = (props) =>
     <div>
         <div className="">
             {
-                props.organizer.hasOwnProperty("events") &&
+                props.loggedInOrganizer._id !== -1 && props.organizer.hasOwnProperty("events") &&
                 props.organizer.events.map(event =>
-                    <Link to={`/organizer/${props.organizer._id}/event/${event._id}/edit`} key={event._id}>
+                    <Link to={eventPage(props.loggedInOrganizer, props.organizer, event)} key={event._id}>
                         <OrganizerListItemComponent item={event}/>
                     </Link>)
             }
             {
-                props.organizer._id === -1 &&
-                props.events !== undefined &&
+                props.loggedInOrganizer._id === -1 && props.events !== undefined &&
                 props.events.map(event =>
                 <Link to={`/event/${event._id}`} key={event._id}
                       onClick={() => props.selectEvent(event)}>
@@ -26,8 +25,16 @@ const OrganizerEventListComponent = (props) =>
         </div>
     </div>;
 
+const eventPage = (loggedInOrganizer, organizer, event) => {
+    if (loggedInOrganizer._id !== -1 && loggedInOrganizer._id === organizer._id) {
+        return `/organizer/${organizer._id}/event/${event._id}/edit`;
+    } else {
+        return `/event/${event._id}`;
+    }
+};
+
 const mapStateToProps = state => ({
-    organizer: state.OrganizerReducer.organizer
+    loggedInOrganizer: state.OrganizerReducer.organizer
 });
 
 const dispatchToPropertyMapper = (dispatch) => {

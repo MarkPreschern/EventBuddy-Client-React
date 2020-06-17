@@ -66,8 +66,6 @@ class RegisterComponent extends React.Component {
         if (this.state.userType === "attendee") {
             if (this.state.newAttendee.password !== this.state.verifyPassword) {
                 this.props.showAlert("Passwords don't match");
-            } else if (this.state.newAttendee.password.length < 8) {
-                this.props.showAlert("Password is too short, must be at least 9 characters");
             } else {
                 AttendeeService.createAttendee(this.state.newAttendee).then(data => {
                     if (data.hasOwnProperty("message")) {
@@ -84,8 +82,6 @@ class RegisterComponent extends React.Component {
         } else if (this.state.userType === "organizer") {
             if (this.state.newOrganizer.password !== this.state.verifyPassword) {
                 this.props.showAlert("Passwords don't match");
-            } else if (this.state.newOrganizer.password.length < 8) {
-                this.props.showAlert("Password is too short, must be at least 9 characters");
             } else {
                 OrganizerService.createOrganizer(this.state.newOrganizer).then(data => {
                     if (data.hasOwnProperty("message")) {

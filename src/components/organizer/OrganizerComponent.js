@@ -357,7 +357,7 @@ class OrganizerComponent extends React.Component {
                             }
                         </div>
                         <div className="EB-scroll-list">
-                            <OrganizerEventListComponent events={this.state.organizer.events}/>
+                            <OrganizerEventListComponent organizer={this.state.organizer} events={this.state.organizer.events}/>
                         </div>
                     </div>
                     <div className="row col-12 col-sm-6 d-inline">
@@ -373,7 +373,7 @@ class OrganizerComponent extends React.Component {
                             }
                         </div>
                         <div className="">
-                            <OrganizerVenueListComponent venues={this.state.organizer.venues}/>
+                            <OrganizerVenueListComponent organizer={this.state.organizer} venues={this.state.organizer.venues}/>
                         </div>
                     </div>
                 </div>

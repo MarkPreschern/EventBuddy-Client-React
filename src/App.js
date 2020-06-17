@@ -51,7 +51,7 @@ class App extends React.Component {
     AlertTemplate = ({ style, options, message, close }) => (
         <div style={style} className="EB-alert">
             <h6>Error! {message}</h6>
-            <button className="btn" onClick={close}>
+            <button className="btn btn-danger" onClick={close}>
                 <i className="fa fa-times"/>
             </button>
         </div>
