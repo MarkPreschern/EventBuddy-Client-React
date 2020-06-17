@@ -15,9 +15,11 @@ const OrganizerEventListComponent = (props) =>
                     </Link>)
             }
             {
-                props.organizer._id === -1 && props.events !== undefined &&
+                props.organizer._id === -1 &&
+                props.events !== undefined &&
                 props.events.map(event =>
-                <Link to={`/event/${event._id}`} key={event._id} onClick={() => props.selectEvent(event)}>
+                <Link to={`/event/${event._id}`} key={event._id}
+                      onClick={() => props.selectEvent(event)}>
                     <OrganizerListItemComponent item={event}/>
                 </Link>)
             }

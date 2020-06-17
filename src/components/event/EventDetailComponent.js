@@ -197,6 +197,7 @@ class EventDetailComponent extends React.Component {
                 </div>
                 <div>
                     {this.props.event.hasOwnProperty("attendee_likes") && this.props.event.attendee_likes.length > 0 &&
+                    this.props.attendee._id !== -1 && this.props.attendee.events_liked.filter(event => event._id === this.props.event._id).length > 0 &&
                         <EventAttendeesComponent attendees={this.props.event.attendee_likes}/>
                     }
                 </div>

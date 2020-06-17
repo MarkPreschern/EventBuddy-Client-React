@@ -161,17 +161,20 @@ class OrganizerComponent extends React.Component {
                         }
                         {
                             this.state.editingImageUrl &&
-                            <div className="d-flex mr-4">
-                                <input className="form-control"
-                                       placeholder="Image URL"
-                                       type="text"
-                                       value={this.state.organizer.image_url}
-                                       onChange={(event) => this.setState({organizer: {...this.state.organizer, image_url: event.target.value}})}/>
-                                <button className="btn btn-outline-success"
-                                        onClick={this.toggleEditImage}>
-                                    <i className="fa fa-check"/>
-                                </button>
-                            </div>
+                            <span>
+                                Paste a URL of an image here!
+                                <div className="form-row">
+                                    <input className="form-control col-12"
+                                           placeholder="Image URL"
+                                           type="text"
+                                           value={this.state.organizer.image_url}
+                                           onChange={(event) => this.setState({organizer: {...this.state.organizer, image_url: event.target.value}})}/>
+                                    <button className="btn btn-outline-success col-12"
+                                            onClick={this.toggleEditImage}>
+                                        <i className="fa fa-check"/>
+                                    </button>
+                                </div>
+                            </span>
                         }
                     </div>
 
@@ -357,7 +360,7 @@ class OrganizerComponent extends React.Component {
                             <OrganizerEventListComponent events={this.state.organizer.events}/>
                         </div>
                     </div>
-                    <div className="row col-12 col-sm-6  d-inline ">
+                    <div className="row col-12 col-sm-6 d-inline">
                         <div className="d-flex">
                             <h4 className="">Venues</h4>
                             {

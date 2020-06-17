@@ -202,17 +202,20 @@ class AttendeeComponent extends React.Component {
                         }
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id && this.state.editingImageUrl &&
-                            <div className="d-flex mr-4">
-                                <input className="form-control"
-                                       placeholder="Image URL"
-                                       type="text"
-                                       value={this.state.attendee.image_url}
-                                       onChange={(event) => this.setState({attendee: {...this.state.attendee, image_url: event.target.value}})}/>
-                                <button className="btn btn-outline-success"
-                                        onClick={this.toggleEditImage}>
-                                    <i className="fa fa-check"/>
-                                </button>
-                            </div>
+                            <span>
+                                Paste a URL of an image here!
+                                <div className="form-row">
+                                    <input className="form-control col-12"
+                                           placeholder="Image URL"
+                                           type="text"
+                                           value={this.state.attendee.image_url}
+                                           onChange={(event) => this.setState({attendee: {...this.state.attendee, image_url: event.target.value}})}/>
+                                    <button className="btn btn-outline-success col-12"
+                                            onClick={this.toggleEditImage}>
+                                        <i className="fa fa-check"/>
+                                    </button>
+                                </div>
+                            </span>
                         }
                     </div>
                     <div className="form-group col-sm-9 col-12">
@@ -234,10 +237,11 @@ class AttendeeComponent extends React.Component {
                             }
                             {
                                 !this.state.editingName &&
-                                <label onClick={this.toggleEditName}>
+                                <label >
                                     {this.state.attendee.name}
                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                     <i className="fa fa-pencil EB-pencil"/>
+                                     <i onClick={this.toggleEditName}
+                                        className="fa fa-pencil EB-pencil"/>
                                     }
                                 </label>
                             }
@@ -261,10 +265,11 @@ class AttendeeComponent extends React.Component {
                             }
                             {
                                 !this.state.editingUsername &&
-                                <label onClick={this.toggleEditUsername}>
+                                <label >
                                     {this.state.attendee.username}
                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                     <i className="fa fa-pencil EB-pencil"/>
+                                     <i onClick={this.toggleEditUsername}
+                                        className="fa fa-pencil EB-pencil"/>
                                     }
                                 </label>
                             }
@@ -289,10 +294,11 @@ class AttendeeComponent extends React.Component {
                              }
                              {
                                  !this.state.editingPhoneNumber &&
-                                 <label onClick={this.toggleEditPhoneNumber}>
+                                 <label >
                                      {this.state.attendee.phone_number}
                                      {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                      <i className="fa fa-pencil EB-pencil"/>
+                                      <i onClick={this.toggleEditPhoneNumber}
+                                         className="fa fa-pencil EB-pencil"/>
                                      }
                                  </label>
                              }
@@ -318,10 +324,11 @@ class AttendeeComponent extends React.Component {
                              }
                              {
                                  !this.state.editingEmail &&
-                                 <label onClick={this.toggleEditEmail}>
+                                 <label >
                                      {this.state.attendee.email}
                                      {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                      <i className="fa fa-pencil EB-pencil"/>
+                                      <i onClick={this.toggleEditEmail}
+                                         className="fa fa-pencil EB-pencil"/>
                                      }
                                  </label>
                              }
@@ -333,11 +340,12 @@ class AttendeeComponent extends React.Component {
                             {
                                 this.state.editingGender &&
                                 <div className="d-flex">
-                                    <select className="form-control"
-                                           placeholder="Username">
-                                        <option value="m" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Male"}})}>Male</option>
-                                        <option value="f" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Female"}})}>Female</option>
-                                        <option value="x" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Other"}})}>Other</option>
+                                    <select defaultValue={this.state.attendee.gender}
+                                        className="form-control"
+                                        onChange={(event) => this.setState({attendee: {...this.state.attendee, gender: event.target.value}})}>
+                                        <option value="Male" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Male"}})}>Male</option>
+                                        <option value="Female" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Female"}})}>Female</option>
+                                        <option value="Other" onClick={() => this.setState({attendee: {...this.state.attendee, gender: "Other"}})}>Other</option>
                                     </select>
                                     <button className="btn btn-outline-success"
                                             onClick={this.toggleEditGender}>
@@ -347,10 +355,11 @@ class AttendeeComponent extends React.Component {
                             }
                             {
                                 !this.state.editingGender &&
-                                <label onClick={this.toggleEditGender}>
+                                <label >
                                     {this.state.attendee.gender}
                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                     <i className="fa fa-pencil EB-pencil"/>
+                                     <i onClick={this.toggleEditGender}
+                                        className="fa fa-pencil EB-pencil"/>
                                     }
                                 </label>
                             }
@@ -373,10 +382,11 @@ class AttendeeComponent extends React.Component {
                             }
                             {
                                 !this.state.editingBirthday &&
-                                <label onClick={this.toggleEditBirthday}>
+                                <label >
                                     {this.state.attendee.dob === undefined ? "" : this.state.attendee.dob.split('T')[0]}
                                     {this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                                     <i className="fa fa-pencil EB-pencil"/>
+                                     <i onClick={this.toggleEditBirthday}
+                                        className="fa fa-pencil EB-pencil"/>
                                     }
                                 </label>
                             }
@@ -384,14 +394,14 @@ class AttendeeComponent extends React.Component {
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
                             <Link to={`/attendee/${this.props.attendee._id}/messages`}>
-                                <button className="btn btn-dark d-block align-items-center">
+                                <button className="btn btn-dark align-items-center">
                                     Messages
                                 </button>
                             </Link>
                         }
                         {
                             this.props.attendee._id !== -1 && this.props.attendee._id !== this.state.attendee._id &&
-                            <button className="btn btn-dark d-block align-items-center" onClick={() => this.message()}>
+                            <button className="btn btn-dark align-items-center" onClick={() => this.message()}>
                                 Message
                             </button>
                         }
@@ -400,18 +410,29 @@ class AttendeeComponent extends React.Component {
 
                 <div className="row mb-3">
                     {
-                        this.state.attendee.hasOwnProperty("events_liked") && this.state.attendee.events_liked.length > 0 &&
+                        this.state.attendee.hasOwnProperty("events_liked") && this.state.attendee.events_liked.length > 0 ?
                         <div className="row col-12 d-inline">
                             <h4>Liked events</h4>
                             <div className="EB-scroll-list">
                                 <AttendeeEventListComponent events={this.state.attendee.events_liked}/>
                             </div>
                         </div>
+                        :
+                        <div className="row col-12 d-inline text-center mt-3 mb-3 ">
+                            <div>
+                                You didn't like any event :(<br/>
+                                <Link to='/event/search/results'>
+                                    <button className="btn btn-outline-info">
+                                        Click here to browse through some of our recommendations!
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
                     }
                 </div>
                 {
                     this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                    <Link to='/event/search'>
+                    <Link to='/event/search/results'>
                         <button className="btn btn-dark mt-3" onClick={() => this.props.resetState()}>
                             Logout
                         </button>

@@ -7,8 +7,9 @@ export default class HomeComponent extends React.Component {Ω
         return(
             <div className="text-center home-container">
                 <h1>Welcome to EventBuddy!</h1>
+                <h6>Like an event, message a friend!</h6>
                 <p>
-                    EventBuddy is a location-based networking application
+                    EventBuddy is a networking application
                     that facilitates communication between users based on
                     mutual event interests.
                 </p>

@@ -18,7 +18,7 @@ class RegisterComponent extends React.Component {
                 phone_number: "",
                 email: "",
                 dob: "",
-                gender: "",
+                gender: "Male",
                 image_url: ""
             },
             newOrganizer: {
@@ -109,9 +109,12 @@ class RegisterComponent extends React.Component {
                 <div className="form-group row">
                     <label className="col-sm-3 col-form-label">Role</label>
                     <div className="col-sm-9">
-                        <select className="form-control mb-2">
-                            <option onClick={() => this.userTypeChange("attendee")}>Event attendee</option>
-                            <option onClick={() => this.userTypeChange("organizer")}>Event organizer</option>
+                        <select onChange={(event) => this.userTypeChange(event.target.value)}
+                            className="form-control mb-2">
+                            <option value='attendee'
+                                onClick={() => this.userTypeChange("attendee")}>Event attendee</option>
+                            <option value='organizer'
+                                onClick={() => this.userTypeChange("organizer")}>Event organizer</option>
                         </select>
                     </div>
                         {
@@ -181,10 +184,15 @@ class RegisterComponent extends React.Component {
 
                                 <label className="col-sm-3 col-form-label">Gender</label>
                                 <div className="col-sm-9">
-                                    <select className="form-control mb-2">
-                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Male"}})}>Male</option>
-                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Female"}})}>Female</option>
-                                        <option onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Other"}})}>Other</option>
+                                    <select
+                                        onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, gender: event.target.value}})}
+                                        className="form-control mb-2">
+                                        <option value='Male'
+                                            onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Male"}})}>Male</option>
+                                        <option value='Female'
+                                            onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Female"}})}>Female</option>
+                                        <option value='Other'
+                                            onClick={() => this.setState({newAttendee: {...this.state.newAttendee, gender: "Other"}})}>Other</option>
                                     </select>
                                 </div>
 
@@ -284,7 +292,8 @@ class RegisterComponent extends React.Component {
                             </div>
                         }
                 </div>
-                <button className="btn btn-dark" onClick={() => this.register()}>
+                <p>Note: All fields are required!</p>
+                <button className="btn btn-dark mt-2" onClick={() => this.register()}>
                     Register
                 </button>
                 <Link to='/event/search'>

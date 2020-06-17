@@ -16,7 +16,8 @@ const OrganizerVenueListComponent = (props) =>
                      </Link>)
             }
             {
-                props.organizer._id === -1 && props.venues !== undefined &&
+                props.organizer._id === -1 &&
+                props.venues !== undefined &&
                 props.venues.map(venue =>
                      <Link to={`/venue/${venue._id}`} key={venue._id}
                            onClick={() => props.selectVenue(venue)}>

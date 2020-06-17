@@ -6,18 +6,19 @@ export default class FooterComponent extends React.Component {
             <footer className="EB-footer mt-5 text-center">
                 <div className="row pt-3">
                     <div className="col-sm-4 col-12">
-                        <h5 className="on-dark-background">EventBuddy</h5>
-                        <p>Bring a buddy to your next event!</p>
+                        <h6 className="on-dark-background">EventBuddy</h6>
+                        <p>Like an event, message a friend!</p>
                     </div>
                     <div className="col-sm-4 col-12">
                         <h6 className="on-dark-background">About Us</h6>
-                        <p>EventBuddy is a location-based networking application
-                            that facilitates communication between users based on mutual event interests.</p>
+                        <p>EventBuddy is a networking application that facilitates communication between users based on mutual event interests.</p>
                     </div>
                     <div className="col-sm-4 col-12">
                         <h6 className="on-dark-background">Contact Us</h6>
-                        <p>+1 (000) 000-0000</p>
-                        <p>contact@eventbuddy.com</p>
+                        <p>
+                            Mark: preschern.m@husky.neu.edu<br/>
+                            Danny: tran.duy@husky.neu.edu
+                        </p>
                     </div>
                 </div>
                 <div className="text-center on-dark-background pb-3">

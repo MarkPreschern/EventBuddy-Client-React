@@ -62,9 +62,12 @@ class LoginComponent extends React.Component {
                 <div className="form-group row">
                     <label className="col-sm-3 col-form-label">Role</label>
                     <div className="col-sm-9">
-                        <select className="form-control mb-2">
-                            <option onClick={() => this.userTypeChange("attendee")}>Event attendee</option>
-                            <option onClick={() => this.userTypeChange("organizer")}>Event organizer</option>
+                        <select onChange={(event) => this.userTypeChange(event.target.value)}
+                            className="form-control mb-2">
+                            <option value='attendee'
+                                onClick={() => this.userTypeChange("attendee")}>Event attendee</option>
+                            <option value='organizer'
+                                onClick={() => this.userTypeChange("organizer")}>Event organizer</option>
                         </select>
                     </div>
                     <label className="col-sm-3 col-form-label">Username</label>

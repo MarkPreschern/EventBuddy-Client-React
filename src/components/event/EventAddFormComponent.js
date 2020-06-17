@@ -46,6 +46,11 @@ class EventAddFormComponent extends React.Component {
         }
     };
 
+    chooseVenue = (venueId) => {
+        const venue = this.props.organizer.venues.filter(venue => venue._id === venueId)[0]
+        this.setState({newEvent: {...this.state.newEvent, venue: venue}})
+    }
+
     render() {
         return(
             <div className="container-fluid">
@@ -82,11 +87,17 @@ class EventAddFormComponent extends React.Component {
                         <label className="col-md-2 col-12">
                             Venue:
                         </label>
-                        <select className="col-md-10 col-12 form-control">
+                        <select
+                            onChange={(event) => this.chooseVenue(event.target.value)}
+                            className="col-md-10 col-12 form-control">
+                            <option disabled selected value> -- Select a venue -- </option>
                             {
                                 this.props.organizer.hasOwnProperty("venues") &&
                                 this.props.organizer.venues.map(venue => {
-                                    return <option key={venue._id} onClick={() => this.setState({newEvent: {...this.state.newEvent, venue: venue}})}>{venue.name}</option>
+                                    return <option key={venue._id}
+                                                   value={venue._id}
+                                                   onClick={() => this.setState({newEvent: {...this.state.newEvent, venue: venue}})}>
+                                    {venue.name}</option>
                                 })
                             }
                         </select>

@@ -31,7 +31,9 @@ class MessageChatComponent extends React.Component {
                 }
             });
         }
-        this.scrollBottom();
+        if(this.props.conversation !== undefined && this.props.conversation.message !== undefined) {
+            this.scrollBottom();
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -65,11 +67,14 @@ class MessageChatComponent extends React.Component {
     render() {
         return(
             <span>
+                {
+                    this.props.conversation !== undefined && this.props.conversation.messages !== undefined &&
+                <span>
                 <div className="EB-chatbox EB-rounded-corners" id="EB-message-scroll">
                     {
-                        this.props.conversation !== undefined && this.props.conversation.messages !== undefined &&
                         this.props.conversation.messages.map(message => {
-                            return <MessageChatBubbleComponent key={message._id} userId={this.props.attendee._id} messageUserId={message.sender._id} message={message}/>
+                            return <MessageChatBubbleComponent key={message._id} userId={this.props.attendee._id}
+                                                               messageUserId={message.sender._id} message={message}/>
                         })
                     }
                 </div>
@@ -85,7 +90,8 @@ class MessageChatComponent extends React.Component {
                         </button>
                     }
                 </div>
-
+                </span>
+                }
             </span>
         )
     }

@@ -13,7 +13,7 @@ const EventCardComponent = (props) =>
             <img className="card-img-top" src={DEFAULT_EVENT_IMAGE_URL} alt=""/>
         }
         <div className="card-body d-flex flex-column">
-            <h5 className="card-title">{props.event.name}</h5>
+            <h5 className="card-title ">{props.event.name}</h5>
             <h6 className="card-text">{props.event.start_date.split("T")[0]}</h6>
             <p className="card-text">{venueInformation(props)}</p>
             <Link className="text-muted mt-auto "

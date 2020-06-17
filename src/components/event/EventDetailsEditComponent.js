@@ -155,7 +155,7 @@ class EventDetailsEditComponent extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid">
                 {
                     this.state.editingName &&
                     <div>
@@ -195,13 +195,13 @@ class EventDetailsEditComponent extends React.Component {
                         </div>
                         :
                         <div className="col-md-7">
-                             <div className="d-flex mr-4">
-                                 <input className="form-control"
+                             <div className="form-row">
+                                 <input className="form-control col-12"
                                         placeholder="Image URL"
                                         type="text"
                                         value={this.state.event.image_url}
                                         onChange={(event) => this.setState({event: {...this.state.event, image_url: event.target.value}})}/>
-                                 <button className="btn btn-outline-success"
+                                 <button className="btn btn-outline-success col-12"
                                          onClick={this.toggleEditPicture}>
                                      <i className="fa fa-check"/>
                                  </button>
@@ -214,10 +214,29 @@ class EventDetailsEditComponent extends React.Component {
                                 <b>Location: </b>
                                 {this.venueInformation()}
                             </li>
-                            <li onClick={this.toggleEditDate}>
-                                <b>Date: </b>
-                                {this.state.event.hasOwnProperty("start_date") ? this.state.event.start_date.split("T")[0] : ""}
-                            </li>
+                            {
+                                this.state.editingDate &&
+                                <li>
+                                    <b>Date: </b>
+                                    <input className="form-control"
+                                           type="date"
+                                           value={this.state.event.date}
+                                           onChange={(event) => this.setState({event: {...this.state.event, start_date: event.target.value}})}/>
+                                    <button onClick={this.toggleEditDate}
+                                            className="btn btn-success">
+                                        <i className="fa fa-check"/>
+                                    </button>
+                                </li>
+                            }
+                            {
+                                !this.state.editingDate &&
+                                <li onClick={this.toggleEditDate}>
+                                    <b>Date: </b>
+                                    {this.state.event.hasOwnProperty("start_date") ? this.state.event.start_date.split("T")[0] : ""}
+                                    <i className="fa fa-pencil EB-pencil"/>
+                                </li>
+                            }
+
                             {
                                 this.state.editingTicketLink &&
                                 <li>
@@ -242,12 +261,6 @@ class EventDetailsEditComponent extends React.Component {
                             }
                         </ul>
                     </div>
-                </div>
-                <div>
-                    {
-                        this.state.event.hasOwnProperty("attendee_likes") && this.state.event.attendee_likes.length > 0 &&
-                        <EventAttendeesComponent attendees={this.state.event.attendee_likes}/>
-                    }
                 </div>
                 <div>
                 {

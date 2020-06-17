@@ -61,7 +61,7 @@ a {
 }
 
 .EB-content-overflow-scroll {
-    overflow: scroll;
+    overflow-x: auto;
 }
 
 .EB-contact-card {
@@ -106,9 +106,9 @@ a {
 }
 
 .EB-item-pic-lg {
-    width: 500px;
+    width: 100%;
     height: 270px;
-    object-fit: contain;
+    object-fit: cover;
     margin: 5px;
 }
 
@@ -128,7 +128,7 @@ a {
 
 .EB-scroll-list {
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -142,7 +142,7 @@ a {
     background-color: white;
     width: 100%;
     height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -224,8 +224,9 @@ a {
     left: 20%;
 }
 
-.EB-popup-content {
-
+.btn-outline-info {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .EB-list-text {
@@ -260,7 +261,7 @@ a {
     background-color: white;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(35, 48, 59, 0.5);
+    box-shadow: inset 1px 1px 5px rgba(35, 48, 59, 0.5);
 }
 
 .EB-list-horizontal {

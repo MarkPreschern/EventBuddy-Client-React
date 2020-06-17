@@ -18,8 +18,10 @@ class MessageComponent extends React.Component {
                             </div>
                             <div className="col-md-9 col-12">
                                 <Switch>
-                                    <Route path='/attendee/:attendeeId/messages/:conversationId' component={MessageChatComponent}/>
-                                    <Route path='/attendee/:attendeeId/messages' component={MessageChatComponent}/>
+                                    <Route path='/attendee/:attendeeId/messages/:conversationId'
+                                           component={MessageChatComponent}/>
+                                    <Route path='/attendee/:attendeeId/messages'
+                                           component={MessageChatComponent}/>
                                 </Switch>
                             </div>
                         </div>

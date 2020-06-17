@@ -9,6 +9,7 @@ import {
 const EventAttendeesComponent = (props) =>
     <span className="text-center m-2">
         <h6>{props.attendees.length} people liked this event</h6>
+        <p>Click on an attendee to view their profile and start messaging!</p>
         <div className="d-flex justify-content-around">
             <div className="EB-scroll-list-horizontal">
                 <div className="EB-list-horizontal">
