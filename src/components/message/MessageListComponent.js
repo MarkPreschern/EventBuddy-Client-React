@@ -5,7 +5,7 @@ import MessageCardComponent from "./MessageCardComponent";
 class MessageListComponent extends React.Component {
     render(){
         return(
-            <div>
+            <div className="EB-contact-card-container">
                 {
                     this.props.attendee.hasOwnProperty("conversations") &&
                     this.props.attendee.conversations.map(conversation =>

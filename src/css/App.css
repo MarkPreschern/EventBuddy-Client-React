@@ -41,7 +41,7 @@ body {
 }
 
 @font-face {
-    font-family: "MyWebFontBold";
+    font-family: "MyWebEFontBold";
     src: url('Roboto-Bold.ttf');
 }
 
@@ -259,7 +259,8 @@ a {
     display: flex;
     justify-content: space-around;
     background-color: white;
-    padding: 10px;
+    padding-left: 60px;
+    padding-right: 20px;
     border-radius: 10px;
     box-shadow: inset 1px 1px 5px rgba(35, 48, 59, 0.5);
 }
@@ -328,4 +329,15 @@ a {
 
 .EB-alert h6, .EB-alert button {
     margin: 5px 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .EB-contact-card-container {
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .EB-contact-card-middle {
+        display: inline-block;
+    }
 }

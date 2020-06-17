@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import MessageChatBubbleComponent from "./MessageChatBubbleComponent";
 import ConversationService from "../../services/ConversationService";
 import MessageService from "../../services/MessageService";
+import {updateAttendee} from "../../actions/AttendeeActions";
 import {selectConversation} from "../../actions/ConversationActions";
 import {showAlert} from "../../actions/AlertActions";
 
@@ -58,10 +59,20 @@ class MessageChatComponent extends React.Component {
             message._id = data._id;
             message.sender = {};
             message.sender._id = data.sender;
+
+            // update selected conversation
             let conversation = this.props.conversation;
             conversation.messages.push(message);
             this.props.selectConversation(conversation);
             this.setState({message: ""});
+
+            // update attendee
+            let attendee = this.props.attendee;
+            attendee.conversations = this.props.attendee.conversations.map(convo => {
+                return (convo._id === conversation._id ? conversation : convo)
+            });
+            this.props.updateAttendee(attendee);
+
             this.scrollBottom();
         }
 
@@ -114,6 +125,9 @@ const mapStateToProps = state => ({
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
+        updateAttendee: (attendee) => {
+            dispatch(updateAttendee(attendee))
+        },
         selectConversation: (conversation) => {
             dispatch(selectConversation(conversation))
         },

@@ -13,7 +13,7 @@ class MessageComponent extends React.Component {
                     <div className="m-2">
                         <h3>Conversations</h3>
                         <div className="row">
-                            <div className="col-3 d-none d-md-inline EB-contact-list">
+                            <div className="col-md-3 col-12 d-md-inline EB-contact-list">
                                 <MessageListComponent/>
                             </div>
                             <div className="col-md-9 col-12">

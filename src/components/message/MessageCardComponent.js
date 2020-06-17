@@ -11,7 +11,7 @@ class MessageCardComponent extends React.Component {
     selected = () => {
         return (this.props.selectedConversation !== undefined
                 && this.props.selectedConversation._id !== -1
-                && this.props.selectedConversation._id === this.props.conversation._id) ? "EB-conversation-selected" : "";
+                && this.props.selectedConversation._id === this.props.conversation._id) ? "EB-contact-card-middle EB-conversation-selected" : "EB-contact-card-middle";
     };
 
     defaultImage = (gender) => {
@@ -28,7 +28,7 @@ class MessageCardComponent extends React.Component {
         return(
             <div className={this.selected()}>
                 <Link to={`/attendee/${this.props.attendee._id}/messages/${this.props.conversation._id}`}
-                      onClick={() => this.props.selectConversation(this.props.conversation)}>
+                      onClick={() => this.props.selectConversation(this.props.attendee.conversations.find(convo => convo._id === this.props.conversation._id))}>
                     <div className="card EB-contact-card d-flex flex-row align-items-center">
                         {
                             this.props.conversation.sender._id === this.props.attendee._id ?

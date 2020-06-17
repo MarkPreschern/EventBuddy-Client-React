@@ -158,7 +158,17 @@ class RegisterComponent extends React.Component {
                                            placeholder="Phone Number"
                                            type="text"
                                            value={this.state.newAttendee.phone_number}
-                                           onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, phone_number: event.target.value}})}/>
+                                           onChange={(event) => {
+                                               const re = /^[0-9\b]+$/;
+                                               if (event.target.value === '' || re.test(event.target.value)) {
+                                                   this.setState({
+                                                                     newAttendee: {
+                                                                         ...this.state.newAttendee,
+                                                                         phone_number: event.target.value
+                                                                     }
+                                                                 })
+                                               }
+                                           }}/>
                                 </div>
 
                                 <label className="col-sm-3 col-form-label">Email</label>

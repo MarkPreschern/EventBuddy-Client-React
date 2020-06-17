@@ -196,7 +196,8 @@ class EventDetailComponent extends React.Component {
                     </div>
                 </div>
                 <div>
-                    {this.props.event.hasOwnProperty("attendee_likes") && this.props.event.attendee_likes.length > 0 &&
+                    {this.props.event.hasOwnProperty("attendee_likes") && this.props.event.attendee_likes.length > 0
+                     && (this.props.attendee._id !== -1 || this.props.organizer._id !== -1) &&
                         <EventAttendeesComponent attendees={this.props.event.attendee_likes}/>
                     }
                 </div>
@@ -227,7 +228,8 @@ class EventDetailComponent extends React.Component {
 
 const mapStateToProps = state => ({
     event: state.EventReducer.event,
-    attendee: state.AttendeeReducer.attendee
+    attendee: state.AttendeeReducer.attendee,
+    organizer: state.OrganizerReducer.organizer
 });
 
 const dispatchToPropertyMapper = (dispatch) => {
