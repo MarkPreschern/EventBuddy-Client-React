@@ -312,3 +312,19 @@ a {
     margin-right: 15px;
     margin-left: 15px;
 }
+
+.EB-alert {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 .1rem rgba(111,112,115,.25);
+}
+
+.EB-alert h6, .EB-alert button {
+    margin: 5px 10px;
+}

@@ -4,6 +4,7 @@ import EventAttendeesComponent from "./EventAttendeesComponent";
 import EventService from "../../services/EventService";
 import OrganizerService from "../../services/OrganizerService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
+import {showAlert} from "../../actions/AlertActions";
 import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
 
 class EventDetailsEditComponent extends React.Component {
@@ -50,14 +51,14 @@ class EventDetailsEditComponent extends React.Component {
         try {
             const data = await EventService.updateEvent(eventId, event);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 event._id = eventId;
                 this.props.updateOrganizer(organizer);
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -67,13 +68,13 @@ class EventDetailsEditComponent extends React.Component {
         try {
             const data = await OrganizerService.updateOrganizer(organizer._id, organizer);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 this.props.updateOrganizer(data);
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -384,6 +385,9 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         updateOrganizer: (organizer) => {
             dispatch(updateOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import OrganizerService from "../../services/OrganizerService";
 import VenueService from "../../services/VenueService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
+import {showAlert} from "../../actions/AlertActions";
 
 class VenueDetailsEditComponent extends React.Component {
     constructor(props) {
@@ -44,14 +45,14 @@ class VenueDetailsEditComponent extends React.Component {
         try {
             const data = await VenueService.updateVenue(organizer._id, venueId, venue);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 venue._id = venueId;
                 this.props.updateOrganizer(organizer);
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -61,13 +62,13 @@ class VenueDetailsEditComponent extends React.Component {
         try {
             const data = await OrganizerService.updateOrganizer(organizer._id, organizer);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 this.props.updateOrganizer(data);
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -265,6 +266,9 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         updateOrganizer: (organizer) => {
             dispatch(updateOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import VenueService from "../../services/VenueService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
+import {showAlert} from "../../actions/AlertActions";
 
 class VenueAddFormComponent extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class VenueAddFormComponent extends React.Component {
         try {
             const data = await VenueService.createVenue(this.props.organizer._id, this.state.newVenue);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 let organizer = this.props.organizer;
                 organizer.venues.push(data);
@@ -31,7 +32,7 @@ class VenueAddFormComponent extends React.Component {
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -142,6 +143,9 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         updateOrganizer: async (organizer) => {
             dispatch(updateOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

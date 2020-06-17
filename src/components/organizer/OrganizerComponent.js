@@ -6,6 +6,7 @@ import OrganizerVenueListComponent from "./OrganizerVenueListComponent";
 import {updateOrganizer} from "../../actions/OrganizerActions";
 import OrganizerService from "../../services/OrganizerService";
 import {resetAction} from "../../actions/RootActions";
+import {showAlert} from "../../actions/AlertActions";
 import {
     DEFAULT_PROFILE_FEMALE_IMAGE_URL,
     DEFAULT_PROFILE_MALE_IMAGE_URL, DEFAULT_PROFILE_OTHER_IMAGE_URL
@@ -33,7 +34,7 @@ class OrganizerComponent extends React.Component {
         const id = pathParts.pop() || pathParts.pop();
         OrganizerService.getOrganizer(id).then(data => {
             if (data === null || data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data === null ? "" : data.message.msgBody);
             } else {
                 this.setState({organizer: data})
             }
@@ -46,7 +47,7 @@ class OrganizerComponent extends React.Component {
             const id = pathParts.pop() || pathParts.pop();
             OrganizerService.getOrganizer(id).then(data => {
                 if (data === null || data.hasOwnProperty("message")) {
-                    // TODO: error handling
+                    this.props.showAlert(data === null ? "" : data.message.msgBody);
                 } else {
                     this.setState({organizer: data})
                 }
@@ -399,6 +400,9 @@ const dispatchToPropertyMapper = (dispatch) => {
         resetState: () => {
             window.sessionStorage.clear();
             dispatch(resetAction())
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

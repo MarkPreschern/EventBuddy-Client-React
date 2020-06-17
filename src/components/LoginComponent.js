@@ -5,6 +5,7 @@ import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
 import {selectAttendee} from "../actions/AttendeeActions";
 import {selectOrganizer} from "../actions/OrganizerActions";
+import {showAlert} from "../actions/AlertActions";
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class LoginComponent extends React.Component {
         this.state = {
             userType: "attendee",
             username: "",
-            password: ""
+            password: "",
         }
     }
 
@@ -30,7 +31,7 @@ class LoginComponent extends React.Component {
         if (this.state.userType === "attendee") {
             AttendeeService.loginAttendee({username: this.state.username, password: this.state.password}).then(data => {
                 if (data.hasOwnProperty("message")) {
-                    // TODO: handle error message
+                    this.props.showAlert(data.message.msgBody);
                 } else {
                     window.sessionStorage.setItem("userType", JSON.stringify("attendee") + ',');
                     window.sessionStorage.setItem("username", JSON.stringify(this.state.username) + ',');
@@ -42,7 +43,7 @@ class LoginComponent extends React.Component {
         } else if (this.state.userType === "organizer") {
             OrganizerService.loginOrganizer({username: this.state.username, password: this.state.password}).then(data => {
                 if (data.hasOwnProperty("message")) {
-                    // TODO: handle error message
+                    this.props.showAlert(data.message.msgBody);
                 } else {
                     window.sessionStorage.setItem("userType", "organizer");
                     window.sessionStorage.setItem("username", this.state.username);
@@ -105,6 +106,9 @@ const dispatchToPropertyMapper = (dispatch) => {
         },
         loginOrganizer: (organizer) => {
             dispatch(selectOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

@@ -2,8 +2,9 @@ import React from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import EventService from "../../services/EventService";
-import {updateOrganizer} from "../../actions/OrganizerActions";
 import OrganizerService from "../../services/OrganizerService";
+import {updateOrganizer} from "../../actions/OrganizerActions";
+import {showAlert} from "../../actions/AlertActions";
 
 class EventAddFormComponent extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class EventAddFormComponent extends React.Component {
             event.organizer = this.props.organizer;
             const data = await EventService.createEvent(event);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 let organizer = this.props.organizer;
                 organizer.events.push(data);
@@ -41,7 +42,7 @@ class EventAddFormComponent extends React.Component {
                 this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -209,6 +210,9 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         updateOrganizer: (organizer) => {
             dispatch(updateOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

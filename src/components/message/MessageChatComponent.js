@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from "react-redux";
 import MessageChatBubbleComponent from "./MessageChatBubbleComponent";
 import ConversationService from "../../services/ConversationService";
-import {selectConversation} from "../../actions/ConversationActions";
 import MessageService from "../../services/MessageService";
+import {selectConversation} from "../../actions/ConversationActions";
+import {showAlert} from "../../actions/AlertActions";
 
 class MessageChatComponent extends React.Component {
     constructor(props) {
@@ -19,16 +20,17 @@ class MessageChatComponent extends React.Component {
 
         const pathParts = window.location.pathname.split('/');
         const id = pathParts.pop() || pathParts.pop();
-        ConversationService.getConversation(this.props.attendee._id, id).then(data => {
-            if (data.hasOwnProperty("message")) {
-                // TODO: error handling
-            } else {
-                data.messages = data.messages.sort((m1, m2) => m1.timestamp > m2.timestamp);
-                data.messages = this.datetime(data.messages);
-                this.props.selectConversation(data);
-                this.scrollBottom();
-            }
-        });
+        if (id !== "messages") {
+            ConversationService.getConversation(this.props.attendee._id, id).then(data => {
+                if (data.hasOwnProperty("message")) {
+                    this.props.showAlert(data.message.msgBody);
+                } else {
+                    data.messages = data.messages.sort((m1, m2) => m1.timestamp > m2.timestamp);
+                    this.props.selectConversation(data);
+                    this.scrollBottom();
+                }
+            });
+        }
         this.scrollBottom();
     }
 
@@ -43,7 +45,7 @@ class MessageChatComponent extends React.Component {
         };
         const data = await MessageService.createMessage(this.props.attendee._id, this.props.conversation._id, message);
         if (data.hasOwnProperty("message")) {
-            // TODO: error handling
+            this.props.showAlert(data.message.msgBody);
         } else {
             message._id = data.sender;
             let conversation = this.props.conversation;
@@ -58,18 +60,6 @@ class MessageChatComponent extends React.Component {
     scrollBottom = () => {
         let messages = document.getElementById("EB-message-scroll");
         messages.scrollTop = messages.scrollHeight;
-    };
-
-    datetime = (messages) => {
-        let recentDateTime = "";
-        messages = messages.map(message => {
-            console.log(message.timestamp);
-            if (recentDateTime === "") {
-                return message;
-            }
-            return message;
-        });
-        return messages;
     };
 
     render() {
@@ -110,6 +100,9 @@ const dispatchToPropertyMapper = (dispatch) => {
     return {
         selectConversation: (conversation) => {
             dispatch(selectConversation(conversation))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

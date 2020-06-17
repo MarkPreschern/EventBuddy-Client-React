@@ -5,6 +5,7 @@ import AttendeeService from "../services/AttendeeService";
 import OrganizerService from "../services/OrganizerService";
 import {selectAttendee} from "../actions/AttendeeActions";
 import {selectOrganizer} from "../actions/OrganizerActions";
+import {showAlert} from "../actions/AlertActions";
 
 class RegisterComponent extends React.Component {
     constructor(props) {
@@ -64,19 +65,17 @@ class RegisterComponent extends React.Component {
     register = () => {
         if (this.state.userType === "attendee") {
             if (this.state.newAttendee.password !== this.state.verifyPassword) {
-                // TODO: error handling
+                this.props.showAlert("Passwords don't match");
             } else if (this.state.newAttendee.password.length < 8) {
-                // TODO: error handling
+                this.props.showAlert("Password is too short, must be at least 9 characters");
             } else {
                 AttendeeService.createAttendee(this.state.newAttendee).then(data => {
                     if (data.hasOwnProperty("message")) {
-                        // TODO: handle error message
+                        this.props.showAlert(data.message.msgBody);
                     } else {
-                        console.log("here");
                         window.sessionStorage.setItem("userType", JSON.stringify("attendee") + ',');
                         window.sessionStorage.setItem("username", JSON.stringify(this.state.newAttendee.username) + ',');
                         window.sessionStorage.setItem("password", JSON.stringify(this.state.newAttendee.password) + ',');
-                        console.log("here");
                         this.props.selectAttendee(data);
                         this.props.history.push(`/attendee/profile/${data._id}`)
                     }
@@ -84,13 +83,13 @@ class RegisterComponent extends React.Component {
             }
         } else if (this.state.userType === "organizer") {
             if (this.state.newOrganizer.password !== this.state.verifyPassword) {
-                // TODO: error handling
+                this.props.showAlert("Passwords don't match");
             } else if (this.state.newOrganizer.password.length < 8) {
-                // TODO: error handling
+                this.props.showAlert("Password is too short, must be at least 9 characters");
             } else {
                 OrganizerService.createOrganizer(this.state.newOrganizer).then(data => {
                     if (data.hasOwnProperty("message")) {
-                        // TODO: handle error message
+                        this.props.showAlert(data.message.msgBody);
                     } else {
                         window.sessionStorage.setItem("userType", JSON.stringify("organizer") + ',');
                         window.sessionStorage.setItem("username", JSON.stringify(this.state.newOrganizer.username) + ',');
@@ -307,6 +306,9 @@ const dispatchToPropertyMapper = (dispatch) => {
         },
         selectOrganizer: async (organizer) => {
             dispatch(selectOrganizer(organizer))
+        },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
         }
     }
 };

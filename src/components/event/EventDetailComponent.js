@@ -8,6 +8,7 @@ import VenueService from "../../services/VenueService";
 import {selectEvent, updateEvent} from "../../actions/EventActions";
 import {updateAttendee} from "../../actions/AttendeeActions";
 import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
+import {showAlert} from "../../actions/AlertActions";
 
 class EventDetailComponent extends React.Component {
 
@@ -49,11 +50,11 @@ class EventDetailComponent extends React.Component {
             if (event.external && !event.integrated) {
                 event.venue = await this.createVenue(event.venue);
                 if (event.venue.hasOwnProperty("message")) {
-                    // TODO: error handling
+                    this.props.showAlert(event.venue.message.msgBody);
                 } else {
                     event = await this.createEvent(event);
                     if (event.hasOwnProperty("message")) {
-                        // TODO: error handling
+                        this.props.showAlert(event.venue.message.msgBody);
                     } else {
                         this.likeEventHelper(event, attendee);
                     }
@@ -62,7 +63,7 @@ class EventDetailComponent extends React.Component {
                 this.likeEventHelper(event, attendee);
             }
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -80,8 +81,12 @@ class EventDetailComponent extends React.Component {
                     AttendeeService.getAttendee(attendee._id).then(data => this.props.updateAttendee(data));
                     EventService.getEvent(event._id).then(data => this.props.updateEvent(data));
                     this.props.history.push(`/event/${event._id}`)
+                } else if (ok1) {
+                    this.props.showAlert(response2.message.msgBody);
+                } else if (ok2) {
+                    this.props.showAlert(response1.message.msgBody);
                 } else {
-                    // TODO: error handling
+                    this.props.showAlert(`${response1.message.msgBody} & ${response2.message.msgBody}`);
                 }
             });
     };
@@ -118,12 +123,16 @@ class EventDetailComponent extends React.Component {
                         AttendeeService.getAttendee(attendee._id).then(data => this.props.updateAttendee(data));
                         EventService.getEvent(event._id).then(data => this.props.updateEvent(data));
                         this.props.history.push(`/event/${event._id}`)
+                    } else if (ok1) {
+                        this.props.showAlert(response2.message.msgBody);
+                    } else if (ok2) {
+                        this.props.showAlert(response1.message.msgBody);
                     } else {
-                        // TODO: error handling
+                        this.props.showAlert(`${response1.message.msgBody} & ${response2.message.msgBody}`);
                     }
                 });
         } catch (e) {
-            // TODO: error handling
+            this.props.showAlert("server-side error");
         }
     };
 
@@ -232,6 +241,9 @@ const dispatchToPropertyMapper = (dispatch) => {
         updateAttendee: (attendee) => {
             dispatch(updateAttendee(attendee))
         },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
+        }
     }
 };
 

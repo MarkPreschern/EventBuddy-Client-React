@@ -2,12 +2,12 @@ import React from 'react'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import AttendeeEventListComponent from "./AttendeeEventListComponent";
-import AttendeeMessageListComponent from "./AttendeeMessageListComponent";
 import AttendeeService from "../../services/AttendeeService";
 import {updateAttendee} from "../../actions/AttendeeActions";
 import {resetAction} from "../../actions/RootActions";
 import {selectConversation} from "../../actions/ConversationActions";
 import ConversationService from "../../services/ConversationService";
+import {showAlert} from "../../actions/AlertActions";
 import {
     DEFAULT_PROFILE_FEMALE_IMAGE_URL,
     DEFAULT_PROFILE_MALE_IMAGE_URL, DEFAULT_PROFILE_OTHER_IMAGE_URL
@@ -35,7 +35,7 @@ class AttendeeComponent extends React.Component {
         const id = pathParts.pop() || pathParts.pop();
         AttendeeService.getAttendee(id).then(data => {
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 this.setState({attendee: data})
             }
@@ -48,7 +48,7 @@ class AttendeeComponent extends React.Component {
             const id = pathParts.pop() || pathParts.pop();
             AttendeeService.getAttendee(id).then(data => {
                 if (data.hasOwnProperty("message")) {
-                    // TODO: error handling
+                    this.props.showAlert(data.message.msgBody);
                 } else {
                     this.setState({attendee: data})
                 }
@@ -68,7 +68,7 @@ class AttendeeComponent extends React.Component {
             };
             const data = await ConversationService.createConversation(this.props.attendee._id, conversation);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 await this.props.selectConversation(data);
                 this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
@@ -76,7 +76,7 @@ class AttendeeComponent extends React.Component {
         } else {
             const data = await ConversationService.getConversation(this.props.attendee._id, existingConversations[0]._id);
             if (data.hasOwnProperty("message")) {
-                // TODO: error handling
+                this.props.showAlert(data.message.msgBody);
             } else {
                 await this.props.selectConversation(data);
                 this.props.history.push(`/attendee/${this.props.attendee._id}/messages/${data._id}`)
@@ -408,18 +408,6 @@ class AttendeeComponent extends React.Component {
                             </div>
                         </div>
                     }
-                    {
-                        this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
-                        this.props.attendee.hasOwnProperty("messages") && this.props.attendee.messages.length > 0 &&
-                        <div className="row col-12 d-inline">
-                            <Link to="/messages">
-                                <h4>Messages</h4>
-                            </Link>
-                            <div className="EB-scroll-list">
-                                <AttendeeMessageListComponent/>
-                            </div>
-                        </div>
-                    }
                 </div>
                 {
                     this.props.attendee._id !== -1 && this.props.attendee._id === this.state.attendee._id &&
@@ -451,6 +439,9 @@ const dispatchToPropertyMapper = (dispatch) => {
             window.sessionStorage.clear();
             dispatch(resetAction())
         },
+        showAlert: (message) => {
+            dispatch(showAlert(message))
+        }
     }
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
+import {Provider as AlertProvider} from "react-alert";
 import './css/App.css'
 import MenuComponent from "./components/MenuComponent";
 import EventComponent from "./components/event/EventComponent"
@@ -14,11 +15,13 @@ import MessageComponent from "./components/message/MessageComponent";
 import VenueDetailsEditComponent from "./components/venue/VenueDetailsEditComponent";
 import EventDetailsEditComponent from "./components/event/EventDetailsEditComponent";
 import VenueAddFormComponent from "./components/venue/VenueAddFormComponent";
+import VenueDetailsComponent from "./components/venue/VenueDetailsComponent"
 import AttendeeService from "./services/AttendeeService";
 import OrganizerService from "./services/OrganizerService";
-import VenueDetailsComponent from "./components/venue/VenueDetailsComponent"
 import {selectAttendee} from "./actions/AttendeeActions";
 import {selectOrganizer} from "./actions/OrganizerActions";
+import AlertComponent from "./components/AlertComponent";
+
 class App extends React.Component {
 
     // attempts to login user if possible via sessionStorage
@@ -45,34 +48,46 @@ class App extends React.Component {
         }
     }
 
+    AlertTemplate = ({ style, options, message, close }) => (
+        <div style={style} className="EB-alert">
+            <h6>Error! {message}</h6>
+            <button className="btn btn-danger" onClick={close}>X</button>
+        </div>
+    );
+
     render() {
         return (
-            <div className="AppContainer">
-                <div className="wrapper">
-                    <BrowserRouter>
-                        <Route path='/' component={MenuComponent}/>
-                        <Route exact path='/' component={HomeComponent}/>
-                        <Route path='/event' component={EventComponent}/>
-                        <Route path='/attendee/profile' component={AttendeeComponent}/>
-                        <Route path='/organizer/profile' component={OrganizerComponent}/>
-                        <Route path="/organizer/:organizerId/venue/:venueId/edit" component={VenueDetailsEditComponent}/>
-                        <Route path="/organizer/:organizerId/event/:eventId/edit" component={EventDetailsEditComponent}/>
-                        <Route path='/attendee/:attendeeId/messages' component={MessageComponent}/>
-                        <Switch>
-                            <Route exact path='/venue/new' component={VenueAddFormComponent}/>
-                            <Route path='/venue/:venueId' component={VenueDetailsComponent}/>
-                        </Switch>
-                        <Route path='/login' component={LoginComponent}/>
-                        <Route path='/register' component={RegisterComponent}/>
-                    </BrowserRouter>
+            <AlertProvider template={this.AlertTemplate} {...{timeout: 5000}}>
+                <div className="AppContainer">
+                    <div className="wrapper">
+                        <BrowserRouter>
+                            <Route path='/' component={MenuComponent}/>
+                            <Route exact path='/' component={HomeComponent}/>
+                            <Route path='/event' component={EventComponent}/>
+                            <Route path='/attendee/profile' component={AttendeeComponent}/>
+                            <Route path='/organizer/profile' component={OrganizerComponent}/>
+                            <Route path="/organizer/:organizerId/venue/:venueId/edit" component={VenueDetailsEditComponent}/>
+                            <Route path="/organizer/:organizerId/event/:eventId/edit" component={EventDetailsEditComponent}/>
+                            <Route path='/attendee/:attendeeId/messages' component={MessageComponent}/>
+                            <Switch>
+                                <Route exact path='/venue/new' component={VenueAddFormComponent}/>
+                                <Route path='/venue/:venueId' component={VenueDetailsComponent}/>
+                            </Switch>
+                            <Route path='/login' component={LoginComponent}/>
+                            <Route path='/register' component={RegisterComponent}/>
+                        </BrowserRouter>
+                        {this.props.alertActive && <AlertComponent/>}
+                    </div>
+                    <FooterComponent/>
                 </div>
-                <FooterComponent/>
-            </div>
+            </AlertProvider>
         );
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    alertActive: state.AlertReducer.active,
+});
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {

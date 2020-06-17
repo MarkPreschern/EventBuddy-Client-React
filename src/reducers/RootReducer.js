@@ -5,6 +5,7 @@ import EventReducer from "./EventReducer"
 import MessageReducer from "./MessageReducer"
 import OrganizerReducer from "./OrganizerReducer"
 import VenueReducer from "./VenueReducer"
+import AlertReducer from "./AlertReducer"
 import {RESET_ACTION} from "../actions/RootActions";
 
 const appReducer = combineReducers(
@@ -14,7 +15,8 @@ const appReducer = combineReducers(
         EventReducer,
         MessageReducer,
         OrganizerReducer,
-        VenueReducer
+        VenueReducer,
+        AlertReducer
     });
 
 const rootReducer = (state, action) => {
