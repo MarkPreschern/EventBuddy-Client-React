@@ -5,6 +5,7 @@ import OrganizerService from "../../services/OrganizerService";
 import {updateOrganizer} from "../../actions/OrganizerActions";
 import {showAlert} from "../../actions/AlertActions";
 import {DEFAULT_EVENT_IMAGE_URL} from "../../common/Constants";
+import EventAttendeesComponent from "./EventAttendeesComponent";
 
 class EventDetailsEditComponent extends React.Component {
     constructor(props) {
@@ -22,8 +23,6 @@ class EventDetailsEditComponent extends React.Component {
             editingNote: false,
             editingPicture: false
         };
-
-        this.imageurl="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     }
 
     componentDidMount() {
@@ -35,7 +34,9 @@ class EventDetailsEditComponent extends React.Component {
         OrganizerService.getOrganizer(organizerId).then(organizer => {
             organizer.events.forEach(event => {
                 if (event._id === eventId) {
-                    this.setState({event: event});
+                    EventService.getEvent(event._id).then(data => {
+                        this.setState({event: data})
+                    });
                 }
             })
         })
@@ -260,6 +261,11 @@ class EventDetailsEditComponent extends React.Component {
                             }
                         </ul>
                     </div>
+                </div>
+                <div>
+                    {this.state.event.hasOwnProperty("attendee_likes") && this.state.event.attendee_likes.length > 0 && this.props.organizer._id !== -1 &&
+                     <EventAttendeesComponent attendees={this.state.event.attendee_likes}/>
+                    }
                 </div>
                 <div>
                 {
