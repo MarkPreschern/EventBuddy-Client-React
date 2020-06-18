@@ -75,7 +75,7 @@ class VenueAddFormComponent extends React.Component {
                         </label>
                         <input
                             className="col-md-10 col-12 form-control"
-                            placeholder="State"
+                            placeholder="(optional)"
                             type="text"
                             value={this.state.newVenue.state}
                             onChange={(event) => this.setState({newVenue: {...this.state.newVenue, state: event.target.value}})}/>

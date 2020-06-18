@@ -205,7 +205,7 @@ class RegisterComponent extends React.Component {
                                 <label className="col-sm-3 col-form-label">Image URL</label>
                                 <div className="col-sm-9">
                                     <input className="form-control "
-                                           placeholder="Image URL"
+                                           placeholder="(optional)"
                                            type="text"
                                            value={this.state.newAttendee.image_url}
                                            onChange={(event) => this.setState({newAttendee: {...this.state.newAttendee, image_url: event.target.value}})}/>
@@ -266,7 +266,12 @@ class RegisterComponent extends React.Component {
                                            placeholder="Phone Number"
                                            type="text"
                                            value={this.state.newOrganizer.phone_number}
-                                           onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, phone_number: event.target.value}})}/>
+                                           onChange={(event) => {
+                                               const re = /^[0-9\b]+$/;
+                                               if (event.target.value === '' || re.test(event.target.value)) {
+                                                   this.setState({newOrganizer: {...this.state.newOrganizer, phone_number: event.target.value}})
+                                               }
+                                           }}/>
                                 </div>
 
                                 <label className="col-sm-3 col-form-label">Email</label>
@@ -282,7 +287,7 @@ class RegisterComponent extends React.Component {
                                 <div className="col-sm-9">
                                     <input className="form-control mb-2"
                                            placeholder="Company URL"
-                                           type="password"
+                                           type="text"
                                            value={this.state.newOrganizer.company_url}
                                            onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, company_url: event.target.value}})}/>
                                 </div>
@@ -290,7 +295,7 @@ class RegisterComponent extends React.Component {
                                 <label className="col-sm-3 col-form-label">Image URL</label>
                                 <div className="col-sm-9">
                                     <input className="form-control"
-                                           placeholder="Image URL"
+                                           placeholder="(optional)"
                                            type="text"
                                            value={this.state.newOrganizer.image_url}
                                            onChange={(event) => this.setState({newOrganizer: {...this.state.newOrganizer, image_url: event.target.value}})}/>
@@ -298,7 +303,6 @@ class RegisterComponent extends React.Component {
                             </div>
                         }
                 </div>
-                <p>Note: All fields are required!</p>
                 <button className="btn btn-dark mt-2" onClick={() => this.register()}>
                     Register
                 </button>

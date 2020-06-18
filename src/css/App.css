@@ -41,7 +41,7 @@ body {
 }
 
 @font-face {
-    font-family: "MyWebEFontBold";
+    font-family: "MyWebFontBold";
     src: url('Roboto-Bold.ttf');
 }
 
@@ -259,14 +259,13 @@ a {
     display: flex;
     justify-content: space-around;
     background-color: white;
-    padding-left: 60px;
-    padding-right: 20px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: inset 1px 1px 5px rgba(35, 48, 59, 0.5);
 }
 
 .EB-list-horizontal {
-    max-width: 500px;
+    max-width: 100%;
     display: inline-flex;
     align-self: center;
 }
