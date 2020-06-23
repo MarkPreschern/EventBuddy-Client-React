@@ -49,7 +49,7 @@ class VenueDetailsEditComponent extends React.Component {
             } else {
                 venue._id = venueId;
                 this.props.updateOrganizer(organizer);
-                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+                this.props.history.push('/profile');
             }
         } catch (e) {
             this.props.showAlert("server-side error");
@@ -65,7 +65,7 @@ class VenueDetailsEditComponent extends React.Component {
                 this.props.showAlert(data.message.msgBody);
             } else {
                 this.props.updateOrganizer(data);
-                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+                this.props.history.push('/profile');
             }
         } catch (e) {
             this.props.showAlert("server-side error");

@@ -187,7 +187,8 @@ class EventDetailComponent extends React.Component {
                                 this.props.event.hasOwnProperty("organizer") &&
                                 <li>
                                     <b>Organizer: </b>
-                                    <Link to={`/organizer/profile/${this.props.event.organizer._id}`}>
+                                    <Link to={`/profile${(this.props.organizer._id !== -1 && this.props.organizer._id === this.props.event.organizer._id) ?
+                                                         "" : `/${this.props.event.organizer._id}`}`}>
                                             {this.props.event.organizer.company_name}
                                     </Link>
                                 </li>

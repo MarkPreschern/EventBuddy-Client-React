@@ -66,8 +66,8 @@ class App extends React.Component {
                             <Route path='/' component={MenuComponent}/>
                             <Route exact path='/' component={HomeComponent}/>
                             <Route path='/event' component={EventComponent}/>
-                            <Route path='/attendee/profile' component={AttendeeComponent}/>
-                            <Route path='/organizer/profile' component={OrganizerComponent}/>
+                            <Route path='/profile' component={AttendeeComponent}/>
+                            <Route path='/profile' component={OrganizerComponent}/>
                             <Route path="/organizer/:organizerId/venue/:venueId/edit" component={VenueDetailsEditComponent}/>
                             <Route path="/organizer/:organizerId/event/:eventId/edit" component={EventDetailsEditComponent}/>
                             <Route path='/attendee/:attendeeId/messages' component={MessageComponent}/>

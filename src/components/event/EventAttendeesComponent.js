@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 import {
     DEFAULT_EVENT_IMAGE_URL,
     DEFAULT_PROFILE_FEMALE_IMAGE_URL,
@@ -16,7 +17,7 @@ const EventAttendeesComponent = (props) =>
                     {
                         props.attendees.map(attendee =>
                         <div key={attendee._id} className="EB-list-content-horizontal text-center">
-                            <Link to={`/attendee/profile/${attendee._id}`}>
+                            <Link to={`/profile${(props.attendee._id !== -1 && props.attendee._id === attendee._id) ? "" : `/${attendee._id}`}`}>
                                 {
                                     !(attendee.image_url === '' || attendee.image_url === undefined) ?
                                     <img className="rounded EB-item-pic" src={attendee.image_url} alt={DEFAULT_EVENT_IMAGE_URL}/>
@@ -44,4 +45,8 @@ const defaultImage = (gender) => {
     }
 };
 
-export default EventAttendeesComponent;
+const mapStateToProps = state => ({
+    attendee: state.AttendeeReducer.attendee
+});
+
+export default connect(mapStateToProps)(EventAttendeesComponent);

@@ -37,7 +37,7 @@ class LoginComponent extends React.Component {
                     window.sessionStorage.setItem("username", JSON.stringify(this.state.username) + ',');
                     window.sessionStorage.setItem("password", JSON.stringify(this.state.password) + ',');
                     this.props.loginAttendee(data);
-                    this.props.history.push(`/attendee/profile/${data._id}`)
+                    this.props.history.push('/profile')
                 }
             });
         } else if (this.state.userType === "organizer") {
@@ -49,7 +49,7 @@ class LoginComponent extends React.Component {
                     window.sessionStorage.setItem("username", this.state.username);
                     window.sessionStorage.setItem("password", this.state.password);
                     this.props.loginOrganizer(data);
-                    this.props.history.push(`/organizer/profile/${data._id}`)
+                    this.props.history.push('/profile')
                 }
             });
         }

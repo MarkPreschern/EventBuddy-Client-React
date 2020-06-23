@@ -24,13 +24,13 @@ const MenuComponent = (props) =>
                 }
                 {
                     props.attendee._id !== -1 &&
-                    <Link to={`/attendee/profile/${props.attendee._id}`}>
+                    <Link to='/profile'>
                         <button className="btn btn-dark mr-2">Profile</button>
                     </Link>
                 }
                 {
                     props.organizer._id !== -1 &&
-                    <Link to={`/organizer/profile/${props.organizer._id}`}>
+                    <Link to='/profile'>
                         <button className="btn btn-dark">Profile</button>
                     </Link>
                 }

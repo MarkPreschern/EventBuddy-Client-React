@@ -29,7 +29,7 @@ class VenueAddFormComponent extends React.Component {
                 let organizer = this.props.organizer;
                 organizer.venues.push(data);
                 this.props.updateOrganizer(organizer);
-                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+                this.props.history.push('/profile');
             }
         } catch (e) {
             this.props.showAlert("server-side error");
@@ -127,7 +127,7 @@ class VenueAddFormComponent extends React.Component {
                 <button className="btn btn-success" onClick={() => this.createVenue()}>
                     Save
                 </button>
-                <Link to={`/organizer/profile/${this.props.organizer._id}`}>
+                <Link to={'/profile'}>
                     <button className="btn btn-danger ml-2">Cancel</button>
                 </Link>
             </div>

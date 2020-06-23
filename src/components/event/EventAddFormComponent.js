@@ -39,7 +39,7 @@ class EventAddFormComponent extends React.Component {
                 organizer.events.push(data);
                 await OrganizerService.updateOrganizer(organizer._id, organizer);
                 this.props.updateOrganizer(organizer);
-                this.props.history.push(`/organizer/profile/${this.props.organizer._id}`);
+                this.props.history.push('/profile');
             }
         } catch (e) {
             this.props.showAlert("server-side error");
@@ -205,7 +205,7 @@ class EventAddFormComponent extends React.Component {
                 <button className="btn btn-success" onClick={() => this.createEvent()}>
                     Save
                 </button>
-                <Link to={`/organizer/profile/${this.props.organizer._id}`}>
+                <Link to={'/profile'}>
                     <button className="btn btn-danger ml-2">Cancel</button>
                 </Link>
             </div>

@@ -75,7 +75,7 @@ class RegisterComponent extends React.Component {
                         window.sessionStorage.setItem("username", JSON.stringify(this.state.newAttendee.username) + ',');
                         window.sessionStorage.setItem("password", JSON.stringify(this.state.newAttendee.password) + ',');
                         this.props.selectAttendee(data);
-                        this.props.history.push(`/attendee/profile/${data._id}`)
+                        this.props.history.push('/profile')
                     }
                 });
             }
@@ -91,7 +91,7 @@ class RegisterComponent extends React.Component {
                         window.sessionStorage.setItem("username", JSON.stringify(this.state.newOrganizer.username) + ',');
                         window.sessionStorage.setItem("password", JSON.stringify(this.state.newOrganizer.password) + ',');
                         this.props.selectOrganizer(data);
-                        this.props.history.push(`/organizer/profile/${data._id}`)
+                        this.props.history.push('/profile')
                     }
                 });
             }
