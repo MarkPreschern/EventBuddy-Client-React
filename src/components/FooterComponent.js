@@ -16,7 +16,7 @@ export default class FooterComponent extends React.Component {
                     <div className="col-sm-4 col-12">
                         <h6 className="on-dark-background">Contact Us</h6>
                         <p>
-                            Mark: preschern.m@husky.neu.edu<br/>
+                            Mark: preschern.m@northeastern.edu<br/>
                             Danny: tran.duy@husky.neu.edu
                         </p>
                     </div>

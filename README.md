@@ -11,6 +11,7 @@ EventBuddy is a networking application that facilitates communication between us
 - Handles CRUD operations via [EventBuddy-Server-Node](https://github.com/MarkPreschern/EventBuddy-Server-Node)
 - User authentication and persistence of user data in session
 - Styling using Bootstrap & CSS
+- Deployed: https://eventbuddy-client.herokuapp.com/
 
 ## Learn More
 
@@ -19,7 +20,5 @@ EventBuddy is a networking application that facilitates communication between us
 - Project Wiki: https://github.com/MarkPreschern/EventBuddy-Client-React/wiki/PROTOTYPE
 
 - EventBuddy-Server-Node: https://github.com/MarkPreschern/EventBuddy-Server-Node
-
-- Deployed: https://eventbuddy-client.herokuapp.com/
 
 

@@ -6,7 +6,7 @@ const MenuComponent = (props) =>
     <div className="">
         <div className="navbar">
             <Link to='/'>
-                <h1 className="navbar-brand">EventBuddy</h1>
+                <img src={require("../img/EB-Logo.png")} alt=""/>
             </Link>
 
             <span className="float-right">
