@@ -1,12 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux";
+import Logo from "../img/EB-Logo.png";
 
 const MenuComponent = (props) =>
     <div className="">
         <div className="navbar">
             <Link to='/'>
-                <img src={require("../img/EB-Logo.png")} alt=""/>
+                <img src={Logo} alt="" className="EB-logo"/>
             </Link>
 
             <span className="float-right">
